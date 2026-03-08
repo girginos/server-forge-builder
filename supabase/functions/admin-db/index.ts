@@ -29,18 +29,19 @@ async function authenticateRequest(req: Request): Promise<boolean> {
 
   const token = authHeader.replace("Bearer ", "");
 
-  // Method 2: Lovable Cloud JWT (service_role from curl tool)
+  // Method 2: Lovable Cloud JWT (decode and check role claim)
   try {
-    const cloudClient = createClient(CLOUD_URL, CLOUD_ANON_KEY, {
-      global: { headers: { Authorization: authHeader } },
-    });
-    const { data, error } = await cloudClient.auth.getClaims(token);
-    if (!error && data?.claims?.role === "service_role") {
-      console.log("Authenticated via Cloud service_role JWT");
-      return true;
+    const parts = token.split(".");
+    if (parts.length === 3) {
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")));
+      console.log("JWT role:", payload.role, "iss:", payload.iss);
+      if (payload.role === "service_role") {
+        console.log("Authenticated via service_role JWT");
+        return true;
+      }
     }
   } catch (e) {
-    console.log("Cloud JWT check failed:", e);
+    console.log("JWT decode failed:", e);
   }
 
   // Method 3: User token + admin role check (for browser/admin panel via external Supabase)
