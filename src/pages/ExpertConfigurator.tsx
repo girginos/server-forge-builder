@@ -39,6 +39,10 @@ export default function ExpertConfigurator() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [contactMethod, setContactMethod] = useState("whatsapp");
+  const [cpu, setCpu] = useState("bilmiyorum");
+  const [ram, setRam] = useState("bilmiyorum");
+  const [storage, setStorage] = useState("bilmiyorum");
+  const [storageType, setStorageType] = useState("bilmiyorum");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
