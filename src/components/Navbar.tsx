@@ -102,7 +102,7 @@ export default function Navbar() {
                   </button>
                   {dropdownOpen && (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
-                      <div className="w-80 rounded-2xl border border-border/60 bg-popover text-popover-foreground shadow-2xl shadow-black/10 p-1.5 animate-fade-in backdrop-blur-sm">
+                      <div className="w-96 rounded-2xl border border-border/60 bg-popover text-popover-foreground shadow-2xl shadow-black/10 p-1.5 animate-fade-in backdrop-blur-sm">
                         <div className="px-3 pt-2 pb-1.5 mb-1">
                           <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Datacenter Hizmetleri</p>
                         </div>
