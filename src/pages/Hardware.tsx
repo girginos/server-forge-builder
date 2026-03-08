@@ -92,7 +92,7 @@ export default function Hardware() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Sunucu Donanımları",
-          url: "https://servermarket.com.tr/hardware",
+          url: `${SITE_URL}/hardware`,
           numberOfItems: filtered.length,
           itemListElement: filtered.slice(0, 10).map((s, i) => ({
             "@type": "ListItem",

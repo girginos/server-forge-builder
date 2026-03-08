@@ -75,9 +75,9 @@ export default function CloudPage() {
             "@context": "https://schema.org",
             "@type": "Service",
             name: "ServerMarket Cloud Çözümleri",
-            provider: { "@type": "Organization", name: "ServerMarket", url: "https://servermarket.com.tr" },
+            provider: { "@type": "Organization", name: "ServerMarket", url: SITE_URL },
             description: "Ölçeklenebilir cloud sunucu, depolama ve CDN hizmetleri.",
-            url: "https://servermarket.com.tr/cloud",
+            url: `${SITE_URL}/cloud`,
             areaServed: "TR",
             serviceType: "Cloud Hosting",
             hasOfferCatalog: {

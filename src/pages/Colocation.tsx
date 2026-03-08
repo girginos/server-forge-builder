@@ -80,9 +80,9 @@ export default function Colocation() {
             "@context": "https://schema.org",
             "@type": "Service",
             name: "ServerMarket Colocation Hizmetleri",
-            provider: { "@type": "Organization", name: "ServerMarket", url: "https://servermarket.com.tr" },
+            provider: { "@type": "Organization", name: "ServerMarket", url: SITE_URL },
             description: "Tier III+ veri merkezlerinde sunucu barındırma hizmetleri.",
-            url: "https://servermarket.com.tr/colocation",
+            url: `${SITE_URL}/colocation`,
             areaServed: "TR",
             serviceType: "Colocation Hosting",
             hasOfferCatalog: {

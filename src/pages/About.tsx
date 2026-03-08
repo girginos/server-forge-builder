@@ -1,5 +1,6 @@
 import { Users, Award, Globe, TrendingUp } from "lucide-react";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 
 const stats = [
   { icon: Users, value: "500+", label: "Mutlu Müşteri" },
@@ -16,6 +17,28 @@ export default function About() {
         description="ServerMarket olarak 15 yılı aşkın süredir Türkiye'nin önde gelen kurumsal sunucu çözümleri sağlayıcısıyız. 500+ mutlu müşteri, 10.000+ satılan sunucu."
         keywords="servermarket hakkında, sunucu firması, kurumsal çözümler, sunucu tedarikçi"
         canonical="/hakkimizda"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          name: "Hakkımızda - ServerMarket",
+          url: `${SITE_URL}/hakkimizda`,
+          description: "ServerMarket olarak 15 yılı aşkın süredir Türkiye'nin önde gelen kurumsal sunucu çözümleri sağlayıcısıyız.",
+          mainEntity: {
+            "@type": "Organization",
+            name: "ServerMarket",
+            url: SITE_URL,
+            foundingDate: "2009",
+            numberOfEmployees: { "@type": "QuantitativeValue", minValue: 50 },
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Maslak, Büyükdere Cad. No:123 Kat:5",
+              addressLocality: "Sarıyer",
+              addressRegion: "İstanbul",
+              addressCountry: "TR",
+            },
+            contactPoint: { "@type": "ContactPoint", telephone: "+90-212-555-0000", contactType: "sales", areaServed: "TR", availableLanguage: "Turkish" },
+          },
+        }}
       />
       <section className="gradient-hero text-secondary-foreground py-20">
         <div className="container text-center">

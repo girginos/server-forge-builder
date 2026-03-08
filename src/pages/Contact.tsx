@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 
 export default function Contact() {
   return (
@@ -12,6 +13,30 @@ export default function Contact() {
         description="ServerMarket ile iletişime geçin. Sunucu donanımı, colocation ve cloud hizmetleri için teklif alın. 7/24 teknik destek."
         keywords="iletişim, teklif al, sunucu satış, teknik destek, servermarket iletişim"
         canonical="/iletisim"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          name: "İletişim - ServerMarket",
+          url: `${SITE_URL}/iletisim`,
+          mainEntity: {
+            "@type": "LocalBusiness",
+            name: "ServerMarket",
+            url: SITE_URL,
+            telephone: "+90-212-555-0000",
+            email: "info@servermarket.com.tr",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Maslak, Büyükdere Cad. No:123 Kat:5",
+              addressLocality: "Sarıyer",
+              addressRegion: "İstanbul",
+              addressCountry: "TR",
+            },
+            openingHoursSpecification: [
+              { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "18:00" },
+              { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "10:00", closes: "14:00" },
+            ],
+          },
+        }}
       />
       <div className="container max-w-5xl">
         <h1 className="text-3xl font-bold text-foreground mb-2">İletişim</h1>

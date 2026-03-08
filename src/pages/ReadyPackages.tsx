@@ -69,7 +69,7 @@ export default function ReadyPackages() {
           "@context": "https://schema.org",
           "@type": "OfferCatalog",
           name: "Hazır Sunucu Paketleri",
-          url: "https://servermarket.com.tr/hazir-paketler",
+          url: `${SITE_URL}/hazir-paketler`,
           description: "İş yükünüze göre optimize edilmiş hazır sunucu paketleri.",
           itemListElement: categories.map((c) => ({
             "@type": "Offer",
