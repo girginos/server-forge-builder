@@ -128,6 +128,12 @@ export default function Configurator() {
     // Show server selection
     return (
       <div className="py-12">
+        <SEO
+          title="Sunucu Yapılandırıcı"
+          description="Sunucunuzu özelleştirin. CPU, RAM, depolama, RAID, ağ kartı ve güç kaynağı seçenekleriyle ihtiyacınıza özel sunucu yapılandırın."
+          keywords="sunucu yapılandırma, server configurator, özel sunucu, sunucu özelleştirme"
+          canonical="/yapilandirici"
+        />
         <div className="container">
           <h1 className="text-3xl font-bold text-foreground mb-2">Sunucu Yapılandırıcı</h1>
           <p className="text-muted-foreground mb-8">Yapılandırmak istediğiniz sunucu modelini seçin.</p>

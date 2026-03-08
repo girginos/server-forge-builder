@@ -60,6 +60,12 @@ export default function ReadyPackages() {
 
   return (
     <div>
+      <SEO
+        title="Hazır Sunucu Paketleri"
+        description="İş yükünüze göre optimize edilmiş hazır sunucu paketleri. Web, veritabanı, sanallaştırma, AI ve depolama sunucuları."
+        keywords="hazır sunucu, sunucu paketi, web sunucu, veritabanı sunucu, sanallaştırma sunucu, AI sunucu"
+        canonical="/hazir-paketler"
+      />
       {/* Hero */}
       <section className="gradient-hero text-secondary-foreground py-16">
         <div className="container text-center">
