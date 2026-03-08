@@ -217,38 +217,81 @@ export default function Cart() {
 
         {/* Step 0 — Cart Review */}
         {step === 0 && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-foreground">Sepet Özeti</h2>
-            {items.map((item) => (
-              <div key={item.id} className="bg-card border rounded-lg p-4 space-y-3">
-                <div className="flex items-start gap-4">
-                  {item.image && <img src={item.image} alt={item.name} className="h-16 w-16 object-contain shrink-0" />}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-foreground text-sm">{item.name}</h3>
-                    {item.specs && <p className="text-[11px] text-muted-foreground mt-1.5 font-mono whitespace-pre-wrap">{item.specs}</p>}
+          <div className="space-y-5">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold text-foreground">Sepet Özeti</h2>
+              <span className="text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-full">{items.length} ürün</span>
+            </div>
+
+            <div className="space-y-3">
+              {items.map((item) => (
+                <div key={item.id} className="group relative bg-card border rounded-xl overflow-hidden transition-shadow hover:shadow-md">
+                  <div className="p-5">
+                    <div className="flex gap-5">
+                      {/* Product image */}
+                      {item.image && (
+                        <div className="shrink-0 flex items-center justify-center w-24 h-20 rounded-lg bg-muted/40 p-2">
+                          <img src={item.image} alt={item.name} className="max-h-full max-w-full object-contain" />
+                        </div>
+                      )}
+
+                      {/* Product info */}
+                      <div className="flex-1 min-w-0 space-y-2">
+                        <div className="flex items-start justify-between gap-3">
+                          <h3 className="font-bold text-foreground">{item.name}</h3>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 shrink-0 text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => removeItem(item.id)}
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </div>
+
+                        {/* Specs as tags */}
+                        {item.specs && (
+                          <div className="flex flex-wrap gap-1.5">
+                            {item.specs.split("|").map((spec, i) => (
+                              <span key={i} className="inline-flex items-center text-[10px] font-medium text-muted-foreground bg-muted/60 px-2 py-0.5 rounded-md whitespace-nowrap">
+                                {spec.trim()}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Bottom bar: quantity + price */}
+                    <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/40">
+                      <div className="flex items-center gap-0.5 bg-muted/50 rounded-lg p-0.5">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-md hover:bg-background" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                          <Minus className="h-3.5 w-3.5" />
+                        </Button>
+                        <span className="w-10 text-center text-sm font-semibold text-foreground">{item.quantity}</span>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-md hover:bg-background" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                          <Plus className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                      <div className="text-right">
+                        {item.quantity > 1 && (
+                          <p className="text-[10px] text-muted-foreground">Birim: ₺{item.price.toLocaleString("tr-TR")}</p>
+                        )}
+                        <span className="text-lg font-bold text-foreground">₺{(item.price * item.quantity).toLocaleString("tr-TR")}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-end gap-4 pt-1 border-t border-border/50">
-                  <div className="flex items-center gap-1.5">
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
-                      <Minus className="h-3 w-3" />
-                    </Button>
-                    <span className="w-7 text-center text-sm font-medium text-foreground">{item.quantity}</span>
-                    <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
-                      <Plus className="h-3 w-3" />
-                    </Button>
-                  </div>
-                  <span className="font-bold text-foreground text-sm whitespace-nowrap">₺{(item.price * item.quantity).toLocaleString("tr-TR")}</span>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => removeItem(item.id)}>
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-            <div className="flex justify-between items-center pt-2">
-              <Button variant="ghost" size="sm" onClick={clearCart} className="text-muted-foreground">Sepeti Temizle</Button>
+              ))}
+            </div>
+
+            {/* Summary bar */}
+            <div className="bg-muted/30 border rounded-xl p-4 flex items-center justify-between">
+              <Button variant="ghost" size="sm" onClick={clearCart} className="text-muted-foreground hover:text-destructive text-xs">
+                <Trash2 className="h-3.5 w-3.5 mr-1" /> Sepeti Temizle
+              </Button>
               <div className="text-right">
-                <span className="text-sm text-muted-foreground">Toplam: </span>
+                <span className="text-xs text-muted-foreground block">Toplam Tutar</span>
                 <span className="text-2xl font-bold text-foreground">₺{total.toLocaleString("tr-TR")}</span>
               </div>
             </div>
