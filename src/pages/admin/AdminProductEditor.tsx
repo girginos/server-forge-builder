@@ -98,6 +98,7 @@ export default function AdminProductEditor() {
       }
 
       const { data: urlData } = cloudSupabase.storage
+        .from("product-images")
         .getPublicUrl(filePath);
 
       newImages.push(urlData.publicUrl);
