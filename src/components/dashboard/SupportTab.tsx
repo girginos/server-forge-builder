@@ -114,10 +114,10 @@ export default function SupportTab({ userId }: { userId: string }) {
           {tickets.map((ticket) => {
             const status = statusMap[ticket.status] || { label: ticket.status, variant: "secondary" as const };
             return (
-              <Card
+                <Card
                 key={ticket.id}
                 className="hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => setChatTicket(ticket)}
+                onClick={() => openChat(ticket)}
               >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between gap-3">
