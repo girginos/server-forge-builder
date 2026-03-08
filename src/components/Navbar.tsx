@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 
 const navLinks = [
+  { label: "Anasayfa", href: "/" },
   { label: "Donanım", href: "/donanim" },
   { label: "Hazır Paketler", href: "/hazir-paketler" },
   { label: "Yapılandırıcı", href: "/yapilandirici" },
