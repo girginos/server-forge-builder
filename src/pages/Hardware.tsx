@@ -10,17 +10,21 @@ import serverDL380 from "@/assets/server-dl380.png";
 import serverSupermicro from "@/assets/server-supermicro.png";
 
 const allServers = [
-  { id: "dell-r740xd", name: "Dell PowerEdge R740xd", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 45000, oldPrice: 52000, badge: "Popüler", brand: "Dell" },
-  { id: "dell-r640", name: "Dell PowerEdge R640", image: serverR640, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 32000, brand: "Dell" },
-  { id: "hp-dl380", name: "HP ProLiant DL380 Gen10", image: serverDL380, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 38000, badge: "Yeni", brand: "HP" },
-  { id: "supermicro-2u", name: "Supermicro SuperServer 2U", image: serverSupermicro, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "4096 GB DDR4", price: 55000, oldPrice: 62000, brand: "Supermicro" },
-  { id: "dell-r740xd-12lff", name: "Dell PowerEdge R740xd 12LFF", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 48000, brand: "Dell" },
-  { id: "hp-dl360", name: "HP ProLiant DL360 Gen10", image: serverDL380, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 35000, badge: "İndirimli", oldPrice: 40000, brand: "HP" },
-  { id: "dell-r630", name: "Dell PowerEdge R630", image: serverR640, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon E5-2600 v4", maxRam: "1536 GB DDR4", price: 22000, brand: "Dell" },
-  { id: "supermicro-1u", name: "Supermicro SuperServer 1U", image: serverSupermicro, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 42000, brand: "Supermicro" },
+  { id: "dell-r740xd", name: "Dell PowerEdge R740xd", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 45000, oldPrice: 52000, badge: "Popüler", brand: "Dell", cpuBrand: "Intel" },
+  { id: "dell-r640", name: "Dell PowerEdge R640", image: serverR640, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 32000, brand: "Dell", cpuBrand: "Intel" },
+  { id: "hp-dl380", name: "HP ProLiant DL380 Gen10", image: serverDL380, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 38000, badge: "Yeni", brand: "HP", cpuBrand: "Intel" },
+  { id: "supermicro-2u", name: "Supermicro SuperServer 2U", image: serverSupermicro, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "4096 GB DDR4", price: 55000, oldPrice: 62000, brand: "Supermicro", cpuBrand: "Intel" },
+  { id: "dell-r740xd-12lff", name: "Dell PowerEdge R740xd 12LFF", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 48000, brand: "Dell", cpuBrand: "Intel" },
+  { id: "hp-dl360", name: "HP ProLiant DL360 Gen10", image: serverDL380, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 35000, badge: "İndirimli", oldPrice: 40000, brand: "HP", cpuBrand: "Intel" },
+  { id: "dell-r630", name: "Dell PowerEdge R630", image: serverR640, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon E5-2600 v4", maxRam: "1536 GB DDR4", price: 22000, brand: "Dell", cpuBrand: "Intel" },
+  { id: "supermicro-1u", name: "Supermicro SuperServer 1U", image: serverSupermicro, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 42000, brand: "Supermicro", cpuBrand: "Intel" },
+  { id: "dell-r7525", name: "Dell PowerEdge R7525", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x AMD EPYC 7003", maxRam: "4096 GB DDR4", price: 58000, badge: "Yeni", brand: "Dell", cpuBrand: "AMD" },
+  { id: "hp-dl325", name: "HP ProLiant DL325 Gen10 Plus", image: serverDL380, formFactor: "1U Rack Mount", cpu: "1x AMD EPYC 7003", maxRam: "2048 GB DDR4", price: 36000, brand: "HP", cpuBrand: "AMD" },
+  { id: "supermicro-amd-2u", name: "Supermicro H12DSU-iN 2U", image: serverSupermicro, formFactor: "2U Rack Mount", cpu: "2x AMD EPYC 7003", maxRam: "4096 GB DDR4", price: 62000, oldPrice: 70000, brand: "Supermicro", cpuBrand: "AMD" },
 ];
 
 const brands = ["Dell", "HP", "Supermicro"];
+const cpuBrands = ["Intel", "AMD"];
 const formFactors = ["1U Rack Mount", "2U Rack Mount"];
 const priceRanges = [
   { label: "Tümü", min: 0, max: Infinity },
@@ -39,6 +43,7 @@ export default function Hardware() {
   const [search, setSearch] = useState("");
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedFormFactors, setSelectedFormFactors] = useState<string[]>([]);
+  const [selectedCpuBrands, setSelectedCpuBrands] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState(0);
   const [sort, setSort] = useState("default");
   const [showFilters, setShowFilters] = useState(true);
@@ -47,12 +52,13 @@ export default function Hardware() {
     setter(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
   };
 
-  const hasActiveFilters = search || selectedBrands.length > 0 || selectedFormFactors.length > 0 || priceRange > 0;
+  const hasActiveFilters = search || selectedBrands.length > 0 || selectedFormFactors.length > 0 || selectedCpuBrands.length > 0 || priceRange > 0;
 
   const clearAll = () => {
     setSearch("");
     setSelectedBrands([]);
     setSelectedFormFactors([]);
+    setSelectedCpuBrands([]);
     setPriceRange(0);
     setSort("default");
   };
@@ -62,6 +68,7 @@ export default function Hardware() {
       if (search && !s.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (selectedBrands.length > 0 && !selectedBrands.includes(s.brand)) return false;
       if (selectedFormFactors.length > 0 && !selectedFormFactors.includes(s.formFactor)) return false;
+      if (selectedCpuBrands.length > 0 && !selectedCpuBrands.includes(s.cpuBrand)) return false;
       const range = priceRanges[priceRange];
       if (s.price < range.min || s.price > range.max) return false;
       return true;
@@ -72,7 +79,7 @@ export default function Hardware() {
     else if (sort === "name-asc") result.sort((a, b) => a.name.localeCompare(b.name));
 
     return result;
-  }, [search, selectedBrands, selectedFormFactors, priceRange, sort]);
+  }, [search, selectedBrands, selectedFormFactors, selectedCpuBrands, priceRange, sort]);
 
   return (
     <div className="py-10">
@@ -150,6 +157,27 @@ export default function Hardware() {
               </div>
             </div>
 
+            {/* CPU Brand */}
+            <div className="bg-card border rounded-lg p-4">
+              <h3 className="font-semibold text-foreground text-sm mb-3">İşlemci</h3>
+              <div className="space-y-2">
+                {cpuBrands.map((cpuBrand) => (
+                  <label key={cpuBrand} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedCpuBrands.includes(cpuBrand)}
+                      onChange={() => toggleFilter(selectedCpuBrands, cpuBrand, setSelectedCpuBrands)}
+                      className="accent-primary rounded"
+                    />
+                    <span className="text-sm text-foreground">{cpuBrand}</span>
+                    <span className="text-xs text-muted-foreground ml-auto">
+                      ({allServers.filter((s) => s.cpuBrand === cpuBrand).length})
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
             {/* Form Factor */}
             <div className="bg-card border rounded-lg p-4">
               <h3 className="font-semibold text-foreground text-sm mb-3">Form Faktörü</h3>
@@ -206,6 +234,12 @@ export default function Hardware() {
                   <span key={b} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
                     {b}
                     <button onClick={() => toggleFilter(selectedBrands, b, setSelectedBrands)}><X className="h-3 w-3" /></button>
+                  </span>
+                ))}
+                {selectedCpuBrands.map((cb) => (
+                  <span key={cb} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
+                    {cb}
+                    <button onClick={() => toggleFilter(selectedCpuBrands, cb, setSelectedCpuBrands)}><X className="h-3 w-3" /></button>
                   </span>
                 ))}
                 {selectedFormFactors.map((ff) => (
