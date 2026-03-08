@@ -121,8 +121,9 @@ const replaceMetaTag = (html: string, regex: RegExp, replacement: string) => {
 };
 
 const buildRouteHtml = (html: string, meta: RouteMeta) => {
+  const baseUrl = getBaseUrl();
   const fullUrl = `${baseUrl}${meta.canonical}`;
-  const ogImage = meta.ogImage || defaultOgImage;
+  const ogImage = meta.ogImage || `${baseUrl}/og-image.jpg`;
 
   let routeHtml = html;
 
