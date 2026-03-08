@@ -262,15 +262,31 @@ export default function AdminProductEditor() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label>Özellikler (JSON)</Label>
-                <Textarea
-                  value={form.specs}
-                  onChange={(e) => setForm({ ...form, specs: e.target.value })}
-                  placeholder='{"cpu": "Intel Xeon", "ram": "64GB", "storage": "1TB SSD"}'
-                  rows={6}
-                  className="font-mono text-sm"
-                />
+              <div className="grid gap-4 sm:grid-cols-2">
+                {(Object.keys(specLabels) as Array<keyof SpecFields>).map((key) => (
+                  <div key={key} className="space-y-2">
+                    <Label>{specLabels[key]}</Label>
+                    <Input
+                      value={form.specs[key]}
+                      onChange={(e) =>
+                        setForm({
+                          ...form,
+                          specs: { ...form.specs, [key]: e.target.value },
+                        })
+                      }
+                      placeholder={
+                        key === "cpu" ? "2x Intel Xeon E5-2680 v4" :
+                        key === "ram" ? "64GB DDR4 ECC" :
+                        key === "storage" ? "2x 1TB SSD NVMe" :
+                        key === "network" ? "4x 1GbE + 2x 10GbE" :
+                        key === "form_factor" ? "2U Rack" :
+                        key === "warranty" ? "3 Yıl" :
+                        key === "power" ? "2x 750W Redundant" :
+                        "Yok"
+                      }
+                    />
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
