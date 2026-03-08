@@ -25,7 +25,7 @@ export default function Auth() {
 
   return (
     <>
-      <SEO title="Giriş Yap | ServerMarket" description="ServerMarket müşteri paneline giriş yapın veya yeni hesap oluşturun." />
+      <SEO title="Müşteri Paneli | ServerMarket" description="ServerMarket müşteri paneline giriş yapın veya yeni hesap oluşturun." />
       <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
         <Card className="w-full max-w-md shadow-card">
           <CardHeader className="text-center space-y-2">
@@ -33,9 +33,9 @@ export default function Auth() {
               <Server className="h-10 w-10 text-primary" />
             </div>
             <CardTitle className="text-2xl">
-              Server<span className="text-gradient">Market</span>
+              Müşteri Paneli
             </CardTitle>
-            <CardDescription>Müşteri paneline hoş geldiniz</CardDescription>
+            <CardDescription>Hesabınıza giriş yapın veya yeni hesap oluşturun</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login">
