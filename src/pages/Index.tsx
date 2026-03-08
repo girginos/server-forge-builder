@@ -75,6 +75,24 @@ export default function Index() {
         description="Türkiye'nin güvenilir sunucu donanım tedarikçisi. Dell, HP, Supermicro sunucu satışı, yapılandırma, colocation ve cloud hizmetleri."
         keywords="sunucu satış, server donanım, dell poweredge, hp proliant, supermicro, sunucu yapılandırma, colocation"
         canonical="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "ServerMarket",
+          url: "https://servermarket.com.tr",
+          description: "Türkiye'nin güvenilir sunucu donanım tedarikçisi.",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://servermarket.com.tr/hardware?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "ServerMarket",
+            url: "https://servermarket.com.tr",
+            contactPoint: { "@type": "ContactPoint", telephone: "+90-212-555-0000", contactType: "sales", areaServed: "TR", availableLanguage: "Turkish" },
+          },
+        }}
       />
       {/* ── Hero Slider ── */}
       <HeroSlider />

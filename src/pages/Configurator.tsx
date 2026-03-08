@@ -133,6 +133,16 @@ export default function Configurator() {
           description="Sunucunuzu özelleştirin. CPU, RAM, depolama, RAID, ağ kartı ve güç kaynağı seçenekleriyle ihtiyacınıza özel sunucu yapılandırın."
           keywords="sunucu yapılandırma, server configurator, özel sunucu, sunucu özelleştirme"
           canonical="/yapilandirici"
+          jsonLd={{
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "ServerMarket Sunucu Yapılandırıcı",
+            url: "https://servermarket.com.tr/yapilandirici",
+            description: "CPU, RAM, depolama ve daha fazlasını seçerek ihtiyacınıza özel sunucu yapılandırın.",
+            applicationCategory: "BusinessApplication",
+            operatingSystem: "Web",
+            provider: { "@type": "Organization", name: "ServerMarket" },
+          }}
         />
         <div className="container">
           <h1 className="text-3xl font-bold text-foreground mb-2">Sunucu Yapılandırıcı</h1>

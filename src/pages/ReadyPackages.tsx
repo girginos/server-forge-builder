@@ -65,6 +65,18 @@ export default function ReadyPackages() {
         description="İş yükünüze göre optimize edilmiş hazır sunucu paketleri. Web, veritabanı, sanallaştırma, AI ve depolama sunucuları."
         keywords="hazır sunucu, sunucu paketi, web sunucu, veritabanı sunucu, sanallaştırma sunucu, AI sunucu"
         canonical="/hazir-paketler"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "OfferCatalog",
+          name: "Hazır Sunucu Paketleri",
+          url: "https://servermarket.com.tr/hazir-paketler",
+          description: "İş yükünüze göre optimize edilmiş hazır sunucu paketleri.",
+          itemListElement: categories.map((c) => ({
+            "@type": "Offer",
+            name: c.label,
+            description: c.desc,
+          })),
+        }}
       />
       {/* Hero */}
       <section className="gradient-hero text-secondary-foreground py-16">

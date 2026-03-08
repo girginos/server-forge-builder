@@ -88,6 +88,30 @@ export default function Hardware() {
         description="Dell, HP, Supermicro sunucu donanımları. Marka, fiyat ve form faktörüne göre filtreleyin, ihtiyacınıza uygun sunucuyu bulun."
         keywords="sunucu donanım, dell poweredge, hp proliant, supermicro, rack sunucu, 1u sunucu, 2u sunucu"
         canonical="/hardware"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Sunucu Donanımları",
+          url: "https://servermarket.com.tr/hardware",
+          numberOfItems: filteredServers.length,
+          itemListElement: filteredServers.slice(0, 10).map((s, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: {
+              "@type": "Product",
+              name: s.name,
+              description: `${s.formFactor} - ${s.cpu} - ${s.maxRam}`,
+              brand: { "@type": "Brand", name: s.brand },
+              offers: {
+                "@type": "Offer",
+                price: s.price.toString(),
+                priceCurrency: "TRY",
+                availability: "https://schema.org/InStock",
+                seller: { "@type": "Organization", name: "ServerMarket" },
+              },
+            },
+          })),
+        }}
       />
       <div className="container">
         {/* Header */}

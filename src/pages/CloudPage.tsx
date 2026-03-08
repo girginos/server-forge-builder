@@ -70,6 +70,36 @@ export default function CloudPage() {
         description="Ölçeklenebilir cloud sunucu, depolama ve CDN hizmetleri. Esnek, güvenli ve yüksek performanslı bulut altyapısı."
         keywords="cloud sunucu, bulut hizmetleri, vps, sanal sunucu, cloud depolama, CDN, kubernetes"
         canonical="/cloud"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: "ServerMarket Cloud Çözümleri",
+            provider: { "@type": "Organization", name: "ServerMarket", url: "https://servermarket.com.tr" },
+            description: "Ölçeklenebilir cloud sunucu, depolama ve CDN hizmetleri.",
+            url: "https://servermarket.com.tr/cloud",
+            areaServed: "TR",
+            serviceType: "Cloud Hosting",
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: "Cloud Planları",
+              itemListElement: [
+                { "@type": "Offer", name: "Starter", price: "1.499", priceCurrency: "TRY", description: "4 vCPU, 8GB RAM, 200GB NVMe" },
+                { "@type": "Offer", name: "Business", price: "3.999", priceCurrency: "TRY", description: "8 vCPU, 32GB RAM, 500GB NVMe" },
+                { "@type": "Offer", name: "Enterprise", price: "9.999", priceCurrency: "TRY", description: "32 vCPU, 128GB RAM, 2TB NVMe" },
+              ],
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          },
+        ]}
       />
 
       {/* Hero */}
