@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { HeadphonesIcon, Plus, MessageSquare, Clock } from "lucide-react";
 import TicketChat from "@/components/TicketChat";
+import { useUnreadCounts } from "@/hooks/useUnreadCounts";
 
 interface Ticket {
   id: string;

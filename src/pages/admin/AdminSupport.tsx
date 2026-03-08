@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { MessageSquare } from "lucide-react";
 import TicketChat from "@/components/TicketChat";
+import { useUnreadCounts } from "@/hooks/useUnreadCounts";
 
 interface Ticket {
   id: string;
