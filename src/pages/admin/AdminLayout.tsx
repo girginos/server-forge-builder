@@ -139,6 +139,7 @@ function AdminHeader() {
       "/admin": "Genel Bakış",
       "/admin/urunler": "Ürün Yönetimi",
       "/admin/siparisler": "Sipariş Yönetimi",
+      "/admin/teklifler": "Teklif Talepleri",
       "/admin/kullanicilar": "Kullanıcı Yönetimi",
       "/admin/destek": "Destek Talepleri",
       "/admin/db": "Veritabanı Araçları",
