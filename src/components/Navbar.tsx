@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ShoppingCart, Search, Phone, Mail, Server, User } from "lucide-react";
+import { Menu, X, ShoppingCart, Search, Phone, Mail, Server, User, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/hooks/useAuth";
 
 const navLinks = [
   { label: "Anasayfa", href: "/" },
@@ -20,6 +21,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const { items } = useCart();
+  const { user } = useAuth();
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
@@ -61,13 +63,13 @@ export default function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Link to="/giris">
+            <Link to={user ? "/panel" : "/giris"}>
               <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-1.5 text-sm">
-                <User className="h-4 w-4" />
-                Giriş Yap
+                {user ? <LayoutDashboard className="h-4 w-4" /> : <User className="h-4 w-4" />}
+                {user ? "Panel" : "Giriş Yap"}
               </Button>
               <Button variant="ghost" size="icon" className="sm:hidden">
-                <User className="h-5 w-5" />
+                {user ? <LayoutDashboard className="h-5 w-5" /> : <User className="h-5 w-5" />}
               </Button>
             </Link>
             <Button variant="ghost" size="icon" className="hidden sm:flex">
