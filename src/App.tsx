@@ -61,6 +61,13 @@ const App = () => (
                     <Route path="/giris" element={<Auth />} />
                     <Route path="/panel" element={<Dashboard />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/admin" element={<AdminLayout />}>
+                      <Route index element={<AdminDashboard />} />
+                      <Route path="urunler" element={<AdminProducts />} />
+                      <Route path="siparisler" element={<AdminOrders />} />
+                      <Route path="kullanicilar" element={<AdminUsers />} />
+                      <Route path="destek" element={<AdminSupport />} />
+                    </Route>
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
