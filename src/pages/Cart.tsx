@@ -264,12 +264,12 @@ export default function Cart() {
 
                     {/* Bottom bar: quantity + price */}
                     <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/40">
-                      <div className="flex items-center gap-0.5 bg-muted/50 rounded-lg p-0.5">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-md hover:bg-background" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                      <div className="flex items-center gap-0 border rounded-lg overflow-hidden">
+                        <Button variant="outline" size="icon" className="h-9 w-9 rounded-none border-0 border-r text-foreground hover:bg-muted" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
                           <Minus className="h-3.5 w-3.5" />
                         </Button>
-                        <span className="w-10 text-center text-sm font-semibold text-foreground">{item.quantity}</span>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-md hover:bg-background" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                        <span className="w-10 text-center text-sm font-semibold text-foreground bg-background">{item.quantity}</span>
+                        <Button variant="outline" size="icon" className="h-9 w-9 rounded-none border-0 border-l text-foreground hover:bg-muted" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
                           <Plus className="h-3.5 w-3.5" />
                         </Button>
                       </div>
