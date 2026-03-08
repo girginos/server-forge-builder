@@ -79,7 +79,7 @@ export default function Hardware() {
     else if (sort === "name-asc") result.sort((a, b) => a.name.localeCompare(b.name));
 
     return result;
-  }, [search, selectedBrands, selectedFormFactors, priceRange, sort]);
+  }, [search, selectedBrands, selectedFormFactors, selectedCpuBrands, priceRange, sort]);
 
   return (
     <div className="py-10">
