@@ -201,23 +201,34 @@ export default function Colocation() {
       </section>
 
       {/* Process Steps */}
-      <section className="py-20 bg-card">
+      <section className="py-24 bg-card">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground">Nasıl Çalışır?</h2>
-            <p className="text-muted-foreground mt-2">4 adımda colocation hizmetiniz hazır.</p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">Nasıl Çalışır?</h2>
+            <p className="text-primary mt-3 text-base font-medium">4 adımda colocation hizmetiniz hazır.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {steps.map((step, i) => (
-              <div key={step.num} className="relative text-center">
-                <div className="text-5xl font-bold text-primary/15 mb-2">{step.num}</div>
-                <h3 className="font-semibold text-foreground text-lg -mt-4">{step.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2">{step.desc}</p>
-                {i < steps.length - 1 && (
-                  <ArrowRight className="hidden lg:block absolute top-8 -right-3 h-5 w-5 text-primary/30" />
-                )}
-              </div>
-            ))}
+          <div className="max-w-6xl mx-auto relative">
+            {/* Connection line – desktop only */}
+            <div className="hidden lg:block absolute top-14 left-[12%] right-[12%] h-px bg-border" />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6">
+              {steps.map((step, i) => (
+                <div key={step.num} className="relative flex flex-col items-center text-center group">
+                  {/* Number circle */}
+                  <div className="relative z-10 h-28 w-28 rounded-full bg-background border-2 border-border flex items-center justify-center mb-6 group-hover:border-primary/50 group-hover:shadow-glow transition-all duration-500">
+                    <span className="text-5xl font-black bg-gradient-to-b from-primary to-primary/40 bg-clip-text text-transparent">
+                      {step.num}
+                    </span>
+                  </div>
+                  {/* Arrow between circles – desktop only */}
+                  {i < steps.length - 1 && (
+                    <ArrowRight className="hidden lg:block absolute top-12 -right-4 h-5 w-5 text-primary/40 z-20" />
+                  )}
+                  <h3 className="font-bold text-foreground text-lg mb-2">{step.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-[220px]">{step.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
