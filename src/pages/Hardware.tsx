@@ -46,7 +46,7 @@ export default function Hardware() {
   const [selectedCpuBrands, setSelectedCpuBrands] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState(0);
   const [sort, setSort] = useState("default");
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   const toggleFilter = (arr: string[], val: string, setter: (v: string[]) => void) => {
     setter(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
