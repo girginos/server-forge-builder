@@ -82,7 +82,13 @@ export default function Navbar() {
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) =>
               link.children ? (
-                <div key={link.label} className="relative" ref={dropdownRef}>
+                <div
+                  key={link.label}
+                  className="relative"
+                  ref={dropdownRef}
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
+                >
                   <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     className={`flex items-center gap-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -92,24 +98,34 @@ export default function Navbar() {
                     }`}
                   >
                     {link.label}
-                    <ChevronDown className={`h-3.5 w-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
                   </button>
                   {dropdownOpen && (
-                    <div className="absolute top-full left-0 mt-1 w-44 rounded-lg border bg-card shadow-lg py-1 animate-fade-in z-50">
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          to={child.href}
-                          onClick={() => setDropdownOpen(false)}
-                          className={`block px-4 py-2 text-sm transition-colors ${
-                            location.pathname === child.href
-                              ? "text-primary bg-primary/5"
-                              : "text-foreground hover:text-primary hover:bg-primary/5"
-                          }`}
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
+                      <div className="w-72 rounded-xl border bg-card shadow-xl p-2 animate-fade-in">
+                        {link.children!.map((child) => (
+                          <Link
+                            key={child.href}
+                            to={child.href}
+                            onClick={() => setDropdownOpen(false)}
+                            className={`flex items-start gap-3 rounded-lg px-3 py-3 transition-colors ${
+                              location.pathname === child.href
+                                ? "text-primary bg-primary/5"
+                                : "text-foreground hover:bg-accent"
+                            }`}
+                          >
+                            <span className={`mt-0.5 shrink-0 flex h-9 w-9 items-center justify-center rounded-lg ${
+                              location.pathname === child.href ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
+                            }`}>
+                              {child.icon}
+                            </span>
+                            <div>
+                              <p className="text-sm font-medium leading-none mb-1">{child.label}</p>
+                              <p className="text-xs text-muted-foreground leading-snug">{child.description}</p>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
