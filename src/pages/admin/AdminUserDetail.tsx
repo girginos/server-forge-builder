@@ -355,7 +355,7 @@ function UserTicketsSection({ userId }: { userId: string }) {
         {tickets.map((t) => {
           const status = statusMap[t.status] || { label: t.status, variant: "secondary" as const };
           return (
-            <Card key={t.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setChatTicket(t)}>
+            <Card key={t.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => openChat(t)}>
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3">
