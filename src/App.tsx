@@ -13,6 +13,7 @@ import Colocation from "./pages/Colocation";
 import CloudPage from "./pages/CloudPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import ReadyPackages from "./pages/ReadyPackages";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 
