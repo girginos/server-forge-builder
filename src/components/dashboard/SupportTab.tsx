@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { HeadphonesIcon, Plus, MessageSquare, Clock } from "lucide-react";
 import TicketChat from "@/components/TicketChat";
+import { useUnreadCounts } from "@/hooks/useUnreadCounts";
 
 interface Ticket {
   id: string;
@@ -35,6 +36,13 @@ export default function SupportTab({ userId }: { userId: string }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [chatTicket, setChatTicket] = useState<Ticket | null>(null);
   const { toast } = useToast();
+  const ticketIds = tickets.map((t) => t.id);
+  const { counts: unreadCounts, markAsRead } = useUnreadCounts(ticketIds, userId);
+
+  const openChat = (ticket: Ticket) => {
+    setChatTicket(ticket);
+    markAsRead(ticket.id);
+  };
 
   const loadTickets = () => {
     supabase.from("support_tickets").select("*").eq("user_id", userId).order("created_at", { ascending: false }).then(({ data }) => {
@@ -106,10 +114,10 @@ export default function SupportTab({ userId }: { userId: string }) {
           {tickets.map((ticket) => {
             const status = statusMap[ticket.status] || { label: ticket.status, variant: "secondary" as const };
             return (
-              <Card
+                <Card
                 key={ticket.id}
                 className="hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => setChatTicket(ticket)}
+                onClick={() => openChat(ticket)}
               >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between gap-3">
@@ -128,7 +136,14 @@ export default function SupportTab({ userId }: { userId: string }) {
                         </div>
                       </div>
                     </div>
-                    <Badge variant={status.variant}>{status.label}</Badge>
+                    <div className="flex items-center gap-2">
+                      <Badge variant={status.variant}>{status.label}</Badge>
+                      {(unreadCounts[ticket.id] || 0) > 0 && (
+                        <span className="h-5 min-w-5 px-1.5 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold flex items-center justify-center">
+                          {unreadCounts[ticket.id]}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>

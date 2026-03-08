@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import TicketChat from "@/components/TicketChat";
+import { useUnreadCounts } from "@/hooks/useUnreadCounts";
 import {
   ArrowLeft, User, Package, HeadphonesIcon, FileText, Activity,
   Shield, Save, ShoppingCart, MessageSquare, Clock, Loader2,
@@ -315,6 +316,13 @@ function UserTicketsSection({ userId }: { userId: string }) {
   const [loading, setLoading] = useState(true);
   const [chatTicket, setChatTicket] = useState<Ticket | null>(null);
   const { user } = useAuth();
+  const ticketIds = tickets.map((t) => t.id);
+  const { counts: unreadCounts, markAsRead } = useUnreadCounts(ticketIds, user?.id);
+
+  const openChat = (t: Ticket) => {
+    setChatTicket(t);
+    markAsRead(t.id);
+  };
 
   useEffect(() => {
     supabase.from("support_tickets").select("*").eq("user_id", userId).order("created_at", { ascending: false }).then(({ data }) => {
@@ -347,7 +355,7 @@ function UserTicketsSection({ userId }: { userId: string }) {
         {tickets.map((t) => {
           const status = statusMap[t.status] || { label: t.status, variant: "secondary" as const };
           return (
-            <Card key={t.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setChatTicket(t)}>
+            <Card key={t.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => openChat(t)}>
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3">
@@ -363,7 +371,14 @@ function UserTicketsSection({ userId }: { userId: string }) {
                       </div>
                     </div>
                   </div>
-                  <Badge variant={status.variant}>{status.label}</Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge variant={status.variant}>{status.label}</Badge>
+                    {(unreadCounts[t.id] || 0) > 0 && (
+                      <span className="h-5 min-w-5 px-1.5 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold flex items-center justify-center">
+                        {unreadCounts[t.id]}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>

@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { MessageSquare } from "lucide-react";
 import TicketChat from "@/components/TicketChat";
+import { useUnreadCounts } from "@/hooks/useUnreadCounts";
 
 interface Ticket {
   id: string;
@@ -38,6 +39,8 @@ export default function AdminSupport() {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
+  const ticketIds = tickets.map((t) => t.id);
+  const { counts: unreadCounts, markAsRead } = useUnreadCounts(ticketIds, user?.id);
 
   useEffect(() => {
     supabase.from("support_tickets").select("*").order("created_at", { ascending: false }).then(({ data }) => {
@@ -45,6 +48,11 @@ export default function AdminSupport() {
       setIsLoading(false);
     });
   }, []);
+
+  const openChat = (t: Ticket) => {
+    setSelectedTicket(t);
+    markAsRead(t.id);
+  };
 
   const updateStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("support_tickets").update({ status, updated_at: new Date().toISOString() } as any).eq("id", id);
@@ -90,8 +98,13 @@ export default function AdminSupport() {
                         </Select>
                       </TableCell>
                       <TableCell>
-                        <Button variant="ghost" size="icon" onClick={() => setSelectedTicket(t)}>
+                        <Button variant="ghost" size="icon" className="relative" onClick={() => openChat(t)}>
                           <MessageSquare className="h-4 w-4" />
+                          {(unreadCounts[t.id] || 0) > 0 && (
+                            <span className="absolute -top-1 -right-1 h-4 min-w-4 px-1 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold flex items-center justify-center">
+                              {unreadCounts[t.id]}
+                            </span>
+                          )}
                         </Button>
                       </TableCell>
                     </TableRow>
