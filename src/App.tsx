@@ -13,6 +13,7 @@ import Colocation from "./pages/Colocation";
 import CloudPage from "./pages/CloudPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import ReadyPackages from "./pages/ReadyPackages";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/donanim" element={<Hardware />} />
+                <Route path="/hazir-paketler" element={<ReadyPackages />} />
                 <Route path="/yapilandirici" element={<Configurator />} />
                 <Route path="/yapilandirici/:serverId" element={<Configurator />} />
                 <Route path="/colocation" element={<Colocation />} />
