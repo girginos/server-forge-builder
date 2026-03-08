@@ -52,7 +52,7 @@ export default function Hardware() {
     setter(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
   };
 
-  const hasActiveFilters = search || selectedBrands.length > 0 || selectedFormFactors.length > 0 || priceRange > 0;
+  const hasActiveFilters = search || selectedBrands.length > 0 || selectedFormFactors.length > 0 || selectedCpuBrands.length > 0 || priceRange > 0;
 
   const clearAll = () => {
     setSearch("");
