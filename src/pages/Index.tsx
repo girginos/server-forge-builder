@@ -213,7 +213,7 @@ export default function Index() {
           </div>
           <div className="text-center mt-6 sm:hidden">
             <Button variant="outline" asChild>
-              <Link to="/donanim">Tüm Sunucuları Gör <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/hardware">Tüm Sunucuları Gör <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
         </div>

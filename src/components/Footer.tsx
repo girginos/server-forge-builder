@@ -19,7 +19,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-teal">Ürünler</h4>
             <ul className="space-y-2 text-sm text-secondary-foreground/70">
-              <li><Link to="/donanim" className="hover:text-teal transition-colors">Sunucu Donanımları</Link></li>
+              <li><Link to="/hardware" className="hover:text-teal transition-colors">Sunucu Donanımları</Link></li>
               <li><Link to="/yapilandirici" className="hover:text-teal transition-colors">Sunucu Yapılandırıcı</Link></li>
               <li><Link to="/cloud" className="hover:text-teal transition-colors">Cloud Çözümleri</Link></li>
               <li><Link to="/colocation" className="hover:text-teal transition-colors">Colocation</Link></li>
