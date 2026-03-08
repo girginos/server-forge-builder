@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Settings, Bot, ArrowRight, Sparkles } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import SEO from "@/components/SEO";
 import serverR740 from "@/assets/server-r740.png";
@@ -109,6 +109,7 @@ export default function Configurator() {
 
   const defaultSelections = Object.fromEntries(configSections.map((s) => [s.id, s.options[0].value]));
   const [selections, setSelections] = useState<Record<string, string>>(defaultSelections);
+  const [showManualSelection, setShowManualSelection] = useState(false);
 
   const totalPrice = useMemo(() => {
     const base = server?.basePrice ?? 25000;
@@ -125,7 +126,6 @@ export default function Configurator() {
   });
 
   if (!serverId) {
-    // Show server selection
     return (
       <div className="py-12">
         <SEO
@@ -146,20 +146,76 @@ export default function Configurator() {
         />
         <div className="container">
           <h1 className="text-3xl font-bold text-foreground mb-2">Sunucu Yapılandırıcı</h1>
-          <p className="text-muted-foreground mb-8">Yapılandırmak istediğiniz sunucu modelini seçin.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {Object.entries(serverData).map(([id, s]) => (
-              <button
-                key={id}
-                onClick={() => navigate(`/yapilandirici/${id}`)}
-                className="bg-card border rounded-lg p-6 text-left hover:shadow-glow hover:border-primary/30 transition-all group"
-              >
-                <img src={s.image} alt={s.name} className="h-32 mx-auto mb-4 object-contain group-hover:scale-105 transition-transform" />
-                <h3 className="font-semibold text-foreground">{s.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">₺{s.basePrice.toLocaleString("tr-TR")}'den başlayan</p>
-              </button>
-            ))}
+          <p className="text-muted-foreground mb-10">Sunucu yapılandırma yönteminizi seçin.</p>
+
+          {/* 2-card selection grid */}
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            {/* Card 1: Manuel */}
+            <button
+              onClick={() => setShowManualSelection(true)}
+              className="bg-card border-2 border-border rounded-2xl p-8 text-left hover:border-primary/50 hover:shadow-glow transition-all group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500" />
+              <div className="relative">
+                <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
+                  <Settings className="h-7 w-7 text-primary" />
+                </div>
+                <h2 className="text-xl font-bold text-foreground mb-2">Kendim Yapılandıracağım</h2>
+                <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
+                  CPU, RAM, depolama ve diğer bileşenleri kendiniz seçerek sunucunuzu tamamen özelleştirin. Teknik bilginiz varsa bu seçenek tam size göre.
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:gap-2.5 transition-all">
+                  Sunucu Seç <ArrowRight className="h-4 w-4" />
+                </span>
+              </div>
+            </button>
+
+            {/* Card 2: AI */}
+            <button
+              onClick={() => navigate("/yapilandirici/ai")}
+              className="bg-card border-2 border-border rounded-2xl p-8 text-left hover:border-accent/50 hover:shadow-glow transition-all group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500" />
+              <div className="absolute top-4 right-4">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-accent/10 text-accent px-2 py-1 rounded-full">
+                  <Sparkles className="h-3 w-3" /> Yeni
+                </span>
+              </div>
+              <div className="relative">
+                <div className="h-14 w-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors">
+                  <Bot className="h-7 w-7 text-accent" />
+                </div>
+                <h2 className="text-xl font-bold text-foreground mb-2">AI ile Yapılandır</h2>
+                <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
+                  Sunucu konusunda bilginiz yok mu? Kullanım amacınızı anlatın, yapay zeka danışmanımız size en uygun yapılandırmayı önersin.
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent group-hover:gap-2.5 transition-all">
+                  AI Danışmana Sor <ArrowRight className="h-4 w-4" />
+                </span>
+              </div>
+            </button>
           </div>
+
+          {/* Manual server selection (shown when card 1 is clicked) */}
+          {showManualSelection && (
+            <div className="animate-fade-in">
+              <h2 className="text-xl font-semibold text-foreground mb-2">Yapılandırmak istediğiniz sunucu modelini seçin</h2>
+              <p className="text-muted-foreground text-sm mb-6">Bir sunucu modeli seçtikten sonra bileşenleri özelleştirebilirsiniz.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {Object.entries(serverData).map(([id, s]) => (
+                  <button
+                    key={id}
+                    onClick={() => navigate(`/yapilandirici/${id}`)}
+                    className="bg-card border rounded-xl p-6 text-left hover:shadow-glow hover:border-primary/30 transition-all group"
+                  >
+                    <img src={s.image} alt={s.name} className="h-32 mx-auto mb-4 object-contain group-hover:scale-105 transition-transform" />
+                    <h3 className="font-semibold text-foreground">{s.name}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">₺{s.basePrice.toLocaleString("tr-TR")}'den başlayan</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
