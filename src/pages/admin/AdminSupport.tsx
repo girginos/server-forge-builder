@@ -98,8 +98,13 @@ export default function AdminSupport() {
                         </Select>
                       </TableCell>
                       <TableCell>
-                        <Button variant="ghost" size="icon" onClick={() => setSelectedTicket(t)}>
+                        <Button variant="ghost" size="icon" className="relative" onClick={() => openChat(t)}>
                           <MessageSquare className="h-4 w-4" />
+                          {(unreadCounts[t.id] || 0) > 0 && (
+                            <span className="absolute -top-1 -right-1 h-4 min-w-4 px-1 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold flex items-center justify-center">
+                              {unreadCounts[t.id]}
+                            </span>
+                          )}
                         </Button>
                       </TableCell>
                     </TableRow>
