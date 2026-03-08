@@ -108,19 +108,17 @@ export default function Navbar() {
                             key={child.href}
                             to={child.href}
                             onClick={() => setDropdownOpen(false)}
-                            className={`flex items-start gap-3 rounded-lg px-3 py-3 transition-colors ${
+                            className={`flex items-start gap-3 rounded-lg px-3 py-3 transition-colors group ${
                               location.pathname === child.href
-                                ? "text-primary bg-primary/5"
-                                : "text-foreground hover:bg-accent"
+                                ? "bg-accent"
+                                : "hover:bg-accent"
                             }`}
                           >
-                            <span className={`mt-0.5 shrink-0 flex h-9 w-9 items-center justify-center rounded-lg ${
-                              location.pathname === child.href ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
-                            }`}>
+                            <span className="mt-0.5 shrink-0 flex h-9 w-9 items-center justify-center rounded-lg bg-muted text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors">
                               {child.icon}
                             </span>
                             <div>
-                              <p className="text-sm font-medium leading-none mb-1">{child.label}</p>
+                              <p className="text-sm font-medium leading-none mb-1 text-foreground">{child.label}</p>
                               <p className="text-xs text-muted-foreground leading-snug">{child.description}</p>
                             </div>
                           </Link>
