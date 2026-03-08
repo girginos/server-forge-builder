@@ -72,7 +72,7 @@ export default function ExpertConfigurator() {
   if (isSubmitted) {
     return (
       <div className="py-20 min-h-[70vh]">
-        <SEO title="Talep Gönderildi" canonical="/yapilandirici/uzman" />
+        <SEO title="Talep Gönderildi" description="Uzman yapılandırma talebiniz alındı." canonical="/yapilandirici/uzman" />
         <div className="container max-w-lg text-center">
           <div className="h-16 w-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="h-8 w-8 text-green-500" />
