@@ -132,9 +132,11 @@ export default function Hardware() {
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar filters */}
-          <aside className={`w-60 shrink-0 space-y-6 ${showFilters ? "block" : "hidden"} lg:block`}>
+          {showFilters && (
+          <aside className="w-full lg:w-60 shrink-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
             {/* Brand */}
             <div className="bg-card border rounded-lg p-4">
               <h3 className="font-semibold text-foreground text-sm mb-3">Marka</h3>
