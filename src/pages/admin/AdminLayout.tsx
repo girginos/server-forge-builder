@@ -187,7 +187,7 @@ export default function AdminLayout() {
     <>
       <SEO title="Admin Panel | ServerMarket" description="ServerMarket admin yönetim paneli." />
       <SidebarProvider>
-        <div className="min-h-screen flex w-full bg-[hsl(220,30%,8%)]">
+        <div className="admin-theme min-h-screen flex w-full bg-background">
           <AdminSidebar />
           <div className="flex-1 flex flex-col min-w-0">
             <AdminHeader />
