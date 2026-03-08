@@ -58,7 +58,7 @@ function AdminSidebar() {
     <Sidebar collapsible="icon" className="border-r-0">
       <SidebarHeader className="p-4">
         <Link to="/admin" className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[hsl(210,100%,40%)] to-[hsl(192,85%,45%)]">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg gradient-primary">
             <Server className="h-5 w-5 text-white" />
           </div>
           {!collapsed && (
