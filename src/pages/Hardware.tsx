@@ -46,7 +46,7 @@ export default function Hardware() {
   const [selectedCpuBrands, setSelectedCpuBrands] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState(0);
   const [sort, setSort] = useState("default");
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   const toggleFilter = (arr: string[], val: string, setter: (v: string[]) => void) => {
     setter(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
@@ -117,7 +117,6 @@ export default function Hardware() {
               variant={showFilters ? "default" : "outline"}
               size="default"
               onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden"
             >
               <SlidersHorizontal className="h-4 w-4" /> Filtreler
             </Button>
@@ -133,9 +132,11 @@ export default function Hardware() {
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar filters */}
-          <aside className={`w-60 shrink-0 space-y-6 ${showFilters ? "block" : "hidden"} lg:block`}>
+          {showFilters && (
+          <aside className="w-full lg:w-60 shrink-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
             {/* Brand */}
             <div className="bg-card border rounded-lg p-4">
               <h3 className="font-semibold text-foreground text-sm mb-3">Marka</h3>
@@ -219,11 +220,15 @@ export default function Hardware() {
             </div>
 
             {hasActiveFilters && (
-              <Button variant="outline" size="sm" className="w-full" onClick={clearAll}>
-                <X className="h-3 w-3" /> Filtreleri Temizle
-              </Button>
+              <div className="sm:col-span-2 lg:col-span-1">
+                <Button variant="outline" size="sm" className="w-full" onClick={clearAll}>
+                  <X className="h-3 w-3" /> Filtreleri Temizle
+                </Button>
+              </div>
             )}
+            </div>
           </aside>
+          )}
 
           {/* Products */}
           <div className="flex-1">
