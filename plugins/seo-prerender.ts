@@ -9,7 +9,7 @@ interface RouteMeta {
 }
 
 const getBaseUrl = () =>
-  process.env.VITE_SITE_URL || "https://server-forge-builder.lovable.app";
+  process.env.VITE_SITE_URL || "https://server.girginos.net";
 
 const staticRoutesMeta: Record<string, RouteMeta> = {
   "/": {
