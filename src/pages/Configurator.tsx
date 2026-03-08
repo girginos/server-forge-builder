@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Settings, Bot, ArrowRight, Sparkles } from "lucide-react";
+import { ShoppingCart, Settings, Users, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import SEO from "@/components/SEO";
 import serverR740 from "@/assets/server-r740.png";
@@ -170,27 +170,22 @@ export default function Configurator() {
               </div>
             </button>
 
-            {/* Card 2: AI */}
+            {/* Card 2: Uzman Desteği */}
             <button
-              onClick={() => navigate("/yapilandirici/ai")}
+              onClick={() => navigate("/yapilandirici/uzman")}
               className="bg-card border-2 border-border rounded-2xl p-8 text-left hover:border-accent/50 hover:shadow-glow transition-all group relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500" />
-              <div className="absolute top-4 right-4">
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-accent/10 text-accent px-2 py-1 rounded-full">
-                  <Sparkles className="h-3 w-3" /> Yeni
-                </span>
-              </div>
               <div className="relative">
                 <div className="h-14 w-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors">
-                  <Bot className="h-7 w-7 text-accent" />
+                  <Users className="h-7 w-7 text-accent" />
                 </div>
-                <h2 className="text-xl font-bold text-foreground mb-2">AI ile Yapılandır</h2>
+                <h2 className="text-xl font-bold text-foreground mb-2">Bilmiyorum, Uzman Desteği İstiyorum</h2>
                 <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-                  Sunucu konusunda bilginiz yok mu? Kullanım amacınızı anlatın, yapay zeka danışmanımız size en uygun yapılandırmayı önersin.
+                  Sunucu konusunda bilginiz yok mu? Kullanım amacınızı anlatın, uzman ekibimiz sizinle iletişime geçerek en uygun çözümü sunacaktır.
                 </p>
                 <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent group-hover:gap-2.5 transition-all">
-                  AI Danışmana Sor <ArrowRight className="h-4 w-4" />
+                  Uzmana Danış <ArrowRight className="h-4 w-4" />
                 </span>
               </div>
             </button>

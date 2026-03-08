@@ -13,7 +13,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Hardware from "./pages/Hardware";
 import Configurator from "./pages/Configurator";
-import AIConfigurator from "./pages/AIConfigurator";
+import ExpertConfigurator from "./pages/ExpertConfigurator";
 import Colocation from "./pages/Colocation";
 import CloudPage from "./pages/CloudPage";
 import About from "./pages/About";
@@ -48,7 +48,7 @@ function SiteLayout() {
           <Route path="/hardware" element={<Hardware />} />
           <Route path="/hazir-paketler" element={<ReadyPackages />} />
           <Route path="/yapilandirici" element={<Configurator />} />
-          <Route path="/yapilandirici/ai" element={<AIConfigurator />} />
+          <Route path="/yapilandirici/uzman" element={<ExpertConfigurator />} />
           <Route path="/yapilandirici/:serverId" element={<Configurator />} />
           <Route path="/colocation" element={<Colocation />} />
           <Route path="/cloud" element={<CloudPage />} />
