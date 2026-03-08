@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { toast } from "@/hooks/use-toast";
 
 export interface CartItem {
   id: string;
@@ -45,6 +46,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         return prev.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i));
       }
       return [...prev, { ...item, quantity: 1 }];
+    });
+    toast({
+      title: "✅ Sepete eklendi",
+      description: `${item.name} sepetinize eklendi.`,
     });
   };
 
