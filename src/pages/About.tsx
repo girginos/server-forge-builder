@@ -1,4 +1,5 @@
 import { Users, Award, Globe, TrendingUp } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const stats = [
   { icon: Users, value: "500+", label: "Mutlu Müşteri" },

@@ -3,6 +3,7 @@ import ServerCard from "@/components/ServerCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X, SlidersHorizontal } from "lucide-react";
+import SEO from "@/components/SEO";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
 import serverDL380 from "@/assets/server-dl380.png";

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Cloud as CloudIcon, Database, Globe, Shield, Cpu, BarChart3 } from "lucide-react";
 import cloudBg from "@/assets/cloud-bg.jpg";
+import SEO from "@/components/SEO";
 
 const services = [
   { icon: CloudIcon, title: "Cloud Sunucu", desc: "Ölçeklenebilir sanal sunucu çözümleri." },

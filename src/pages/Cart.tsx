@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Trash2, Plus, Minus, ShoppingCart, Send, CheckCircle2 } from "lucide-react";
+import SEO from "@/components/SEO";
 import { useCart } from "@/context/CartContext";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";

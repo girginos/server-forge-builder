@@ -70,6 +70,12 @@ const testimonials = [
 export default function Index() {
   return (
     <div>
+      <SEO
+        title="Kurumsal Sunucu Donanım Çözümleri"
+        description="Türkiye'nin güvenilir sunucu donanım tedarikçisi. Dell, HP, Supermicro sunucu satışı, yapılandırma, colocation ve cloud hizmetleri."
+        keywords="sunucu satış, server donanım, dell poweredge, hp proliant, supermicro, sunucu yapılandırma, colocation"
+        canonical="/"
+      />
       {/* ── Hero ── */}
       <section className="gradient-hero text-secondary-foreground relative overflow-hidden">
         {/* Background grid pattern */}

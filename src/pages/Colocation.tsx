@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Server, Shield, Zap, Wifi, Lock, Clock } from "lucide-react";
 import colocationBg from "@/assets/colocation-bg.jpg";
+import SEO from "@/components/SEO";
 
 const features = [
   { icon: Server, title: "Tier III+ Veri Merkezi", desc: "%99.98 uptime garantisi ile kesintisiz hizmet." },

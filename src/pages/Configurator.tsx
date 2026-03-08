@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import SEO from "@/components/SEO";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
 import serverDL380 from "@/assets/server-dl380.png";
