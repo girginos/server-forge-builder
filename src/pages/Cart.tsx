@@ -273,8 +273,11 @@ export default function Cart() {
             </div>
             <div>
               <label className="text-sm font-medium text-foreground mb-1 block">Telefon *</label>
-              <Input type="tel" value={contact.phone} onChange={(e) => { setContact({ ...contact, phone: e.target.value }); setContactErrors((p) => ({ ...p, phone: undefined })); }} placeholder="+90 5XX XXX XXXX" />
-              {contactErrors.phone && <p className="text-xs text-destructive mt-1">{contactErrors.phone}</p>}
+              <PhoneInput
+                value={contact.phone}
+                onChange={(v) => { setContact({ ...contact, phone: v }); setContactErrors((p) => ({ ...p, phone: undefined })); }}
+                error={contactErrors.phone}
+              />
             </div>
           </div>
         )}
