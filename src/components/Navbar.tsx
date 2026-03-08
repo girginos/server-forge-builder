@@ -5,25 +5,31 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/hooks/useAuth";
 
+interface NavChild {
+  label: string;
+  href: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
 interface NavItem {
   label: string;
   href?: string;
-  children?: { label: string; href: string }[];
+  children?: NavChild[];
 }
+
+const datacenterChildren: NavChild[] = [
+  { label: "Cloud", href: "/cloud", description: "Bulut sunucu ve altyapı hizmetleri", icon: <Cloud className="h-5 w-5" /> },
+  { label: "Leasing", href: "/leasing", description: "Esnek ödeme ile sunucu kiralama", icon: <Monitor className="h-5 w-5" /> },
+  { label: "Colocation", href: "/colocation", description: "Veri merkezinde sunucu barındırma", icon: <Building2 className="h-5 w-5" /> },
+];
 
 const navLinks: NavItem[] = [
   { label: "Anasayfa", href: "/" },
   { label: "Donanım", href: "/hardware" },
   { label: "Hazır Paketler", href: "/hazir-paketler" },
   { label: "Yapılandırıcı", href: "/yapilandirici" },
-  {
-    label: "Datacenter",
-    children: [
-      { label: "Cloud", href: "/cloud" },
-      { label: "Leasing", href: "/leasing" },
-      { label: "Colocation", href: "/colocation" },
-    ],
-  },
+  { label: "Datacenter", children: datacenterChildren },
   { label: "Hakkımızda", href: "/hakkimizda" },
   { label: "İletişim", href: "/iletisim" },
 ];
