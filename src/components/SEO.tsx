@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "@/config/site";
 
 interface SEOProps {
   title: string;
@@ -11,15 +12,14 @@ interface SEOProps {
 }
 
 export default function SEO({ title, description, keywords, canonical, ogImage, jsonLd, noIndex }: SEOProps) {
-  const siteName = "ServerMarket";
-  const fullTitle = `${title} | ${siteName}`;
-  const baseUrl = "https://server-forge-builder.lovable.app";
-  const defaultOgImage = `${baseUrl}/og-image.jpg`;
+  const fullTitle = `${title} | ${SITE_NAME}`;
+  const baseUrl = SITE_URL;
+  const defaultOgImage = DEFAULT_OG_IMAGE;
 
   const defaultJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteName,
+    name: SITE_NAME,
     url: baseUrl,
     logo: `${baseUrl}/favicon.ico`,
     contactPoint: {
@@ -49,7 +49,7 @@ export default function SEO({ title, description, keywords, canonical, ogImage, 
       {/* Open Graph */}
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:site_name" content={siteName} />
+      <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="tr_TR" />
       {canonical && <meta property="og:url" content={`${baseUrl}${canonical}`} />}

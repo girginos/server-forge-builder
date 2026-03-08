@@ -1,4 +1,4 @@
-import { Plugin } from "vite";
+import { Plugin, loadEnv } from "vite";
 
 interface RouteMeta {
   title: string;
@@ -8,8 +8,8 @@ interface RouteMeta {
   ogImage?: string;
 }
 
-const baseUrl = "https://server-forge-builder.lovable.app";
-const defaultOgImage = `${baseUrl}/og-image.jpg`;
+const getBaseUrl = () =>
+  process.env.VITE_SITE_URL || "https://server-forge-builder.lovable.app";
 
 const staticRoutesMeta: Record<string, RouteMeta> = {
   "/": {
@@ -121,8 +121,9 @@ const replaceMetaTag = (html: string, regex: RegExp, replacement: string) => {
 };
 
 const buildRouteHtml = (html: string, meta: RouteMeta) => {
+  const baseUrl = getBaseUrl();
   const fullUrl = `${baseUrl}${meta.canonical}`;
-  const ogImage = meta.ogImage || defaultOgImage;
+  const ogImage = meta.ogImage || `${baseUrl}/og-image.jpg`;
 
   let routeHtml = html;
 
