@@ -101,26 +101,36 @@ export default function Navbar() {
                     <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
                   </button>
                   {dropdownOpen && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
-                      <div className="w-72 rounded-xl border bg-card shadow-xl p-2 animate-fade-in">
-                        {link.children!.map((child) => (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
+                      <div className="w-80 rounded-2xl border border-border/60 bg-popover text-popover-foreground shadow-2xl shadow-black/10 p-1.5 animate-fade-in backdrop-blur-sm">
+                        <div className="px-3 pt-2 pb-1.5 mb-1">
+                          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Datacenter Hizmetleri</p>
+                        </div>
+                        {link.children!.map((child, idx) => (
                           <Link
                             key={child.href}
                             to={child.href}
                             onClick={() => setDropdownOpen(false)}
-                            className={`flex items-start gap-3 rounded-lg px-3 py-3 transition-colors group ${
+                            className={`flex items-center gap-3.5 rounded-xl px-3 py-3 transition-all duration-150 group ${
                               location.pathname === child.href
-                                ? "bg-accent"
-                                : "hover:bg-accent"
+                                ? "bg-primary/8"
+                                : "hover:bg-muted/60"
                             }`}
                           >
-                            <span className="mt-0.5 shrink-0 flex h-9 w-9 items-center justify-center rounded-lg bg-muted text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors">
+                            <span className={`shrink-0 flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-150 ${
+                              location.pathname === child.href
+                                ? "bg-primary text-primary-foreground shadow-md shadow-primary/25"
+                                : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                            }`}>
                               {child.icon}
                             </span>
-                            <div>
-                              <p className="text-sm font-medium leading-none mb-1 text-foreground">{child.label}</p>
+                            <div className="flex-1 min-w-0">
+                              <p className={`text-sm font-semibold leading-none mb-1 ${
+                                location.pathname === child.href ? "text-primary" : "text-foreground"
+                              }`}>{child.label}</p>
                               <p className="text-xs text-muted-foreground leading-snug">{child.description}</p>
                             </div>
+                            <ChevronDown className={`h-3.5 w-3.5 -rotate-90 text-muted-foreground/40 group-hover:text-primary/60 transition-colors shrink-0`} />
                           </Link>
                         ))}
                       </div>
