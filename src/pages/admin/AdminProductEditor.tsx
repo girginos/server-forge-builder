@@ -12,24 +12,57 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface SpecFields {
+  cpu: string;
+  ram: string;
+  storage: string;
+  network: string;
+  form_factor: string;
+  warranty: string;
+  power: string;
+  os: string;
+}
+
 interface ProductForm {
   name: string;
   description: string;
   category: string;
   price: number;
-  specs: string;
+  specs: SpecFields;
   image_url: string;
   images: string[];
   in_stock: boolean;
   featured: boolean;
 }
 
+const emptySpecs: SpecFields = {
+  cpu: "",
+  ram: "",
+  storage: "",
+  network: "",
+  form_factor: "",
+  warranty: "",
+  power: "",
+  os: "",
+};
+
+const specLabels: Record<keyof SpecFields, string> = {
+  cpu: "İşlemci",
+  ram: "RAM",
+  storage: "Disk / Depolama",
+  network: "Ağ",
+  form_factor: "Form Faktörü",
+  warranty: "Garanti",
+  power: "Güç Kaynağı",
+  os: "İşletim Sistemi",
+};
+
 const emptyForm: ProductForm = {
   name: "",
   description: "",
   category: "server",
   price: 0,
-  specs: "{}",
+  specs: { ...emptySpecs },
   image_url: "",
   images: [],
   in_stock: true,
