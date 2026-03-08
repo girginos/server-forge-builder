@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 import ServerCard from "@/components/ServerCard";
 import HeroSlider from "@/components/HeroSlider";
 import {
@@ -79,17 +80,17 @@ export default function Index() {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "ServerMarket",
-          url: "https://servermarket.com.tr",
+          url: SITE_URL,
           description: "Türkiye'nin güvenilir sunucu donanım tedarikçisi.",
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://servermarket.com.tr/hardware?q={search_term_string}",
+            target: `${SITE_URL}/hardware?q={search_term_string}`,
             "query-input": "required name=search_term_string",
           },
           publisher: {
             "@type": "Organization",
             name: "ServerMarket",
-            url: "https://servermarket.com.tr",
+            url: SITE_URL,
             contactPoint: { "@type": "ContactPoint", telephone: "+90-212-555-0000", contactType: "sales", areaServed: "TR", availableLanguage: "Turkish" },
           },
         }}

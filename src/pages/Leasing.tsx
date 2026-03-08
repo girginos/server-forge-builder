@@ -15,6 +15,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
 import serverDL380 from "@/assets/server-dl380.png";
@@ -203,9 +204,9 @@ export default function Leasing() {
             "@context": "https://schema.org",
             "@type": "Service",
             name: "ServerMarket Kirala Senin Olsun",
-            provider: { "@type": "Organization", name: "ServerMarket", url: "https://servermarket.com.tr" },
+            provider: { "@type": "Organization", name: "ServerMarket", url: SITE_URL },
             description: "Peşinatsız, sabit taksitlerle sunucu sahibi olun. 12-48 ay vade seçenekleri.",
-            url: "https://servermarket.com.tr/leasing",
+            url: `${SITE_URL}/leasing`,
             areaServed: "TR",
             serviceType: "Server Leasing",
           },

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X, SlidersHorizontal } from "lucide-react";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
 import serverDL380 from "@/assets/server-dl380.png";
@@ -92,7 +93,7 @@ export default function Hardware() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Sunucu Donanımları",
-          url: "https://servermarket.com.tr/hardware",
+          url: `${SITE_URL}/hardware`,
           numberOfItems: filtered.length,
           itemListElement: filtered.slice(0, 10).map((s, i) => ({
             "@type": "ListItem",

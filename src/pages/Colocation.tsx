@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import colocationBg from "@/assets/colocation-bg.jpg";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 
 const features = [
   { icon: Server, title: "Tier III+ Veri Merkezi", desc: "%99.98 uptime garantisi ile kesintisiz hizmet. Uluslararası standartlarda sertifikalı altyapı.", highlights: ["ISO 27001 sertifikalı", "Uptime Institute Tier III"] },
@@ -80,9 +81,9 @@ export default function Colocation() {
             "@context": "https://schema.org",
             "@type": "Service",
             name: "ServerMarket Colocation Hizmetleri",
-            provider: { "@type": "Organization", name: "ServerMarket", url: "https://servermarket.com.tr" },
+            provider: { "@type": "Organization", name: "ServerMarket", url: SITE_URL },
             description: "Tier III+ veri merkezlerinde sunucu barındırma hizmetleri.",
-            url: "https://servermarket.com.tr/colocation",
+            url: `${SITE_URL}/colocation`,
             areaServed: "TR",
             serviceType: "Colocation Hosting",
             hasOfferCatalog: {

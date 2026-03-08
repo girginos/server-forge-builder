@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import cloudBg from "@/assets/cloud-bg.jpg";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 
 const services = [
   { icon: CloudIcon, title: "Cloud Sunucu", desc: "Saniyeler içinde ölçeklenebilir sanal sunucular. CPU, RAM ve disk kaynaklarını ihtiyacınıza göre ayarlayın.", features: ["Anında ölçekleme", "Saatlik faturalandırma", "Otomatik yedekleme"] },
@@ -75,9 +76,9 @@ export default function CloudPage() {
             "@context": "https://schema.org",
             "@type": "Service",
             name: "ServerMarket Cloud Çözümleri",
-            provider: { "@type": "Organization", name: "ServerMarket", url: "https://servermarket.com.tr" },
+            provider: { "@type": "Organization", name: "ServerMarket", url: SITE_URL },
             description: "Ölçeklenebilir cloud sunucu, depolama ve CDN hizmetleri.",
-            url: "https://servermarket.com.tr/cloud",
+            url: `${SITE_URL}/cloud`,
             areaServed: "TR",
             serviceType: "Cloud Hosting",
             hasOfferCatalog: {
