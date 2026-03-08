@@ -74,8 +74,8 @@ export default function ExpertConfigurator() {
       <div className="py-20 min-h-[70vh]">
         <SEO title="Talep Gönderildi" description="Uzman yapılandırma talebiniz alındı." canonical="/yapilandirici/uzman" />
         <div className="container max-w-lg text-center">
-          <div className="h-16 w-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="h-8 w-8 text-green-500" />
+          <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 className="h-8 w-8 text-primary" />
           </div>
           <h1 className="text-2xl font-bold text-foreground mb-3">Talebiniz Alındı!</h1>
           <p className="text-muted-foreground mb-8">
