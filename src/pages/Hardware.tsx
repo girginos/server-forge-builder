@@ -157,6 +157,27 @@ export default function Hardware() {
               </div>
             </div>
 
+            {/* CPU Brand */}
+            <div className="bg-card border rounded-lg p-4">
+              <h3 className="font-semibold text-foreground text-sm mb-3">İşlemci</h3>
+              <div className="space-y-2">
+                {cpuBrands.map((cpuBrand) => (
+                  <label key={cpuBrand} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedCpuBrands.includes(cpuBrand)}
+                      onChange={() => toggleFilter(selectedCpuBrands, cpuBrand, setSelectedCpuBrands)}
+                      className="accent-primary rounded"
+                    />
+                    <span className="text-sm text-foreground">{cpuBrand}</span>
+                    <span className="text-xs text-muted-foreground ml-auto">
+                      ({allServers.filter((s) => s.cpuBrand === cpuBrand).length})
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
             {/* Form Factor */}
             <div className="bg-card border rounded-lg p-4">
               <h3 className="font-semibold text-foreground text-sm mb-3">Form Faktörü</h3>
