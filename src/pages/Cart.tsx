@@ -56,7 +56,7 @@ export default function Cart() {
         <h1 className="text-2xl font-bold text-foreground">Sepetiniz Boş</h1>
         <p className="text-muted-foreground mt-2">Henüz ürün eklemediniz.</p>
         <Button variant="hero" className="mt-6" asChild>
-          <Link to="/donanim">Ürünleri İncele</Link>
+          <Link to="/hardware">Ürünleri İncele</Link>
         </Button>
       </div>
     );

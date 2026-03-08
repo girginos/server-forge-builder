@@ -36,7 +36,7 @@ const App = () => (
               <main className="flex-1">
                 <Routes>
                   <Route path="/" element={<Index />} />
-                  <Route path="/donanim" element={<Hardware />} />
+                  <Route path="/hardware" element={<Hardware />} />
                   <Route path="/hazir-paketler" element={<ReadyPackages />} />
                   <Route path="/yapilandirici" element={<Configurator />} />
                   <Route path="/yapilandirici/:serverId" element={<Configurator />} />

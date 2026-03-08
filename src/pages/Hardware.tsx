@@ -80,7 +80,7 @@ export default function Hardware() {
         title="Sunucu Donanımları"
         description="Dell, HP, Supermicro sunucu donanımları. Marka, fiyat ve form faktörüne göre filtreleyin, ihtiyacınıza uygun sunucuyu bulun."
         keywords="sunucu donanım, dell poweredge, hp proliant, supermicro, rack sunucu, 1u sunucu, 2u sunucu"
-        canonical="/donanim"
+        canonical="/hardware"
       />
       <div className="container">
         {/* Header */}

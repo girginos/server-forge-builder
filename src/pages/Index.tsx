@@ -203,7 +203,7 @@ export default function Index() {
               <p className="text-muted-foreground mt-2">Başlangıç noktanızı seçin, ardından ihtiyacınıza göre özelleştirin.</p>
             </div>
             <Button variant="ghost" asChild className="hidden sm:flex">
-              <Link to="/donanim">Tümünü Gör <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/hardware">Tümünü Gör <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -213,7 +213,7 @@ export default function Index() {
           </div>
           <div className="text-center mt-6 sm:hidden">
             <Button variant="outline" asChild>
-              <Link to="/donanim">Tüm Sunucuları Gör <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/hardware">Tüm Sunucuları Gör <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
         </div>
