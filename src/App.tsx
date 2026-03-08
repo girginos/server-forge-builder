@@ -18,6 +18,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ReadyPackages from "./pages/ReadyPackages";
 import Cart from "./pages/Cart";
+import Leasing from "./pages/Leasing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
                   <Route path="/hakkimizda" element={<About />} />
                   <Route path="/iletisim" element={<Contact />} />
                   <Route path="/sepet" element={<Cart />} />
+                  <Route path="/leasing" element={<Leasing />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>

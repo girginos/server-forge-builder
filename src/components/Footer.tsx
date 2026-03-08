@@ -22,6 +22,7 @@ export default function Footer() {
               <li><Link to="/hardware" className="hover:text-teal transition-colors">Sunucu Donanımları</Link></li>
               <li><Link to="/yapilandirici" className="hover:text-teal transition-colors">Sunucu Yapılandırıcı</Link></li>
               <li><Link to="/cloud" className="hover:text-teal transition-colors">Cloud Çözümleri</Link></li>
+              <li><Link to="/leasing" className="hover:text-teal transition-colors">Kirala Senin Olsun</Link></li>
               <li><Link to="/colocation" className="hover:text-teal transition-colors">Colocation</Link></li>
             </ul>
           </div>
