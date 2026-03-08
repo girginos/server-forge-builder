@@ -16,6 +16,11 @@ async function authenticateRequest(req: Request): Promise<boolean> {
   console.log("x-admin-api-key present:", !!req.headers.get("x-admin-api-key"));
   console.log("ADMIN_API_KEY env present:", !!Deno.env.get("ADMIN_API_KEY"));
   console.log("SERVICE_ROLE_KEY env present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
+  const token = authHeader?.replace("Bearer ", "") || "";
+  const srk = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  console.log("Token last10:", token.slice(-10));
+  console.log("SRK last10:", srk.slice(-10));
+  console.log("Match:", token === srk);
   // Method 1: API Key authentication (for server-side/automation)
   const apiKey = req.headers.get("x-admin-api-key");
   const storedApiKey = Deno.env.get("ADMIN_API_KEY");
