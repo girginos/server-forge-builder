@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://servermarket.com.tr/</loc>
+    <loc>https://server.girginos.net/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://servermarket.com.tr/hardware</loc>
+    <loc>https://server.girginos.net/hardware</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://servermarket.com.tr/hazir-paketler</loc>
+    <loc>https://server.girginos.net/hazir-paketler</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://servermarket.com.tr/yapilandirici</loc>
+    <loc>https://server.girginos.net/yapilandirici</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://servermarket.com.tr/colocation</loc>
+    <loc>https://server.girginos.net/colocation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://servermarket.com.tr/cloud</loc>
+    <loc>https://server.girginos.net/cloud</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://servermarket.com.tr/leasing</loc>
+    <loc>https://server.girginos.net/leasing</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://servermarket.com.tr/hakkimizda</loc>
+    <loc>https://server.girginos.net/hakkimizda</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://servermarket.com.tr/iletisim</loc>
+    <loc>https://server.girginos.net/iletisim</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
