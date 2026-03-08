@@ -198,16 +198,29 @@ export default function Navbar() {
                       <ChevronDown className={`h-3.5 w-3.5 transition-transform ${mobileDropdownOpen ? "rotate-180" : ""}`} />
                     </button>
                     {mobileDropdownOpen && (
-                      <div className="ml-4 flex flex-col gap-1 mt-1">
+                      <div className="ml-2 flex flex-col gap-1 mt-1 border-l-2 border-primary/20 pl-2">
                         {link.children.map((child) => (
                           <Link
                             key={child.href}
                             to={child.href}
                             onClick={() => { setMobileOpen(false); setMobileDropdownOpen(false); }}
-                            className={`px-3 py-2 rounded-md text-sm ${
+                            className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm ${
                               location.pathname === child.href
                                 ? "text-primary bg-primary/5"
                                 : "text-foreground hover:text-primary"
+                            }`}
+                          >
+                            <span className={`shrink-0 flex h-8 w-8 items-center justify-center rounded-lg ${
+                              location.pathname === child.href ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
+                            }`}>
+                              {child.icon}
+                            </span>
+                            <div>
+                              <p className="font-medium leading-none mb-0.5">{child.label}</p>
+                              <p className="text-[11px] text-muted-foreground">{child.description}</p>
+                            </div>
+                          </Link>
+                        ))}
                             }`}
                           >
                             {child.label}
