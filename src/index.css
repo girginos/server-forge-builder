@@ -97,6 +97,22 @@
   }
 }
 
+/* Admin panel dark theme overrides */
+.admin-theme {
+  --background: 220 30% 10%;
+  --foreground: 210 20% 90%;
+  --card: 220 25% 13%;
+  --card-foreground: 210 20% 90%;
+  --popover: 220 25% 13%;
+  --popover-foreground: 210 20% 90%;
+  --muted: 220 20% 18%;
+  --muted-foreground: 210 15% 55%;
+  --border: 220 20% 20%;
+  --input: 220 20% 20%;
+  --accent: 220 25% 18%;
+  --accent-foreground: 210 20% 90%;
+}
+
 @keyframes heroSlideUp {
   from {
     opacity: 0;

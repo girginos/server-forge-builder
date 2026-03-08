@@ -35,6 +35,35 @@ import AdminDbTools from "./pages/admin/AdminDbTools";
 
 const queryClient = new QueryClient();
 
+function SiteLayout() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/hardware" element={<Hardware />} />
+          <Route path="/hazir-paketler" element={<ReadyPackages />} />
+          <Route path="/yapilandirici" element={<Configurator />} />
+          <Route path="/yapilandirici/:serverId" element={<Configurator />} />
+          <Route path="/colocation" element={<Colocation />} />
+          <Route path="/cloud" element={<CloudPage />} />
+          <Route path="/hakkimizda" element={<About />} />
+          <Route path="/iletisim" element={<Contact />} />
+          <Route path="/sepet" element={<Cart />} />
+          <Route path="/leasing" element={<Leasing />} />
+          <Route path="/giris" element={<Auth />} />
+          <Route path="/panel" element={<Dashboard />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <PartnersBanner />
+      <Footer />
+    </div>
+  );
+}
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -45,40 +74,21 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <ScrollToTop />
-              <div className="min-h-screen flex flex-col">
-                <Navbar />
-                <main className="flex-1">
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/hardware" element={<Hardware />} />
-                    <Route path="/hazir-paketler" element={<ReadyPackages />} />
-                    <Route path="/yapilandirici" element={<Configurator />} />
-                    <Route path="/yapilandirici/:serverId" element={<Configurator />} />
-                    <Route path="/colocation" element={<Colocation />} />
-                    <Route path="/cloud" element={<CloudPage />} />
-                    <Route path="/hakkimizda" element={<About />} />
-                    <Route path="/iletisim" element={<Contact />} />
-                    <Route path="/sepet" element={<Cart />} />
-                    <Route path="/leasing" element={<Leasing />} />
-                    <Route path="/giris" element={<Auth />} />
-                    <Route path="/panel" element={<Dashboard />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />
-                    <Route path="/admin" element={<AdminLayout />}>
-                      <Route index element={<AdminDashboard />} />
-                      <Route path="urunler" element={<AdminProducts />} />
-                      <Route path="urunler/yeni" element={<AdminProductEditor />} />
-                      <Route path="urunler/:id" element={<AdminProductEditor />} />
-                      <Route path="siparisler" element={<AdminOrders />} />
-                      <Route path="kullanicilar" element={<AdminUsers />} />
-                      <Route path="destek" element={<AdminSupport />} />
-                      <Route path="db" element={<AdminDbTools />} />
-                    </Route>
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
-                <PartnersBanner />
-                <Footer />
-              </div>
+              <Routes>
+                {/* Admin panel — standalone layout, no site navbar/footer */}
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="urunler" element={<AdminProducts />} />
+                  <Route path="urunler/yeni" element={<AdminProductEditor />} />
+                  <Route path="urunler/:id" element={<AdminProductEditor />} />
+                  <Route path="siparisler" element={<AdminOrders />} />
+                  <Route path="kullanicilar" element={<AdminUsers />} />
+                  <Route path="destek" element={<AdminSupport />} />
+                  <Route path="db" element={<AdminDbTools />} />
+                </Route>
+                {/* Main site layout */}
+                <Route path="/*" element={<SiteLayout />} />
+              </Routes>
             </BrowserRouter>
           </CartProvider>
         </AuthProvider>
