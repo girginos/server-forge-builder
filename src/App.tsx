@@ -24,6 +24,12 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminSupport from "./pages/admin/AdminSupport";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +61,13 @@ const App = () => (
                     <Route path="/giris" element={<Auth />} />
                     <Route path="/panel" element={<Dashboard />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/admin" element={<AdminLayout />}>
+                      <Route index element={<AdminDashboard />} />
+                      <Route path="urunler" element={<AdminProducts />} />
+                      <Route path="siparisler" element={<AdminOrders />} />
+                      <Route path="kullanicilar" element={<AdminUsers />} />
+                      <Route path="destek" element={<AdminSupport />} />
+                    </Route>
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
