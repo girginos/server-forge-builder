@@ -33,6 +33,7 @@ import AdminOrders from "./pages/admin/AdminOrders";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminSupport from "./pages/admin/AdminSupport";
 import AdminDbTools from "./pages/admin/AdminDbTools";
+import AdminQuotes from "./pages/admin/AdminQuotes";
 
 const queryClient = new QueryClient();
 
@@ -83,6 +84,7 @@ const App = () => (
                   <Route path="urunler/yeni" element={<AdminProductEditor />} />
                   <Route path="urunler/:id" element={<AdminProductEditor />} />
                   <Route path="siparisler" element={<AdminOrders />} />
+                  <Route path="teklifler" element={<AdminQuotes />} />
                   <Route path="kullanicilar" element={<AdminUsers />} />
                   <Route path="kullanicilar/:userId" element={<AdminUserDetail />} />
                   <Route path="destek" element={<AdminSupport />} />

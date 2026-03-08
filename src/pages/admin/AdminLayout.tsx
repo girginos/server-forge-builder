@@ -30,6 +30,7 @@ import {
   PanelLeft,
   Server,
   Home,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -37,6 +38,7 @@ const navItems = [
   { label: "Genel Bakış", path: "/admin", icon: LayoutDashboard },
   { label: "Ürünler", path: "/admin/urunler", icon: Package },
   { label: "Siparişler", path: "/admin/siparisler", icon: ShoppingCart },
+  { label: "Teklifler", path: "/admin/teklifler", icon: FileText },
   { label: "Kullanıcılar", path: "/admin/kullanicilar", icon: Users },
   { label: "Destek", path: "/admin/destek", icon: HeadphonesIcon },
   { label: "DB Araçları", path: "/admin/db", icon: Database },
@@ -137,6 +139,7 @@ function AdminHeader() {
       "/admin": "Genel Bakış",
       "/admin/urunler": "Ürün Yönetimi",
       "/admin/siparisler": "Sipariş Yönetimi",
+      "/admin/teklifler": "Teklif Talepleri",
       "/admin/kullanicilar": "Kullanıcı Yönetimi",
       "/admin/destek": "Destek Talepleri",
       "/admin/db": "Veritabanı Araçları",

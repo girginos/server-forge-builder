@@ -131,6 +131,66 @@ export type Database = {
         }
         Relationships: []
       }
+      quote_requests: {
+        Row: {
+          address: string | null
+          billing_type: string | null
+          city: string | null
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          items: Json
+          name: string
+          note: string | null
+          phone: string
+          status: string
+          tax_number: string | null
+          tax_office: string | null
+          total_amount: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          address?: string | null
+          billing_type?: string | null
+          city?: string | null
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          items?: Json
+          name: string
+          note?: string | null
+          phone: string
+          status?: string
+          tax_number?: string | null
+          tax_office?: string | null
+          total_amount?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          address?: string | null
+          billing_type?: string | null
+          city?: string | null
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          items?: Json
+          name?: string
+          note?: string | null
+          phone?: string
+          status?: string
+          tax_number?: string | null
+          tax_office?: string | null
+          total_amount?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       support_tickets: {
         Row: {
           created_at: string
