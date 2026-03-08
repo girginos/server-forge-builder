@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate, Outlet, Link, useLocation } from "react-router-dom";
 import { useAdminCheck } from "@/hooks/useAdminCheck";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Package, Users, ShoppingCart, HeadphonesIcon, LogOut } from "lucide-react";
+import { LayoutDashboard, Package, Users, ShoppingCart, HeadphonesIcon, LogOut, Database } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import SEO from "@/components/SEO";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,7 @@ const navItems = [
   { label: "Siparişler", path: "/admin/siparisler", icon: ShoppingCart },
   { label: "Kullanıcılar", path: "/admin/kullanicilar", icon: Users },
   { label: "Destek", path: "/admin/destek", icon: HeadphonesIcon },
+  { label: "DB Araçları", path: "/admin/db", icon: Database },
 ];
 
 export default function AdminLayout() {
