@@ -44,6 +44,7 @@ const App = () => (
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
+            <PartnersBanner />
             <Footer />
           </div>
         </BrowserRouter>
