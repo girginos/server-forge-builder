@@ -66,7 +66,7 @@ export default function Navbar() {
             <Link to={user ? "/panel" : "/giris"}>
               <Button variant="ghost" size="sm" className="hidden sm:flex items-center gap-1.5 text-sm">
                 {user ? <LayoutDashboard className="h-4 w-4" /> : <User className="h-4 w-4" />}
-                {user ? "Panel" : "Giriş Yap"}
+                {user ? "Panel" : "Müşteri Paneli"}
               </Button>
               <Button variant="ghost" size="icon" className="sm:hidden">
                 {user ? <LayoutDashboard className="h-5 w-5" /> : <User className="h-5 w-5" />}
