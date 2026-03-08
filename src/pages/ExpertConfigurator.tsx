@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
@@ -38,6 +39,10 @@ export default function ExpertConfigurator() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [contactMethod, setContactMethod] = useState("whatsapp");
+  const [cpu, setCpu] = useState("bilmiyorum");
+  const [ram, setRam] = useState("bilmiyorum");
+  const [storage, setStorage] = useState("bilmiyorum");
+  const [storageType, setStorageType] = useState("bilmiyorum");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -54,7 +59,7 @@ export default function ExpertConfigurator() {
     const { error } = await supabase.from("support_tickets").insert({
       user_id: user?.id || null,
       subject: `Uzman Yapılandırma Talebi - ${useCaseLabel}`,
-      message: `Kullanım Amacı: ${useCaseLabel}\n\nDetaylar:\n${details.trim()}\n\nİletişim Bilgileri:\nAd: ${name.trim()}\nTelefon: ${phone.trim()}\nE-posta: ${email.trim()}\nTercih Edilen İletişim: ${contactMethod}`,
+      message: `Kullanım Amacı: ${useCaseLabel}\n\nDetaylar:\n${details.trim()}\n\nKaynak İhtiyacı:\nCPU: ${cpu}\nRAM: ${ram}\nDepolama: ${storage} (${storageType})\n\nİletişim Bilgileri:\nAd: ${name.trim()}\nTelefon: ${phone.trim()}\nE-posta: ${email.trim()}\nTercih Edilen İletişim: ${contactMethod}`,
       status: "open",
     } as any);
 
@@ -163,9 +168,73 @@ export default function ExpertConfigurator() {
             <p className="text-xs text-muted-foreground mt-1 text-right">{details.length}/2000</p>
           </div>
 
-          {/* Step 3: Contact info */}
+          {/* Step 3: Resource requirements */}
           <div>
-            <h2 className="text-lg font-semibold text-foreground mb-1">3. İletişim Bilgileriniz</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-1">3. Kaynak İhtiyacı</h2>
+            <p className="text-sm text-muted-foreground mb-4">Tahmini kaynak ihtiyacınızı seçin. Bilmiyorsanız "Bilmiyorum" seçeneğini bırakabilirsiniz.</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>İşlemci (CPU)</Label>
+                <Select value={cpu} onValueChange={setCpu}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="bilmiyorum">Bilmiyorum</SelectItem>
+                    <SelectItem value="1-4 Çekirdek">1-4 Çekirdek</SelectItem>
+                    <SelectItem value="8-16 Çekirdek">8-16 Çekirdek</SelectItem>
+                    <SelectItem value="16-32 Çekirdek">16-32 Çekirdek</SelectItem>
+                    <SelectItem value="32-64 Çekirdek">32-64 Çekirdek</SelectItem>
+                    <SelectItem value="64+ Çekirdek">64+ Çekirdek</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Bellek (RAM)</Label>
+                <Select value={ram} onValueChange={setRam}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="bilmiyorum">Bilmiyorum</SelectItem>
+                    <SelectItem value="16-32 GB">16-32 GB</SelectItem>
+                    <SelectItem value="32-64 GB">32-64 GB</SelectItem>
+                    <SelectItem value="64-128 GB">64-128 GB</SelectItem>
+                    <SelectItem value="128-256 GB">128-256 GB</SelectItem>
+                    <SelectItem value="256-512 GB">256-512 GB</SelectItem>
+                    <SelectItem value="512 GB+">512 GB+</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Depolama Kapasitesi</Label>
+                <Select value={storage} onValueChange={setStorage}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="bilmiyorum">Bilmiyorum</SelectItem>
+                    <SelectItem value="500 GB - 1 TB">500 GB - 1 TB</SelectItem>
+                    <SelectItem value="1 - 4 TB">1 - 4 TB</SelectItem>
+                    <SelectItem value="4 - 10 TB">4 - 10 TB</SelectItem>
+                    <SelectItem value="10 - 50 TB">10 - 50 TB</SelectItem>
+                    <SelectItem value="50 TB+">50 TB+</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Depolama Tipi</Label>
+                <Select value={storageType} onValueChange={setStorageType}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="bilmiyorum">Bilmiyorum</SelectItem>
+                    <SelectItem value="SSD (Hızlı)">SSD (Hızlı)</SelectItem>
+                    <SelectItem value="NVMe (Çok Hızlı)">NVMe (Çok Hızlı)</SelectItem>
+                    <SelectItem value="HDD (Büyük Kapasite)">HDD (Büyük Kapasite)</SelectItem>
+                    <SelectItem value="Karma (SSD + HDD)">Karma (SSD + HDD)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 4: Contact info */}
+          <div>
+            <h2 className="text-lg font-semibold text-foreground mb-1">4. İletişim Bilgileriniz</h2>
             <p className="text-sm text-muted-foreground mb-4">Size nasıl ulaşmamızı istersiniz?</p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-5">
