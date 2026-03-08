@@ -93,8 +93,8 @@ export default function Hardware() {
           "@type": "ItemList",
           name: "Sunucu Donanımları",
           url: "https://servermarket.com.tr/hardware",
-          numberOfItems: filteredServers.length,
-          itemListElement: filteredServers.slice(0, 10).map((s, i) => ({
+          numberOfItems: filtered.length,
+          itemListElement: filtered.slice(0, 10).map((s, i) => ({
             "@type": "ListItem",
             position: i + 1,
             item: {
