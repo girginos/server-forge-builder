@@ -1,28 +1,55 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ShoppingCart, Search, Phone, Mail, Server, User, LayoutDashboard } from "lucide-react";
+import { Menu, X, ShoppingCart, Search, Phone, Mail, Server, User, LayoutDashboard, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/hooks/useAuth";
 
-const navLinks = [
+interface NavItem {
+  label: string;
+  href?: string;
+  children?: { label: string; href: string }[];
+}
+
+const navLinks: NavItem[] = [
   { label: "Anasayfa", href: "/" },
   { label: "Donanım", href: "/hardware" },
   { label: "Hazır Paketler", href: "/hazir-paketler" },
   { label: "Yapılandırıcı", href: "/yapilandirici" },
-  { label: "Leasing", href: "/leasing" },
-  { label: "Cloud", href: "/cloud" },
-  { label: "Colocation", href: "/colocation" },
+  {
+    label: "Datacenter",
+    children: [
+      { label: "Cloud", href: "/cloud" },
+      { label: "Leasing", href: "/leasing" },
+      { label: "Colocation", href: "/colocation" },
+    ],
+  },
   { label: "Hakkımızda", href: "/hakkimizda" },
   { label: "İletişim", href: "/iletisim" },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const location = useLocation();
   const { items } = useCart();
   const { user } = useAuth();
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  const isActiveChild = (children?: { href: string }[]) =>
+    children?.some((c) => location.pathname === c.href);
 
   return (
     <>
@@ -47,19 +74,53 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === link.href
-                    ? "text-primary bg-primary/5"
-                    : "text-foreground hover:text-primary hover:bg-primary/5"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.children ? (
+                <div key={link.label} className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className={`flex items-center gap-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      isActiveChild(link.children)
+                        ? "text-primary bg-primary/5"
+                        : "text-foreground hover:text-primary hover:bg-primary/5"
+                    }`}
+                  >
+                    {link.label}
+                    <ChevronDown className={`h-3.5 w-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {dropdownOpen && (
+                    <div className="absolute top-full left-0 mt-1 w-44 rounded-lg border bg-card shadow-lg py-1 animate-fade-in z-50">
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          to={child.href}
+                          onClick={() => setDropdownOpen(false)}
+                          className={`block px-4 py-2 text-sm transition-colors ${
+                            location.pathname === child.href
+                              ? "text-primary bg-primary/5"
+                              : "text-foreground hover:text-primary hover:bg-primary/5"
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={link.href}
+                  to={link.href!}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    location.pathname === link.href
+                      ? "text-primary bg-primary/5"
+                      : "text-foreground hover:text-primary hover:bg-primary/5"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
           </nav>
 
           <div className="flex items-center gap-2">
@@ -100,20 +161,54 @@ export default function Navbar() {
         {mobileOpen && (
           <div className="lg:hidden border-t bg-card animate-fade-in">
             <nav className="container flex flex-col py-4 gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    location.pathname === link.href
-                      ? "text-primary bg-primary/5"
-                      : "text-foreground hover:text-primary"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) =>
+                link.children ? (
+                  <div key={link.label}>
+                    <button
+                      onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-sm font-medium ${
+                        isActiveChild(link.children)
+                          ? "text-primary bg-primary/5"
+                          : "text-foreground hover:text-primary"
+                      }`}
+                    >
+                      {link.label}
+                      <ChevronDown className={`h-3.5 w-3.5 transition-transform ${mobileDropdownOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {mobileDropdownOpen && (
+                      <div className="ml-4 flex flex-col gap-1 mt-1">
+                        {link.children.map((child) => (
+                          <Link
+                            key={child.href}
+                            to={child.href}
+                            onClick={() => { setMobileOpen(false); setMobileDropdownOpen(false); }}
+                            className={`px-3 py-2 rounded-md text-sm ${
+                              location.pathname === child.href
+                                ? "text-primary bg-primary/5"
+                                : "text-foreground hover:text-primary"
+                            }`}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    key={link.href}
+                    to={link.href!}
+                    onClick={() => setMobileOpen(false)}
+                    className={`px-3 py-2 rounded-md text-sm font-medium ${
+                      location.pathname === link.href
+                        ? "text-primary bg-primary/5"
+                        : "text-foreground hover:text-primary"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              )}
             </nav>
           </div>
         )}
