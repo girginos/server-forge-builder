@@ -7,7 +7,7 @@
     <meta name="description" content="Türkiye'nin güvenilir sunucu donanım tedarikçisi. Dell, HP, Supermicro sunucu satışı, yapılandırma, colocation ve cloud hizmetleri." />
     <meta name="author" content="ServerMarket" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://servermarket.com.tr" />
+    <link rel="canonical" href="https://server-forge-builder.lovable.app" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -15,14 +15,49 @@
     <meta property="og:locale" content="tr_TR" />
     <meta property="og:title" content="ServerMarket - Kurumsal Sunucu Donanım Çözümleri" />
     <meta property="og:description" content="Türkiye'nin güvenilir sunucu donanım tedarikçisi. Dell, HP, Supermicro sunucu satışı, yapılandırma, colocation ve cloud hizmetleri." />
-    <meta property="og:url" content="https://servermarket.com.tr" />
-    <meta property="og:image" content="https://servermarket.com.tr/og-image.jpg" />
+    <meta property="og:url" content="https://server-forge-builder.lovable.app" />
+    <meta property="og:image" content="https://server-forge-builder.lovable.app/og-image.jpg" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ServerMarket - Kurumsal Sunucu Donanım Çözümleri" />
     <meta name="twitter:description" content="Türkiye'nin güvenilir sunucu donanım tedarikçisi. Dell, HP, Supermicro sunucu satışı, yapılandırma, colocation ve cloud hizmetleri." />
-    <meta name="twitter:image" content="https://servermarket.com.tr/og-image.jpg" />
+    <meta name="twitter:image" content="https://server-forge-builder.lovable.app/og-image.jpg" />
+
+    <!-- Route-based SEO: runs synchronously before render -->
+    <script>
+      (function(){
+        var base = "https://server-forge-builder.lovable.app";
+        var routes = {
+          "/": { t: "Kurumsal Sunucu Donanım Çözümleri | ServerMarket", d: "Türkiye'nin güvenilir sunucu donanım tedarikçisi. Dell, HP, Supermicro sunucu satışı, yapılandırma, colocation ve cloud hizmetleri." },
+          "/hardware": { t: "Sunucu Donanımları | ServerMarket", d: "Dell, HP, Supermicro sunucu donanımları. Marka, fiyat ve form faktörüne göre filtreleyin." },
+          "/hazir-paketler": { t: "Hazır Sunucu Paketleri | ServerMarket", d: "İş yükünüze göre optimize edilmiş hazır sunucu paketleri." },
+          "/yapilandirici": { t: "Sunucu Yapılandırıcı | ServerMarket", d: "CPU, RAM, depolama seçenekleriyle ihtiyacınıza özel sunucu yapılandırın." },
+          "/colocation": { t: "Colocation Hizmetleri | ServerMarket", d: "Tier III+ veri merkezlerinde sunucu barındırma. 7/24 güvenlik, yüksek bant genişliği." },
+          "/cloud": { t: "Cloud Çözümleri | ServerMarket", d: "Ölçeklenebilir cloud sunucu, depolama ve CDN hizmetleri." },
+          "/leasing": { t: "Kirala Senin Olsun - Sunucu Kiralama | ServerMarket", d: "Peşinatsız, sabit taksitlerle sunucu sahibi olun. 12-48 ay vade." },
+          "/hakkimizda": { t: "Hakkımızda | ServerMarket", d: "15 yılı aşkın süredir Türkiye'nin önde gelen kurumsal sunucu çözümleri sağlayıcısı." },
+          "/iletisim": { t: "İletişim | ServerMarket", d: "Sunucu donanımı, colocation ve cloud hizmetleri için teklif alın. 7/24 teknik destek." }
+        };
+        var p = location.pathname.replace(/\/+$/, "") || "/";
+        var m = routes[p];
+        if (!m) return;
+        var url = base + p;
+        document.title = m.t;
+        function setMeta(attr, key, val) {
+          var el = document.querySelector('meta['+attr+'="'+key+'"]');
+          if (el) el.setAttribute("content", val);
+        }
+        setMeta("name","description",m.d);
+        setMeta("property","og:title",m.t);
+        setMeta("property","og:description",m.d);
+        setMeta("property","og:url",url);
+        setMeta("name","twitter:title",m.t);
+        setMeta("name","twitter:description",m.d);
+        var canon = document.querySelector('link[rel="canonical"]');
+        if (canon) canon.setAttribute("href", url);
+      })();
+    </script>
   </head>
 
   <body>
