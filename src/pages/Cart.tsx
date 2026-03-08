@@ -251,9 +251,9 @@ export default function Cart() {
 
                         {/* Specs as tags */}
                         {item.specs && (
-                          <div className="flex flex-wrap gap-1.5">
+                          <div className="flex flex-wrap gap-2">
                             {item.specs.split("|").map((spec, i) => (
-                              <span key={i} className="inline-flex items-center text-[10px] font-medium text-muted-foreground bg-muted/60 px-2 py-0.5 rounded-md whitespace-nowrap">
+                              <span key={i} className="inline-flex items-center text-xs font-medium text-muted-foreground bg-muted/60 px-2.5 py-1 rounded-md">
                                 {spec.trim()}
                               </span>
                             ))}
