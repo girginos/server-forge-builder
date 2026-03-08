@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Settings, Bot, ArrowRight, Sparkles } from "lucide-react";
+import { ShoppingCart, Settings, Users, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import SEO from "@/components/SEO";
 import serverR740 from "@/assets/server-r740.png";
