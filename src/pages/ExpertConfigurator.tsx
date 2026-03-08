@@ -12,7 +12,7 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import SEO from "@/components/SEO";
 import { ArrowLeft, Users, Globe, Database, Cpu, Server, Shield, CheckCircle2, MessageCircle, Phone, Mail } from "lucide-react";
-import { PhoneInput } from "@/components/PhoneInput";
+import PhoneInput from "@/components/PhoneInput";
 
 const useCases = [
   { id: "web", icon: <Globe className="h-5 w-5" />, label: "Web Hosting", desc: "Web sitesi / e-ticaret barındırma" },
