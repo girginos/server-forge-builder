@@ -220,11 +220,15 @@ export default function Hardware() {
             </div>
 
             {hasActiveFilters && (
-              <Button variant="outline" size="sm" className="w-full" onClick={clearAll}>
-                <X className="h-3 w-3" /> Filtreleri Temizle
-              </Button>
+              <div className="sm:col-span-2 lg:col-span-1">
+                <Button variant="outline" size="sm" className="w-full" onClick={clearAll}>
+                  <X className="h-3 w-3" /> Filtreleri Temizle
+                </Button>
+              </div>
             )}
+            </div>
           </aside>
+          )}
 
           {/* Products */}
           <div className="flex-1">
