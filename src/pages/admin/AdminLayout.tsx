@@ -1,11 +1,37 @@
 import { useEffect } from "react";
 import { useNavigate, Outlet, Link, useLocation } from "react-router-dom";
 import { useAdminCheck } from "@/hooks/useAdminCheck";
-import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Package, Users, ShoppingCart, HeadphonesIcon, LogOut, Database } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import SEO from "@/components/SEO";
 import { cn } from "@/lib/utils";
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarFooter,
+  SidebarHeader,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import {
+  LayoutDashboard,
+  Package,
+  Users,
+  ShoppingCart,
+  HeadphonesIcon,
+  LogOut,
+  Database,
+  PanelLeft,
+  Server,
+  Home,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const navItems = [
   { label: "Genel Bakış", path: "/admin", icon: LayoutDashboard },
@@ -16,54 +42,163 @@ const navItems = [
   { label: "DB Araçları", path: "/admin/db", icon: Database },
 ];
 
-export default function AdminLayout() {
-  const { isAdmin, loading } = useAdminCheck();
+function AdminSidebar() {
+  const { state } = useSidebar();
+  const collapsed = state === "collapsed";
+  const location = useLocation();
   const { signOut } = useAuth();
   const navigate = useNavigate();
+
+  const isActive = (path: string) => {
+    if (path === "/admin") return location.pathname === "/admin";
+    return location.pathname.startsWith(path);
+  };
+
+  return (
+    <Sidebar collapsible="icon" className="border-r-0">
+      <SidebarHeader className="p-4">
+        <Link to="/admin" className="flex items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[hsl(210,100%,40%)] to-[hsl(192,85%,45%)]">
+            <Server className="h-5 w-5 text-white" />
+          </div>
+          {!collapsed && (
+            <div className="flex flex-col">
+              <span className="text-sm font-bold tracking-tight text-sidebar-foreground">
+                ServerMarket
+              </span>
+              <span className="text-[10px] uppercase tracking-widest text-sidebar-foreground/50">
+                Admin Panel
+              </span>
+            </div>
+          )}
+        </Link>
+      </SidebarHeader>
+
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-sidebar-foreground/40 text-[10px] uppercase tracking-widest">
+            Yönetim
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {navItems.map((item) => (
+                <SidebarMenuItem key={item.path}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isActive(item.path)}
+                    tooltip={item.label}
+                  >
+                    <Link to={item.path}>
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter className="p-3 space-y-1">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Siteye Dön">
+              <Link to="/">
+                <Home className="h-4 w-4" />
+                <span>Siteye Dön</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              tooltip="Çıkış Yap"
+              onClick={() => {
+                signOut();
+                navigate("/");
+              }}
+              className="text-destructive hover:text-destructive"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>Çıkış Yap</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
+
+function AdminHeader() {
   const location = useLocation();
+
+  const getPageTitle = () => {
+    const map: Record<string, string> = {
+      "/admin": "Genel Bakış",
+      "/admin/urunler": "Ürün Yönetimi",
+      "/admin/siparisler": "Sipariş Yönetimi",
+      "/admin/kullanicilar": "Kullanıcı Yönetimi",
+      "/admin/destek": "Destek Talepleri",
+      "/admin/db": "Veritabanı Araçları",
+    };
+    // Check for sub-routes like /admin/urunler/yeni
+    if (location.pathname.startsWith("/admin/urunler/")) return "Ürün Editörü";
+    return map[location.pathname] || "Admin Panel";
+  };
+
+  return (
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-sidebar-border bg-[hsl(220,30%,8%)] px-4">
+      <SidebarTrigger className="text-sidebar-foreground/70 hover:text-sidebar-foreground" />
+      <div className="flex-1">
+        <h1 className="text-sm font-semibold text-sidebar-foreground tracking-tight">
+          {getPageTitle()}
+        </h1>
+      </div>
+      <div className="flex items-center gap-2">
+        <div className="h-2 w-2 rounded-full bg-[hsl(var(--success))] animate-pulse" />
+        <span className="text-xs text-sidebar-foreground/50 hidden sm:inline">Sistem Aktif</span>
+      </div>
+    </header>
+  );
+}
+
+export default function AdminLayout() {
+  const { isAdmin, loading } = useAdminCheck();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!loading && !isAdmin) navigate("/giris", { replace: true });
   }, [isAdmin, loading, navigate]);
 
-  if (loading) return <div className="min-h-[60vh] flex items-center justify-center">Yükleniyor...</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[hsl(220,30%,8%)]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[hsl(210,100%,40%)] to-[hsl(192,85%,45%)] animate-pulse" />
+          <p className="text-sm text-sidebar-foreground/50">Yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!isAdmin) return null;
 
   return (
     <>
       <SEO title="Admin Panel | ServerMarket" description="ServerMarket admin yönetim paneli." />
-      <div className="container py-6 max-w-7xl">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold">Admin Panel</h1>
-          <Button variant="outline" size="sm" onClick={() => { signOut(); navigate("/"); }}>
-            <LogOut className="h-4 w-4 mr-2" /> Çıkış
-          </Button>
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-6">
-          <nav className="md:w-52 flex md:flex-col gap-1 overflow-x-auto">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors",
-                  location.pathname === item.path
-                    ? "bg-primary text-primary-foreground"
-                    : "hover:bg-muted text-muted-foreground"
-                )}
-              >
-                <item.icon className="h-4 w-4" />
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex-1 min-w-0">
-            <Outlet />
+      <SidebarProvider>
+        <div className="min-h-screen flex w-full bg-[hsl(220,30%,8%)]">
+          <AdminSidebar />
+          <div className="flex-1 flex flex-col min-w-0">
+            <AdminHeader />
+            <main className="flex-1 p-6 overflow-auto">
+              <div className="max-w-7xl mx-auto">
+                <Outlet />
+              </div>
+            </main>
           </div>
         </div>
-      </div>
+      </SidebarProvider>
     </>
   );
 }
