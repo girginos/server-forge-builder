@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import TicketChat from "@/components/TicketChat";
+import { useUnreadCounts } from "@/hooks/useUnreadCounts";
 import {
   ArrowLeft, User, Package, HeadphonesIcon, FileText, Activity,
   Shield, Save, ShoppingCart, MessageSquare, Clock, Loader2,
