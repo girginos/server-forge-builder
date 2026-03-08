@@ -37,6 +37,7 @@ const navItems = [
   { label: "Genel Bakış", path: "/admin", icon: LayoutDashboard },
   { label: "Ürünler", path: "/admin/urunler", icon: Package },
   { label: "Siparişler", path: "/admin/siparisler", icon: ShoppingCart },
+  { label: "Teklifler", path: "/admin/teklifler", icon: FileText },
   { label: "Kullanıcılar", path: "/admin/kullanicilar", icon: Users },
   { label: "Destek", path: "/admin/destek", icon: HeadphonesIcon },
   { label: "DB Araçları", path: "/admin/db", icon: Database },
