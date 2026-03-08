@@ -84,6 +84,7 @@ const App = () => (
                   <Route path="urunler/:id" element={<AdminProductEditor />} />
                   <Route path="siparisler" element={<AdminOrders />} />
                   <Route path="kullanicilar" element={<AdminUsers />} />
+                  <Route path="kullanicilar/:userId" element={<AdminUserDetail />} />
                   <Route path="destek" element={<AdminSupport />} />
                   <Route path="db" element={<AdminDbTools />} />
                 </Route>
