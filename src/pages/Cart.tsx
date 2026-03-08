@@ -220,13 +220,15 @@ export default function Cart() {
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-foreground">Sepet Özeti</h2>
             {items.map((item) => (
-              <div key={item.id} className="bg-card border rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                {item.image && <img src={item.image} alt={item.name} className="h-16 w-16 object-contain shrink-0" />}
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-foreground text-sm">{item.name}</h3>
-                  {item.specs && <p className="text-[11px] text-muted-foreground mt-1 font-mono line-clamp-2">{item.specs}</p>}
+              <div key={item.id} className="bg-card border rounded-lg p-4 space-y-3">
+                <div className="flex items-start gap-4">
+                  {item.image && <img src={item.image} alt={item.name} className="h-16 w-16 object-contain shrink-0" />}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-foreground text-sm">{item.name}</h3>
+                    {item.specs && <p className="text-[11px] text-muted-foreground mt-1.5 font-mono whitespace-pre-wrap">{item.specs}</p>}
+                  </div>
                 </div>
-                <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                <div className="flex items-center justify-end gap-4 pt-1 border-t border-border/50">
                   <div className="flex items-center gap-1.5">
                     <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
                       <Minus className="h-3 w-3" />
