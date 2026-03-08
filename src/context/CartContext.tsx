@@ -47,6 +47,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { ...item, quantity: 1 }];
     });
+    toast({
+      title: "✅ Sepete eklendi",
+      description: `${item.name} sepetinize eklendi.`,
+    });
   };
 
   const removeItem = (id: string) => setItems((prev) => prev.filter((i) => i.id !== id));
