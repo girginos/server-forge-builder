@@ -136,7 +136,14 @@ export default function SupportTab({ userId }: { userId: string }) {
                         </div>
                       </div>
                     </div>
-                    <Badge variant={status.variant}>{status.label}</Badge>
+                    <div className="flex items-center gap-2">
+                      <Badge variant={status.variant}>{status.label}</Badge>
+                      {(unreadCounts[ticket.id] || 0) > 0 && (
+                        <span className="h-5 min-w-5 px-1.5 rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold flex items-center justify-center">
+                          {unreadCounts[ticket.id]}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
