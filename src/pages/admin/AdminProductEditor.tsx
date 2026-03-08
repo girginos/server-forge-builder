@@ -89,6 +89,7 @@ export default function AdminProductEditor() {
       const filePath = `products/${fileName}`;
 
       const { error } = await cloudSupabase.storage
+        .from("product-images")
         .upload(filePath, file);
 
       if (error) {
