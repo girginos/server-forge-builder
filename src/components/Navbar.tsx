@@ -221,11 +221,6 @@ export default function Navbar() {
                             </div>
                           </Link>
                         ))}
-                            }`}
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
                       </div>
                     )}
                   </div>
