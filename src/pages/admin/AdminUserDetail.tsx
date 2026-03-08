@@ -316,6 +316,13 @@ function UserTicketsSection({ userId }: { userId: string }) {
   const [loading, setLoading] = useState(true);
   const [chatTicket, setChatTicket] = useState<Ticket | null>(null);
   const { user } = useAuth();
+  const ticketIds = tickets.map((t) => t.id);
+  const { counts: unreadCounts, markAsRead } = useUnreadCounts(ticketIds, user?.id);
+
+  const openChat = (t: Ticket) => {
+    setChatTicket(t);
+    markAsRead(t.id);
+  };
 
   useEffect(() => {
     supabase.from("support_tickets").select("*").eq("user_id", userId).order("created_at", { ascending: false }).then(({ data }) => {
