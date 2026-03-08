@@ -94,7 +94,7 @@ export default function Colocation() {
               <Button variant="hero" size="lg" asChild>
                 <Link to="/iletisim">Teklif Al <ArrowRight className="h-4 w-4 ml-1" /></Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10">
+              <Button variant="outline" size="lg" className="border-white/50 text-white bg-white/10 hover:bg-white/20">
                 Veri Merkezini Gezin
               </Button>
             </div>
