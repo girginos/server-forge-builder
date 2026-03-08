@@ -261,7 +261,15 @@ export default function AdminProductEditor() {
                   rows={5}
                 />
               </div>
+            </CardContent>
+          </Card>
 
+          {/* Specs */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Teknik Özellikler</CardTitle>
+            </CardHeader>
+            <CardContent>
               <div className="grid gap-4 sm:grid-cols-2">
                 {(Object.keys(specLabels) as Array<keyof SpecFields>).map((key) => (
                   <div key={key} className="space-y-2">
