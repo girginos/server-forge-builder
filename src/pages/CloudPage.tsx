@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import cloudBg from "@/assets/cloud-bg.jpg";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 
 const services = [
   { icon: CloudIcon, title: "Cloud Sunucu", desc: "Saniyeler içinde ölçeklenebilir sanal sunucular. CPU, RAM ve disk kaynaklarını ihtiyacınıza göre ayarlayın.", features: ["Anında ölçekleme", "Saatlik faturalandırma", "Otomatik yedekleme"] },

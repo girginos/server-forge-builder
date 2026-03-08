@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Globe, Database, Layers, Brain, HardDrive, ShoppingCart, Check } from "lucide-react";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 import { useCart } from "@/context/CartContext";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 import ServerCard from "@/components/ServerCard";
 import HeroSlider from "@/components/HeroSlider";
 import {

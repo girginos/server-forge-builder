@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import colocationBg from "@/assets/colocation-bg.jpg";
 import SEO from "@/components/SEO";
+import { SITE_URL } from "@/config/site";
 
 const features = [
   { icon: Server, title: "Tier III+ Veri Merkezi", desc: "%99.98 uptime garantisi ile kesintisiz hizmet. Uluslararası standartlarda sertifikalı altyapı.", highlights: ["ISO 27001 sertifikalı", "Uptime Institute Tier III"] },
