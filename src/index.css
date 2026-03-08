@@ -112,3 +112,18 @@
   from { width: 0%; }
   to { width: 100%; }
 }
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes heroGlow {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.15; }
+  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.25; }
+}
+
+@keyframes heroOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
