@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "@/context/CartContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PartnersBanner from "@/components/PartnersBanner";
 import Index from "./pages/Index";
 import Hardware from "./pages/Hardware";
 import Configurator from "./pages/Configurator";
