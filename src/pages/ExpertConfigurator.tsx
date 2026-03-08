@@ -232,9 +232,9 @@ export default function ExpertConfigurator() {
             </div>
           </div>
 
-          {/* Step 3: Contact info */}
+          {/* Step 4: Contact info */}
           <div>
-            <h2 className="text-lg font-semibold text-foreground mb-1">3. İletişim Bilgileriniz</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-1">4. İletişim Bilgileriniz</h2>
             <p className="text-sm text-muted-foreground mb-4">Size nasıl ulaşmamızı istersiniz?</p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-5">
