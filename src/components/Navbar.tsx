@@ -21,6 +21,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const { items } = useCart();
+  const { user } = useAuth();
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
