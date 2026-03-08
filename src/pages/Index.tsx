@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import ServerCard from "@/components/ServerCard";
+import HeroSlider from "@/components/HeroSlider";
 import {
   Shield, Settings, Cpu, Zap, Truck, Headphones,
   Globe, Database, Layers, ArrowRight, CheckCircle2,
   Users, Award, Server, Clock, Package, Brain,
   HardDrive, ChevronRight
 } from "lucide-react";
-import heroImage from "@/assets/hero-server.png";
 import colocationBg from "@/assets/colocation-bg.jpg";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
@@ -76,75 +76,8 @@ export default function Index() {
         keywords="sunucu satış, server donanım, dell poweredge, hp proliant, supermicro, sunucu yapılandırma, colocation"
         canonical="/"
       />
-      {/* ── Hero ── */}
-      <section className="gradient-hero text-secondary-foreground relative overflow-hidden">
-        {/* Background grid pattern */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
-
-        <div className="container py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center relative">
-          <div className="space-y-7">
-            <div className="flex flex-wrap gap-2 animate-fade-in opacity-0">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-xs font-medium text-teal">
-                <Settings className="h-3 w-3" /> Esnek Yapılandırma
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-xs font-medium text-teal">
-                <Shield className="h-3 w-3" /> Garantili Donanım
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-teal/30 bg-teal/10 px-3 py-1 text-xs font-medium text-teal">
-                <Cpu className="h-3 w-3" /> Stres Testli
-              </span>
-            </div>
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] animate-fade-in-delay-1 opacity-0">
-              Kurumsal Sunucu{" "}
-              <span className="text-gradient">Çözümleri</span>
-              <br />
-              <span className="text-2xl lg:text-3xl font-medium text-secondary-foreground/60 mt-2 block">
-                Güç. Güvenilirlik. Performans.
-              </span>
-            </h1>
-            <p className="text-lg text-secondary-foreground/70 max-w-lg animate-fade-in-delay-2 opacity-0">
-              İşletmeniz için <strong className="text-secondary-foreground">enterprise sınıfı performans</strong>.
-              Tamamen test edilmiş ve ihtiyacınıza göre yapılandırılmış sunucu donanımları.
-            </p>
-            <div className="flex flex-wrap gap-3 animate-fade-in-delay-2 opacity-0">
-              <Button variant="hero" size="lg" asChild>
-                <Link to="/yapilandirici"><Settings className="h-5 w-5" /> Sunucu Yapılandır</Link>
-              </Button>
-              <Button variant="heroOutline" size="lg" asChild>
-                <Link to="/hazir-paketler">Hazır Paketler</Link>
-              </Button>
-            </div>
-            {/* Trust indicators */}
-            <div className="flex items-center gap-6 pt-2 animate-fade-in-delay-2 opacity-0">
-              <div className="flex -space-x-2">
-                {[...Array(4)].map((_, i) => (
-                  <div key={i} className="h-8 w-8 rounded-full bg-navy-light border-2 border-navy flex items-center justify-center text-[10px] font-bold text-teal">
-                    {["AY", "EK", "MD", "SK"][i]}
-                  </div>
-                ))}
-              </div>
-              <div>
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className="text-warning text-sm">★</span>
-                  ))}
-                </div>
-                <p className="text-xs text-secondary-foreground/50">500+ müşteri güveniyor</p>
-              </div>
-            </div>
-          </div>
-          <div className="relative hidden lg:block">
-            <img src={heroImage} alt="Sunucu donanımları" className="rounded-xl shadow-2xl animate-fade-in opacity-0" />
-            <div className="absolute -bottom-5 -right-5 bg-teal rounded-xl px-6 py-4 text-center shadow-glow animate-pulse-glow">
-              <p className="text-3xl font-bold text-accent-foreground">%40'a</p>
-              <p className="text-xs font-medium text-accent-foreground/80">varan indirimler</p>
-            </div>
-            <div className="absolute -top-3 -left-3 bg-card rounded-lg px-4 py-3 shadow-card animate-float border">
-              <p className="text-xs font-medium text-foreground flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-success" /> 72 Saat Stres Testi</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── Hero Slider ── */}
+      <HeroSlider />
 
       {/* ── Features Bar ── */}
       <section className="border-b bg-card">
