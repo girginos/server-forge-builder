@@ -172,10 +172,10 @@ export default function AdminLayout() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[hsl(220,30%,8%)]">
+      <div className="admin-theme min-h-screen flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
-          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[hsl(210,100%,40%)] to-[hsl(192,85%,45%)] animate-pulse" />
-          <p className="text-sm text-sidebar-foreground/50">Yükleniyor...</p>
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary to-accent animate-pulse" />
+          <p className="text-sm text-muted-foreground">Yükleniyor...</p>
         </div>
       </div>
     );
