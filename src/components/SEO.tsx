@@ -6,7 +6,7 @@ interface SEOProps {
   keywords?: string;
   canonical?: string;
   ogImage?: string;
-  jsonLd?: Record<string, unknown>;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   noIndex?: boolean;
 }
 

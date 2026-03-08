@@ -198,6 +198,27 @@ export default function Leasing() {
         description="Peşinatsız, sabit taksitlerle sunucu sahibi olun. 12-48 ay vade, garanti dahil. Kurumsal sunucu kiralama çözümleri."
         keywords="sunucu kiralama, kirala senin olsun, sunucu leasing, sunucu taksit, kurumsal kiralama"
         canonical="/leasing"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: "ServerMarket Kirala Senin Olsun",
+            provider: { "@type": "Organization", name: "ServerMarket", url: "https://servermarket.com.tr" },
+            description: "Peşinatsız, sabit taksitlerle sunucu sahibi olun. 12-48 ay vade seçenekleri.",
+            url: "https://servermarket.com.tr/leasing",
+            areaServed: "TR",
+            serviceType: "Server Leasing",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqItems.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          },
+        ]}
       />
 
       {/* Hero */}

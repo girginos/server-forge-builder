@@ -75,6 +75,37 @@ export default function Colocation() {
         description="Tier III+ veri merkezlerinde sunucu barındırma. Yedekli güç, 7/24 güvenlik, yüksek bant genişliği ile kesintisiz colocation hizmetleri."
         keywords="colocation, sunucu barındırma, veri merkezi, datacenter, server hosting, rack kirala"
         canonical="/colocation"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: "ServerMarket Colocation Hizmetleri",
+            provider: { "@type": "Organization", name: "ServerMarket", url: "https://servermarket.com.tr" },
+            description: "Tier III+ veri merkezlerinde sunucu barındırma hizmetleri.",
+            url: "https://servermarket.com.tr/colocation",
+            areaServed: "TR",
+            serviceType: "Colocation Hosting",
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: "Colocation Planları",
+              itemListElement: [
+                { "@type": "Offer", name: "1U Sunucu", price: "2.500", priceCurrency: "TRY", description: "1U alan, 1kW güç, 1Gbps port" },
+                { "@type": "Offer", name: "2U Sunucu", price: "4.000", priceCurrency: "TRY", description: "2U alan, 1.5kW güç, 1Gbps port" },
+                { "@type": "Offer", name: "Quarter Rack", price: "8.000", priceCurrency: "TRY", description: "10U alan, 3kW güç, 10Gbps port" },
+                { "@type": "Offer", name: "Half Rack", price: "14.000", priceCurrency: "TRY", description: "21U alan, 5kW güç, 10Gbps port" },
+              ],
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          },
+        ]}
       />
 
       {/* Hero */}
