@@ -109,6 +109,7 @@ export default function Configurator() {
 
   const defaultSelections = Object.fromEntries(configSections.map((s) => [s.id, s.options[0].value]));
   const [selections, setSelections] = useState<Record<string, string>>(defaultSelections);
+  const [showManualSelection, setShowManualSelection] = useState(false);
 
   const totalPrice = useMemo(() => {
     const base = server?.basePrice ?? 25000;
