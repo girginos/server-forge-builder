@@ -6,6 +6,7 @@ import { useCart } from "@/context/CartContext";
 
 const navLinks = [
   { label: "Donanım", href: "/donanim" },
+  { label: "Hazır Paketler", href: "/hazir-paketler" },
   { label: "Yapılandırıcı", href: "/yapilandirici" },
   { label: "Cloud", href: "/cloud" },
   { label: "Colocation", href: "/colocation" },
