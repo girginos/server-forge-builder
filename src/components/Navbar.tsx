@@ -20,7 +20,7 @@ interface NavItem {
 
 const datacenterChildren: NavChild[] = [
   { label: "Cloud", href: "/cloud", description: "Bulut sunucu ve altyapı hizmetleri", icon: <Cloud className="h-5 w-5" /> },
-  { label: "Leasing", href: "/leasing", description: "Esnek ödeme ile sunucu kiralama", icon: <Monitor className="h-5 w-5" /> },
+  { label: "Leasing", href: "/leasing", description: "Kirala, senin olsun sunucu çözümleri", icon: <Monitor className="h-5 w-5" /> },
   { label: "Colocation", href: "/colocation", description: "Veri merkezinde sunucu barındırma", icon: <Building2 className="h-5 w-5" /> },
 ];
 
