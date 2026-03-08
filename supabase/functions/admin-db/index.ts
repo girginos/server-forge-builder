@@ -10,6 +10,8 @@ const EXTERNAL_URL = "https://merqyvrpmjymyftgfcmg.supabase.co";
 const EXTERNAL_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1lcnF5dnJwbWp5bXlmdGdmY21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwMTQzNjgsImV4cCI6MjA4NjU5MDM2OH0.yC0YABZ0WWHTr-JlXbXOoB_dnlwF_G4YW1mF_t9Cp0Q";
 
 async function authenticateRequest(req: Request): Promise<boolean> {
+  const authHeader = req.headers.get("Authorization");
+
   // Method 1: API Key authentication (for server-side/automation)
   const apiKey = req.headers.get("x-admin-api-key");
   const storedApiKey = Deno.env.get("ADMIN_API_KEY");
@@ -18,14 +20,12 @@ async function authenticateRequest(req: Request): Promise<boolean> {
   }
 
   // Method 2: Service role key (for Lovable Cloud automation)
-  const authHeader = req.headers.get("Authorization");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (authHeader && serviceRoleKey && authHeader === `Bearer ${serviceRoleKey}`) {
     return true;
   }
 
-  // Method 2: User token + admin role check (for browser/admin panel)
-  const authHeader = req.headers.get("Authorization");
+  // Method 3: User token + admin role check (for browser/admin panel)
   if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
