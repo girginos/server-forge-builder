@@ -68,6 +68,7 @@ export default function Hardware() {
       if (search && !s.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (selectedBrands.length > 0 && !selectedBrands.includes(s.brand)) return false;
       if (selectedFormFactors.length > 0 && !selectedFormFactors.includes(s.formFactor)) return false;
+      if (selectedCpuBrands.length > 0 && !selectedCpuBrands.includes(s.cpuBrand)) return false;
       const range = priceRanges[priceRange];
       if (s.price < range.min || s.price > range.max) return false;
       return true;
