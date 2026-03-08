@@ -147,7 +147,7 @@ function AdminHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-sidebar-border bg-[hsl(220,30%,8%)] px-4">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-border bg-background px-4">
       <SidebarTrigger className="text-sidebar-foreground/70 hover:text-sidebar-foreground" />
       <div className="flex-1">
         <h1 className="text-sm font-semibold text-sidebar-foreground tracking-tight">
