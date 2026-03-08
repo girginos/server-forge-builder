@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Trash2, Plus, Minus, ShoppingCart, Send, CheckCircle2 } from "lucide-react";
+import SEO from "@/components/SEO";
 import { useCart } from "@/context/CartContext";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -50,6 +51,7 @@ export default function Cart() {
   if (items.length === 0 && !submitted) {
     return (
       <div className="py-20 text-center">
+        <SEO title="Sepetim" description="Sepetinizi inceleyin ve teklif talebinizi gönderin." canonical="/sepet" />
         <ShoppingCart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
         <h1 className="text-2xl font-bold text-foreground">Sepetiniz Boş</h1>
         <p className="text-muted-foreground mt-2">Henüz ürün eklemediniz.</p>
@@ -77,6 +79,7 @@ export default function Cart() {
 
   return (
     <div className="py-12">
+      <SEO title="Sepetim" description="Sepetinizi inceleyin ve teklif talebinizi gönderin." canonical="/sepet" />
       <div className="container max-w-5xl">
         <h1 className="text-3xl font-bold text-foreground mb-6">Sepetim ({items.length})</h1>
 

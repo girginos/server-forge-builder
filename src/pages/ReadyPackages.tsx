@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Globe, Database, Layers, Brain, HardDrive, ShoppingCart, Check } from "lucide-react";
+import SEO from "@/components/SEO";
 import { useCart } from "@/context/CartContext";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
@@ -59,6 +60,12 @@ export default function ReadyPackages() {
 
   return (
     <div>
+      <SEO
+        title="Hazır Sunucu Paketleri"
+        description="İş yükünüze göre optimize edilmiş hazır sunucu paketleri. Web, veritabanı, sanallaştırma, AI ve depolama sunucuları."
+        keywords="hazır sunucu, sunucu paketi, web sunucu, veritabanı sunucu, sanallaştırma sunucu, AI sunucu"
+        canonical="/hazir-paketler"
+      />
       {/* Hero */}
       <section className="gradient-hero text-secondary-foreground py-16">
         <div className="container text-center">

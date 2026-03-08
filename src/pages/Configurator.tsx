@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import SEO from "@/components/SEO";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
 import serverDL380 from "@/assets/server-dl380.png";
@@ -127,6 +128,12 @@ export default function Configurator() {
     // Show server selection
     return (
       <div className="py-12">
+        <SEO
+          title="Sunucu Yapılandırıcı"
+          description="Sunucunuzu özelleştirin. CPU, RAM, depolama, RAID, ağ kartı ve güç kaynağı seçenekleriyle ihtiyacınıza özel sunucu yapılandırın."
+          keywords="sunucu yapılandırma, server configurator, özel sunucu, sunucu özelleştirme"
+          canonical="/yapilandirici"
+        />
         <div className="container">
           <h1 className="text-3xl font-bold text-foreground mb-2">Sunucu Yapılandırıcı</h1>
           <p className="text-muted-foreground mb-8">Yapılandırmak istediğiniz sunucu modelini seçin.</p>
@@ -170,6 +177,11 @@ export default function Configurator() {
 
   return (
     <div className="py-8">
+      <SEO
+        title={`${server.name} Yapılandır`}
+        description={`${server.name} sunucusunu özelleştirin. CPU, RAM, depolama ve daha fazlasını seçin.`}
+        canonical={`/yapilandirici/${serverId}`}
+      />
       <div className="container">
         <h1 className="text-2xl font-bold text-foreground mb-6">{server.name}</h1>
 

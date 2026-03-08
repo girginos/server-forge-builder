@@ -3,6 +3,7 @@ import ServerCard from "@/components/ServerCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X, SlidersHorizontal } from "lucide-react";
+import SEO from "@/components/SEO";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
 import serverDL380 from "@/assets/server-dl380.png";
@@ -75,6 +76,12 @@ export default function Hardware() {
 
   return (
     <div className="py-10">
+      <SEO
+        title="Sunucu Donanımları"
+        description="Dell, HP, Supermicro sunucu donanımları. Marka, fiyat ve form faktörüne göre filtreleyin, ihtiyacınıza uygun sunucuyu bulun."
+        keywords="sunucu donanım, dell poweredge, hp proliant, supermicro, rack sunucu, 1u sunucu, 2u sunucu"
+        canonical="/donanim"
+      />
       <div className="container">
         {/* Header */}
         <div className="mb-6">

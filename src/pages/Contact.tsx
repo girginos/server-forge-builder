@@ -2,10 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import SEO from "@/components/SEO";
 
 export default function Contact() {
   return (
     <div className="py-12">
+      <SEO
+        title="İletişim"
+        description="ServerMarket ile iletişime geçin. Sunucu donanımı, colocation ve cloud hizmetleri için teklif alın. 7/24 teknik destek."
+        keywords="iletişim, teklif al, sunucu satış, teknik destek, servermarket iletişim"
+        canonical="/iletisim"
+      />
       <div className="container max-w-5xl">
         <h1 className="text-3xl font-bold text-foreground mb-2">İletişim</h1>
         <p className="text-muted-foreground mb-8">Sorularınız ve teklif talepleriniz için bize ulaşın.</p>

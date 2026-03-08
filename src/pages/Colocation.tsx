@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Server, Shield, Zap, Wifi, Lock, Clock } from "lucide-react";
 import colocationBg from "@/assets/colocation-bg.jpg";
+import SEO from "@/components/SEO";
 
 const features = [
   { icon: Server, title: "Tier III+ Veri Merkezi", desc: "%99.98 uptime garantisi ile kesintisiz hizmet." },
@@ -22,6 +23,12 @@ const plans = [
 export default function Colocation() {
   return (
     <div>
+      <SEO
+        title="Colocation Hizmetleri"
+        description="Tier III+ veri merkezlerinde sunucu barındırma. Yedekli güç, 7/24 güvenlik, yüksek bant genişliği ile kesintisiz colocation hizmetleri."
+        keywords="colocation, sunucu barındırma, veri merkezi, datacenter, server hosting, rack kirala"
+        canonical="/colocation"
+      />
       <section className="relative h-80 overflow-hidden">
         <img src={colocationBg} alt="Colocation veri merkezi" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 gradient-navy opacity-80" />

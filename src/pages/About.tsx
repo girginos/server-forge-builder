@@ -1,4 +1,5 @@
 import { Users, Award, Globe, TrendingUp } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const stats = [
   { icon: Users, value: "500+", label: "Mutlu Müşteri" },
@@ -10,6 +11,12 @@ const stats = [
 export default function About() {
   return (
     <div>
+      <SEO
+        title="Hakkımızda"
+        description="ServerMarket olarak 15 yılı aşkın süredir Türkiye'nin önde gelen kurumsal sunucu çözümleri sağlayıcısıyız. 500+ mutlu müşteri, 10.000+ satılan sunucu."
+        keywords="servermarket hakkında, sunucu firması, kurumsal çözümler, sunucu tedarikçi"
+        canonical="/hakkimizda"
+      />
       <section className="gradient-hero text-secondary-foreground py-20">
         <div className="container text-center">
           <h1 className="text-4xl font-bold">Hakkımızda</h1>

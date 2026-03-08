@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
 import ServerCard from "@/components/ServerCard";
 import {
   Shield, Settings, Cpu, Zap, Truck, Headphones,
@@ -69,6 +70,12 @@ const testimonials = [
 export default function Index() {
   return (
     <div>
+      <SEO
+        title="Kurumsal Sunucu Donanım Çözümleri"
+        description="Türkiye'nin güvenilir sunucu donanım tedarikçisi. Dell, HP, Supermicro sunucu satışı, yapılandırma, colocation ve cloud hizmetleri."
+        keywords="sunucu satış, server donanım, dell poweredge, hp proliant, supermicro, sunucu yapılandırma, colocation"
+        canonical="/"
+      />
       {/* ── Hero ── */}
       <section className="gradient-hero text-secondary-foreground relative overflow-hidden">
         {/* Background grid pattern */}
