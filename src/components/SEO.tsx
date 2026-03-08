@@ -19,7 +19,7 @@ export default function SEO({ title, description, keywords, canonical, ogImage, 
   const defaultJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteName,
+    name: SITE_NAME,
     url: baseUrl,
     logo: `${baseUrl}/favicon.ico`,
     contactPoint: {
