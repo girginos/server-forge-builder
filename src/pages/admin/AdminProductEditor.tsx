@@ -12,24 +12,57 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface SpecFields {
+  cpu: string;
+  ram: string;
+  storage: string;
+  network: string;
+  form_factor: string;
+  warranty: string;
+  power: string;
+  os: string;
+}
+
 interface ProductForm {
   name: string;
   description: string;
   category: string;
   price: number;
-  specs: string;
+  specs: SpecFields;
   image_url: string;
   images: string[];
   in_stock: boolean;
   featured: boolean;
 }
 
+const emptySpecs: SpecFields = {
+  cpu: "",
+  ram: "",
+  storage: "",
+  network: "",
+  form_factor: "",
+  warranty: "",
+  power: "",
+  os: "",
+};
+
+const specLabels: Record<keyof SpecFields, string> = {
+  cpu: "İşlemci",
+  ram: "RAM",
+  storage: "Disk / Depolama",
+  network: "Ağ",
+  form_factor: "Form Faktörü",
+  warranty: "Garanti",
+  power: "Güç Kaynağı",
+  os: "İşletim Sistemi",
+};
+
 const emptyForm: ProductForm = {
   name: "",
   description: "",
   category: "server",
   price: 0,
-  specs: "{}",
+  specs: { ...emptySpecs },
   image_url: "",
   images: [],
   in_stock: true,
@@ -66,7 +99,7 @@ export default function AdminProductEditor() {
             description: data.description || "",
             category: data.category,
             price: data.price,
-            specs: JSON.stringify(data.specs, null, 2),
+            specs: { ...emptySpecs, ...(typeof data.specs === 'object' ? data.specs as Record<string, string> : {}) },
             image_url: data.image_url || "",
             images: (data as any).images || [],
             in_stock: data.in_stock,
@@ -151,13 +184,10 @@ export default function AdminProductEditor() {
     }
 
     setSaving(true);
-    let specs = {};
-    try {
-      specs = JSON.parse(form.specs || "{}");
-    } catch {
-      toast({ title: "Geçersiz JSON formatı", variant: "destructive" });
-      setSaving(false);
-      return;
+    // Filter out empty spec values
+    const specs: Record<string, string> = {};
+    for (const [key, value] of Object.entries(form.specs)) {
+      if (value.trim()) specs[key] = value.trim();
     }
 
     const payload = {
@@ -231,16 +261,40 @@ export default function AdminProductEditor() {
                   rows={5}
                 />
               </div>
+            </CardContent>
+          </Card>
 
-              <div className="space-y-2">
-                <Label>Özellikler (JSON)</Label>
-                <Textarea
-                  value={form.specs}
-                  onChange={(e) => setForm({ ...form, specs: e.target.value })}
-                  placeholder='{"cpu": "Intel Xeon", "ram": "64GB", "storage": "1TB SSD"}'
-                  rows={6}
-                  className="font-mono text-sm"
-                />
+          {/* Specs */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Teknik Özellikler</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {(Object.keys(specLabels) as Array<keyof SpecFields>).map((key) => (
+                  <div key={key} className="space-y-2">
+                    <Label>{specLabels[key]}</Label>
+                    <Input
+                      value={form.specs[key]}
+                      onChange={(e) =>
+                        setForm({
+                          ...form,
+                          specs: { ...form.specs, [key]: e.target.value },
+                        })
+                      }
+                      placeholder={
+                        key === "cpu" ? "2x Intel Xeon E5-2680 v4" :
+                        key === "ram" ? "64GB DDR4 ECC" :
+                        key === "storage" ? "2x 1TB SSD NVMe" :
+                        key === "network" ? "4x 1GbE + 2x 10GbE" :
+                        key === "form_factor" ? "2U Rack" :
+                        key === "warranty" ? "3 Yıl" :
+                        key === "power" ? "2x 750W Redundant" :
+                        "Yok"
+                      }
+                    />
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
