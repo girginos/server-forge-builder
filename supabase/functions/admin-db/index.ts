@@ -17,6 +17,13 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     return true;
   }
 
+  // Method 2: Service role key (for Lovable Cloud automation)
+  const authHeader = req.headers.get("Authorization");
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (authHeader && serviceRoleKey && authHeader === `Bearer ${serviceRoleKey}`) {
+    return true;
+  }
+
   // Method 2: User token + admin role check (for browser/admin panel)
   const authHeader = req.headers.get("Authorization");
   if (!authHeader?.startsWith("Bearer ")) {
