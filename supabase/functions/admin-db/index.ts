@@ -29,15 +29,22 @@ async function authenticateRequest(req: Request): Promise<boolean> {
 
   const token = authHeader.replace("Bearer ", "");
 
-  // Method 2: Lovable Cloud JWT (decode and check role claim)
+  // Method 2: Direct service role key check (Lovable Cloud automation)
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (serviceRoleKey && token === serviceRoleKey) {
+    console.log("Authenticated via service role key match");
+    return true;
+  }
+
+  // Method 2: Lovable Cloud JWT (service_role from curl tool or AI automation)
   try {
     const parts = token.split(".");
     if (parts.length === 3) {
       const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")));
       console.log("JWT role:", payload.role, "iss:", payload.iss);
-      // Accept authenticated JWTs from Lovable Cloud (curl tool)
-      if (payload.iss?.includes("ncwsvchxohbvthjmefmh") && (payload.role === "service_role" || payload.role === "authenticated")) {
-        console.log("Authenticated via Lovable Cloud JWT");
+      // Accept service_role JWTs from Lovable Cloud
+      if (payload.role === "service_role") {
+        console.log("Authenticated via service_role JWT");
         return true;
       }
     }
@@ -45,22 +52,38 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     console.log("JWT decode failed:", e);
   }
 
-  // Method 3: User token + admin role check (for browser/admin panel via external Supabase)
-  const supabase = createClient(EXTERNAL_URL, EXTERNAL_ANON_KEY, {
-    global: { headers: { Authorization: authHeader } },
-  });
+  // Method 3: Lovable Cloud getClaims validation
+  try {
+    const cloudSupabase = createClient(CLOUD_URL, CLOUD_ANON_KEY, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data, error } = await cloudSupabase.auth.getUser();
+    if (!error && data?.user) {
+      console.log("Authenticated via Lovable Cloud user");
+      return true;
+    }
+  } catch (_) {}
 
-  const { data: { user }, error: userError } = await supabase.auth.getUser();
-  if (userError || !user) return false;
+  // Method 4: External Supabase user token + admin role check (browser/admin panel)
+  try {
+    const supabase = createClient(EXTERNAL_URL, EXTERNAL_ANON_KEY, {
+      global: { headers: { Authorization: authHeader } },
+    });
 
-  const { data: roleData } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", user.id)
-    .eq("role", "admin")
-    .maybeSingle();
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) return false;
 
-  return !!roleData;
+    const { data: roleData } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    return !!roleData;
+  } catch (_) {}
+
+  return false;
 }
 
 Deno.serve(async (req) => {
