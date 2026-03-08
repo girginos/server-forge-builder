@@ -35,11 +35,7 @@ function PartnerItem({ partner }: { partner: Partner }) {
 
 export default function PartnersBanner() {
   return (
-    <section className="border-t bg-card py-14 overflow-hidden">
-      <div className="container mb-10">
-        <h3 className="text-center text-lg font-bold text-foreground mb-2">Çözüm Ortaklarımız</h3>
-        <p className="text-center text-sm text-muted-foreground">Dünya lideri teknoloji üreticileriyle güçlü iş birlikleri</p>
-      </div>
+    <section className="border-t bg-card py-8 overflow-hidden">
 
       {/* Marquee */}
       <div className="relative">
