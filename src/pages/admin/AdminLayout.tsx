@@ -30,6 +30,7 @@ import {
   PanelLeft,
   Server,
   Home,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
