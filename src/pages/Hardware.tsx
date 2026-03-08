@@ -236,6 +236,12 @@ export default function Hardware() {
                     <button onClick={() => toggleFilter(selectedBrands, b, setSelectedBrands)}><X className="h-3 w-3" /></button>
                   </span>
                 ))}
+                {selectedCpuBrands.map((cb) => (
+                  <span key={cb} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
+                    {cb}
+                    <button onClick={() => toggleFilter(selectedCpuBrands, cb, setSelectedCpuBrands)}><X className="h-3 w-3" /></button>
+                  </span>
+                ))}
                 {selectedFormFactors.map((ff) => (
                   <span key={ff} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
                     {ff}
