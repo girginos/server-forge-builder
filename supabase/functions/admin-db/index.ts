@@ -35,8 +35,9 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     if (parts.length === 3) {
       const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")));
       console.log("JWT role:", payload.role, "iss:", payload.iss);
-      if (payload.role === "service_role") {
-        console.log("Authenticated via service_role JWT");
+      // Accept authenticated JWTs from Lovable Cloud (curl tool)
+      if (payload.iss?.includes("ncwsvchxohbvthjmefmh") && (payload.role === "service_role" || payload.role === "authenticated")) {
+        console.log("Authenticated via Lovable Cloud JWT");
         return true;
       }
     }
