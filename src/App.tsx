@@ -27,6 +27,7 @@ import NotFound from "./pages/NotFound";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
+import AdminProductEditor from "./pages/admin/AdminProductEditor";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminSupport from "./pages/admin/AdminSupport";
@@ -65,6 +66,8 @@ const App = () => (
                     <Route path="/admin" element={<AdminLayout />}>
                       <Route index element={<AdminDashboard />} />
                       <Route path="urunler" element={<AdminProducts />} />
+                      <Route path="urunler/yeni" element={<AdminProductEditor />} />
+                      <Route path="urunler/:id" element={<AdminProductEditor />} />
                       <Route path="siparisler" element={<AdminOrders />} />
                       <Route path="kullanicilar" element={<AdminUsers />} />
                       <Route path="destek" element={<AdminSupport />} />
