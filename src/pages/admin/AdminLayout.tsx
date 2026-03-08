@@ -141,8 +141,8 @@ function AdminHeader() {
       "/admin/destek": "Destek Talepleri",
       "/admin/db": "Veritabanı Araçları",
     };
-    // Check for sub-routes like /admin/urunler/yeni
     if (location.pathname.startsWith("/admin/urunler/")) return "Ürün Editörü";
+    if (location.pathname.startsWith("/admin/kullanicilar/")) return "Kullanıcı Detayı";
     return map[location.pathname] || "Admin Panel";
   };
 

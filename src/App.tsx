@@ -28,6 +28,7 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminProductEditor from "./pages/admin/AdminProductEditor";
+import AdminUserDetail from "./pages/admin/AdminUserDetail";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminSupport from "./pages/admin/AdminSupport";
@@ -83,6 +84,7 @@ const App = () => (
                   <Route path="urunler/:id" element={<AdminProductEditor />} />
                   <Route path="siparisler" element={<AdminOrders />} />
                   <Route path="kullanicilar" element={<AdminUsers />} />
+                  <Route path="kullanicilar/:userId" element={<AdminUserDetail />} />
                   <Route path="destek" element={<AdminSupport />} />
                   <Route path="db" element={<AdminDbTools />} />
                 </Route>
