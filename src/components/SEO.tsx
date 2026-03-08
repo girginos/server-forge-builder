@@ -49,7 +49,7 @@ export default function SEO({ title, description, keywords, canonical, ogImage, 
       {/* Open Graph */}
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:site_name" content={siteName} />
+      <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="tr_TR" />
       {canonical && <meta property="og:url" content={`${baseUrl}${canonical}`} />}
