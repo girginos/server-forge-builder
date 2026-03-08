@@ -13,6 +13,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Hardware from "./pages/Hardware";
 import Configurator from "./pages/Configurator";
+import AIConfigurator from "./pages/AIConfigurator";
 import Colocation from "./pages/Colocation";
 import CloudPage from "./pages/CloudPage";
 import About from "./pages/About";
