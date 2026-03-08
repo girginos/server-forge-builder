@@ -9,6 +9,7 @@ const navLinks = [
   { label: "Donanım", href: "/hardware" },
   { label: "Hazır Paketler", href: "/hazir-paketler" },
   { label: "Yapılandırıcı", href: "/yapilandirici" },
+  { label: "Leasing", href: "/leasing" },
   { label: "Cloud", href: "/cloud" },
   { label: "Colocation", href: "/colocation" },
   { label: "Hakkımızda", href: "/hakkimizda" },
