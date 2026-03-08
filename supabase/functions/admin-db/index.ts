@@ -9,18 +9,13 @@ const corsHeaders = {
 const EXTERNAL_URL = "https://merqyvrpmjymyftgfcmg.supabase.co";
 const EXTERNAL_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1lcnF5dnJwbWp5bXlmdGdmY21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwMTQzNjgsImV4cCI6MjA4NjU5MDM2OH0.yC0YABZ0WWHTr-JlXbXOoB_dnlwF_G4YW1mF_t9Cp0Q";
 
+// Lovable Cloud Supabase (for verifying curl tool JWTs)
+const CLOUD_URL = Deno.env.get("SUPABASE_URL")!;
+const CLOUD_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+
 async function authenticateRequest(req: Request): Promise<boolean> {
   const authHeader = req.headers.get("Authorization");
-  console.log("Auth header present:", !!authHeader);
-  console.log("Auth header prefix:", authHeader?.substring(0, 20));
-  console.log("x-admin-api-key present:", !!req.headers.get("x-admin-api-key"));
-  console.log("ADMIN_API_KEY env present:", !!Deno.env.get("ADMIN_API_KEY"));
-  console.log("SERVICE_ROLE_KEY env present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
-  const token = authHeader?.replace("Bearer ", "") || "";
-  const srk = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
-  console.log("Token last10:", token.slice(-10));
-  console.log("SRK last10:", srk.slice(-10));
-  console.log("Match:", token === srk);
+
   // Method 1: API Key authentication (for server-side/automation)
   const apiKey = req.headers.get("x-admin-api-key");
   const storedApiKey = Deno.env.get("ADMIN_API_KEY");
@@ -28,17 +23,27 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     return true;
   }
 
-  // Method 2: Service role key (for Lovable Cloud automation)
-  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (authHeader && serviceRoleKey && authHeader === `Bearer ${serviceRoleKey}`) {
-    return true;
-  }
-
-  // Method 3: User token + admin role check (for browser/admin panel)
   if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
 
+  const token = authHeader.replace("Bearer ", "");
+
+  // Method 2: Lovable Cloud JWT (service_role from curl tool)
+  try {
+    const cloudClient = createClient(CLOUD_URL, CLOUD_ANON_KEY, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data, error } = await cloudClient.auth.getClaims(token);
+    if (!error && data?.claims?.role === "service_role") {
+      console.log("Authenticated via Cloud service_role JWT");
+      return true;
+    }
+  } catch (e) {
+    console.log("Cloud JWT check failed:", e);
+  }
+
+  // Method 3: User token + admin role check (for browser/admin panel via external Supabase)
   const supabase = createClient(EXTERNAL_URL, EXTERNAL_ANON_KEY, {
     global: { headers: { Authorization: authHeader } },
   });
@@ -67,7 +72,7 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const { action, sql, table, data, format } = await req.json();
+    const { action, sql, table } = await req.json();
     const dbUrl = Deno.env.get("EXTERNAL_DB_URL")!;
 
     if (action === "query" && sql) {
