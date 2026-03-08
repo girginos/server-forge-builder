@@ -36,6 +36,13 @@ export default function SupportTab({ userId }: { userId: string }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [chatTicket, setChatTicket] = useState<Ticket | null>(null);
   const { toast } = useToast();
+  const ticketIds = tickets.map((t) => t.id);
+  const { counts: unreadCounts, markAsRead } = useUnreadCounts(ticketIds, userId);
+
+  const openChat = (ticket: Ticket) => {
+    setChatTicket(ticket);
+    markAsRead(ticket.id);
+  };
 
   const loadTickets = () => {
     supabase.from("support_tickets").select("*").eq("user_id", userId).order("created_at", { ascending: false }).then(({ data }) => {
