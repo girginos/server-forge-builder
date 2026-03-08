@@ -184,13 +184,10 @@ export default function AdminProductEditor() {
     }
 
     setSaving(true);
-    let specs = {};
-    try {
-      specs = JSON.parse(form.specs || "{}");
-    } catch {
-      toast({ title: "Geçersiz JSON formatı", variant: "destructive" });
-      setSaving(false);
-      return;
+    // Filter out empty spec values
+    const specs: Record<string, string> = {};
+    for (const [key, value] of Object.entries(form.specs)) {
+      if (value.trim()) specs[key] = value.trim();
     }
 
     const payload = {
