@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { HeadphonesIcon, Plus, MessageSquare, Clock } from "lucide-react";
+import TicketChat from "@/components/TicketChat";
 
 interface Ticket {
   id: string;
@@ -32,6 +33,7 @@ export default function SupportTab({ userId }: { userId: string }) {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [chatTicket, setChatTicket] = useState<Ticket | null>(null);
   const { toast } = useToast();
 
   const loadTickets = () => {
@@ -104,7 +106,11 @@ export default function SupportTab({ userId }: { userId: string }) {
           {tickets.map((ticket) => {
             const status = statusMap[ticket.status] || { label: ticket.status, variant: "secondary" as const };
             return (
-              <Card key={ticket.id} className="hover:shadow-md transition-shadow">
+              <Card
+                key={ticket.id}
+                className="hover:shadow-md transition-shadow cursor-pointer"
+                onClick={() => setChatTicket(ticket)}
+              >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3 min-w-0">
@@ -130,6 +136,30 @@ export default function SupportTab({ userId }: { userId: string }) {
           })}
         </div>
       )}
+
+      {/* Chat Dialog */}
+      <Dialog open={!!chatTicket} onOpenChange={(open) => !open && setChatTicket(null)}>
+        <DialogContent className="max-w-lg h-[70vh] flex flex-col p-0">
+          <DialogHeader className="px-6 pt-6 pb-3 border-b shrink-0">
+            <div className="flex items-center justify-between gap-2">
+              <DialogTitle className="text-base truncate">{chatTicket?.subject}</DialogTitle>
+              {chatTicket && (
+                <Badge variant={statusMap[chatTicket.status]?.variant || "secondary"}>
+                  {statusMap[chatTicket.status]?.label || chatTicket.status}
+                </Badge>
+              )}
+            </div>
+          </DialogHeader>
+          {chatTicket && (
+            <TicketChat
+              ticketId={chatTicket.id}
+              currentUserId={userId}
+              currentUserRole="user"
+              ticketStatus={chatTicket.status}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -9,7 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import TicketChat from "@/components/TicketChat";
 import {
   ArrowLeft, User, Package, HeadphonesIcon, FileText, Activity,
   Shield, Save, ShoppingCart, MessageSquare, Clock, Loader2,
@@ -310,6 +313,8 @@ function UserOrdersSection({ userId }: { userId: string }) {
 function UserTicketsSection({ userId }: { userId: string }) {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
+  const [chatTicket, setChatTicket] = useState<Ticket | null>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     supabase.from("support_tickets").select("*").eq("user_id", userId).order("created_at", { ascending: false }).then(({ data }) => {
@@ -336,34 +341,59 @@ function UserTicketsSection({ userId }: { userId: string }) {
   }
 
   return (
-    <div className="space-y-3">
-      <p className="text-sm text-muted-foreground">{tickets.length} talep</p>
-      {tickets.map((t) => {
-        const status = statusMap[t.status] || { label: t.status, variant: "secondary" as const };
-        return (
-          <Card key={t.id}>
-            <CardContent className="p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 shrink-0 rounded-lg bg-accent/50 flex items-center justify-center mt-0.5">
-                    <MessageSquare className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">{t.subject}</p>
-                    <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{t.message}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Clock className="h-3 w-3 text-muted-foreground" />
-                      <span className="text-xs text-muted-foreground">{new Date(t.created_at).toLocaleDateString("tr-TR")}</span>
+    <>
+      <div className="space-y-3">
+        <p className="text-sm text-muted-foreground">{tickets.length} talep</p>
+        {tickets.map((t) => {
+          const status = statusMap[t.status] || { label: t.status, variant: "secondary" as const };
+          return (
+            <Card key={t.id} className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setChatTicket(t)}>
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-3">
+                    <div className="h-9 w-9 shrink-0 rounded-lg bg-accent/50 flex items-center justify-center mt-0.5">
+                      <MessageSquare className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">{t.subject}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{t.message}</p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <Clock className="h-3 w-3 text-muted-foreground" />
+                        <span className="text-xs text-muted-foreground">{new Date(t.created_at).toLocaleDateString("tr-TR")}</span>
+                      </div>
                     </div>
                   </div>
+                  <Badge variant={status.variant}>{status.label}</Badge>
                 </div>
-                <Badge variant={status.variant}>{status.label}</Badge>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      })}
-    </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      <Dialog open={!!chatTicket} onOpenChange={(open) => !open && setChatTicket(null)}>
+        <DialogContent className="max-w-lg h-[70vh] flex flex-col p-0">
+          <DialogHeader className="px-6 pt-6 pb-3 border-b shrink-0">
+            <div className="flex items-center justify-between gap-2">
+              <DialogTitle className="text-base truncate">{chatTicket?.subject}</DialogTitle>
+              {chatTicket && (
+                <Badge variant={statusMap[chatTicket.status]?.variant || "secondary"}>
+                  {statusMap[chatTicket.status]?.label || chatTicket.status}
+                </Badge>
+              )}
+            </div>
+          </DialogHeader>
+          {chatTicket && user && (
+            <TicketChat
+              ticketId={chatTicket.id}
+              currentUserId={user.id}
+              currentUserRole="admin"
+              ticketStatus={chatTicket.status}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
