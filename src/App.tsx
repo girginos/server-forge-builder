@@ -48,7 +48,7 @@ function SiteLayout() {
           <Route path="/hardware" element={<Hardware />} />
           <Route path="/hazir-paketler" element={<ReadyPackages />} />
           <Route path="/yapilandirici" element={<Configurator />} />
-          <Route path="/yapilandirici/ai" element={<AIConfigurator />} />
+          <Route path="/yapilandirici/uzman" element={<ExpertConfigurator />} />
           <Route path="/yapilandirici/:serverId" element={<Configurator />} />
           <Route path="/colocation" element={<Colocation />} />
           <Route path="/cloud" element={<CloudPage />} />
