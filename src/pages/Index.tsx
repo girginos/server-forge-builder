@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import ServerCard from "@/components/ServerCard";
+import HeroSlider from "@/components/HeroSlider";
 import {
   Shield, Settings, Cpu, Zap, Truck, Headphones,
   Globe, Database, Layers, ArrowRight, CheckCircle2,
   Users, Award, Server, Clock, Package, Brain,
   HardDrive, ChevronRight
 } from "lucide-react";
-import heroImage from "@/assets/hero-server.png";
 import colocationBg from "@/assets/colocation-bg.jpg";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
