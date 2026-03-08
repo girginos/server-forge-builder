@@ -22,6 +22,12 @@ const plans = [
 export default function CloudPage() {
   return (
     <div>
+      <SEO
+        title="Cloud Çözümleri"
+        description="Ölçeklenebilir cloud sunucu, depolama ve CDN hizmetleri. Esnek, güvenli ve yüksek performanslı bulut altyapısı."
+        keywords="cloud sunucu, bulut hizmetleri, vps, sanal sunucu, cloud depolama, CDN, kubernetes"
+        canonical="/cloud"
+      />
       <section className="relative h-80 overflow-hidden">
         <img src={cloudBg} alt="Cloud altyapı" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 gradient-navy opacity-70" />
