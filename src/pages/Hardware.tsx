@@ -58,6 +58,7 @@ export default function Hardware() {
     setSearch("");
     setSelectedBrands([]);
     setSelectedFormFactors([]);
+    setSelectedCpuBrands([]);
     setPriceRange(0);
     setSort("default");
   };
