@@ -232,7 +232,7 @@ export default function CloudPage() {
               <Button variant="hero" size="lg" asChild>
                 <Link to="/iletisim">Ücretsiz Teklif Al <ArrowRight className="h-4 w-4 ml-1" /></Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10" asChild>
+              <Button variant="outline" size="lg" className="border-white/50 text-white bg-white/10 hover:bg-white/20" asChild>
                 <Link to="/iletisim">Demo Talep Et</Link>
               </Button>
             </div>
