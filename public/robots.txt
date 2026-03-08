@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://servermarket.com.tr/sitemap.xml
+Sitemap: https://server.girginos.net/sitemap.xml
