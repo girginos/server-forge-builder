@@ -117,7 +117,6 @@ export default function Hardware() {
               variant={showFilters ? "default" : "outline"}
               size="default"
               onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden"
             >
               <SlidersHorizontal className="h-4 w-4" /> Filtreler
             </Button>
