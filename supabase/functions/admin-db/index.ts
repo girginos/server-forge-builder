@@ -11,7 +11,11 @@ const EXTERNAL_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 async function authenticateRequest(req: Request): Promise<boolean> {
   const authHeader = req.headers.get("Authorization");
-
+  console.log("Auth header present:", !!authHeader);
+  console.log("Auth header prefix:", authHeader?.substring(0, 20));
+  console.log("x-admin-api-key present:", !!req.headers.get("x-admin-api-key"));
+  console.log("ADMIN_API_KEY env present:", !!Deno.env.get("ADMIN_API_KEY"));
+  console.log("SERVICE_ROLE_KEY env present:", !!Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"));
   // Method 1: API Key authentication (for server-side/automation)
   const apiKey = req.headers.get("x-admin-api-key");
   const storedApiKey = Deno.env.get("ADMIN_API_KEY");
