@@ -99,7 +99,7 @@ export default function AdminProductEditor() {
             description: data.description || "",
             category: data.category,
             price: data.price,
-            specs: JSON.stringify(data.specs, null, 2),
+            specs: { ...emptySpecs, ...(typeof data.specs === 'object' ? data.specs as Record<string, string> : {}) },
             image_url: data.image_url || "",
             images: (data as any).images || [],
             in_stock: data.in_stock,
