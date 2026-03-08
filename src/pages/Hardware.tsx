@@ -43,6 +43,7 @@ export default function Hardware() {
   const [search, setSearch] = useState("");
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedFormFactors, setSelectedFormFactors] = useState<string[]>([]);
+  const [selectedCpuBrands, setSelectedCpuBrands] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState(0);
   const [sort, setSort] = useState("default");
   const [showFilters, setShowFilters] = useState(true);
