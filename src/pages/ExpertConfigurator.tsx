@@ -59,7 +59,7 @@ export default function ExpertConfigurator() {
     const { error } = await supabase.from("support_tickets").insert({
       user_id: user?.id || null,
       subject: `Uzman Yapılandırma Talebi - ${useCaseLabel}`,
-      message: `Kullanım Amacı: ${useCaseLabel}\n\nDetaylar:\n${details.trim()}\n\nİletişim Bilgileri:\nAd: ${name.trim()}\nTelefon: ${phone.trim()}\nE-posta: ${email.trim()}\nTercih Edilen İletişim: ${contactMethod}`,
+      message: `Kullanım Amacı: ${useCaseLabel}\n\nDetaylar:\n${details.trim()}\n\nKaynak İhtiyacı:\nCPU: ${cpu}\nRAM: ${ram}\nDepolama: ${storage} (${storageType})\n\nİletişim Bilgileri:\nAd: ${name.trim()}\nTelefon: ${phone.trim()}\nE-posta: ${email.trim()}\nTercih Edilen İletişim: ${contactMethod}`,
       status: "open",
     } as any);
 
