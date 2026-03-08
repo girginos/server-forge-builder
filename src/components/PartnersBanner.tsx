@@ -25,9 +25,9 @@ const partners: Partner[] = [
 
 function PartnerItem({ partner }: { partner: Partner }) {
   return (
-    <div className="flex items-center justify-center mx-14 shrink-0 group hover:opacity-100 opacity-50 transition-all duration-300">
-      <div className="h-16 w-32 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all">
-        <img src={partner.logo} alt={partner.name} className="h-10 w-auto object-contain" />
+    <div className="flex items-center justify-center mx-16 shrink-0 group hover:opacity-100 opacity-50 transition-all duration-300">
+      <div className="h-20 w-44 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all">
+        <img src={partner.logo} alt={partner.name} className="h-12 w-auto object-contain" />
       </div>
     </div>
   );
