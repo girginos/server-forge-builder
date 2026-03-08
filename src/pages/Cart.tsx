@@ -79,6 +79,7 @@ export default function Cart() {
 
   return (
     <div className="py-12">
+      <SEO title="Sepetim" description="Sepetinizi inceleyin ve teklif talebinizi gönderin." canonical="/sepet" />
       <div className="container max-w-5xl">
         <h1 className="text-3xl font-bold text-foreground mb-6">Sepetim ({items.length})</h1>
 

@@ -177,6 +177,11 @@ export default function Configurator() {
 
   return (
     <div className="py-8">
+      <SEO
+        title={`${server.name} Yapılandır`}
+        description={`${server.name} sunucusunu özelleştirin. CPU, RAM, depolama ve daha fazlasını seçin.`}
+        canonical={`/yapilandirici/${serverId}`}
+      />
       <div className="container">
         <h1 className="text-2xl font-bold text-foreground mb-6">{server.name}</h1>
 
