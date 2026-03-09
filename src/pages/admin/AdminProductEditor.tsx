@@ -192,8 +192,9 @@ export default function AdminProductEditor() {
       if (value.trim()) specs[key] = value.trim();
     }
 
-    const payload = {
+    const payload: Record<string, any> = {
       name: form.name,
+      slug: slugify(form.name),
       description: form.description || null,
       category: form.category,
       price: form.price,
