@@ -131,7 +131,7 @@ export default function ProductDetail() {
       <SEO
         title={`${product.name} | ServerMarket`}
         description={product.description || `${product.name} - ${getCategoryLabel(product.category)}`}
-        canonical={`/urun/${product.id}`}
+        canonical={`/urun/${categorySlug}/${product.slug}`}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Product",
