@@ -9,5 +9,3 @@ verify_jwt = false
 [functions.sitemap]
 verify_jwt = false
 
-[functions.temp-update]
-verify_jwt = false
