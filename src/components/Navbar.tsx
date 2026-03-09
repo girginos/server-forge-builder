@@ -48,23 +48,12 @@ const navLinks: NavItem[] = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
   const location = useLocation();
   const { items } = useCart();
   const { user } = useAuth();
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
 
   const isActiveChild = (children?: { href: string }[]) =>
     children?.some((c) => location.pathname === c.href);
