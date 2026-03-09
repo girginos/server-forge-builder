@@ -38,6 +38,30 @@ interface HardwareCategoryPageProps {
   filters?: FilterConfig[];
 }
 
+function AddToCartButton({ product }: { product: HardwareProduct }) {
+  const { addItem } = useCart();
+  return (
+    <Button
+      size="sm"
+      variant="outline"
+      className="shrink-0 gap-1.5 text-xs"
+      disabled={!product.in_stock}
+      onClick={() =>
+        addItem({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image_url || undefined,
+          specs: product.description || undefined,
+        })
+      }
+    >
+      <ShoppingCart className="h-3.5 w-3.5" />
+      Sepete Ekle
+    </Button>
+  );
+}
+
 export default function HardwareCategoryPage({
   title,
   description,
