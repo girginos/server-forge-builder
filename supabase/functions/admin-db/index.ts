@@ -23,6 +23,12 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     return true;
   }
 
+  // Method 1b: Service Role Key (for internal tools like curl)
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (authHeader && serviceRoleKey && authHeader === `Bearer ${serviceRoleKey}`) {
+    return true;
+  }
+
   if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
