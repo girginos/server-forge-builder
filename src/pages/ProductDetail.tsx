@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import DOMPurify from "dompurify";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { useCart } from "@/context/CartContext";
@@ -261,11 +262,12 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Description */}
+            {/* Short Description */}
             {product.description && (
-              <p className="text-muted-foreground leading-relaxed">
-                {product.description}
-              </p>
+              <div
+                className="text-muted-foreground leading-relaxed text-sm [&_a]:text-primary [&_a]:underline"
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }}
+              />
             )}
 
             {/* Add to cart */}
@@ -322,9 +324,10 @@ export default function ProductDetail() {
                   </h2>
                 </div>
                 <div className="px-4 py-4">
-                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                    {product.description}
-                  </p>
+                  <div
+                    className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground [&_a]:text-primary [&_a]:underline [&_h2]:text-foreground [&_h3]:text-foreground [&_strong]:text-foreground"
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }}
+                  />
                 </div>
               </div>
             )}

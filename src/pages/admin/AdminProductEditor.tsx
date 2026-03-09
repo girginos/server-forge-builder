@@ -5,7 +5,7 @@ import { supabase as cloudSupabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import RichTextEditor from "@/components/RichTextEditor";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -257,11 +257,10 @@ export default function AdminProductEditor() {
 
               <div className="space-y-2">
                 <Label>Açıklama</Label>
-                <Textarea
-                  value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                <RichTextEditor
+                  content={form.description}
+                  onChange={(html) => setForm({ ...form, description: html })}
                   placeholder="Ürün hakkında detaylı açıklama..."
-                  rows={5}
                 />
               </div>
             </CardContent>
