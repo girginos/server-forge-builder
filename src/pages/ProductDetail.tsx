@@ -132,6 +132,7 @@ export default function ProductDetail() {
         title={`${product.name} | ServerMarket`}
         description={product.description || `${product.name} - ${getCategoryLabel(product.category)}`}
         canonical={`/urun/${categorySlug}/${product.slug}`}
+        ogImage={allImages[0] || undefined}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Product",
