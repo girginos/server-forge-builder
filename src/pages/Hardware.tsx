@@ -1,39 +1,13 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import ServerCard from "@/components/ServerCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, X, SlidersHorizontal } from "lucide-react";
+import { Search, X, SlidersHorizontal, Loader2 } from "lucide-react";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
 import HardwareSidebar from "@/components/hardware/HardwareSidebar";
-import serverR740 from "@/assets/server-r740.png";
-import serverR640 from "@/assets/server-r640.png";
-import serverDL380 from "@/assets/server-dl380.png";
-import serverSupermicro from "@/assets/server-supermicro.png";
+import { supabase } from "@/lib/supabase";
 
-const allServers = [
-  { id: "dell-r740xd", name: "Dell PowerEdge R740xd", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 45000, oldPrice: 52000, badge: "Popüler", brand: "Dell", cpuBrand: "Intel" },
-  { id: "dell-r640", name: "Dell PowerEdge R640", image: serverR640, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 32000, brand: "Dell", cpuBrand: "Intel" },
-  { id: "hp-dl380", name: "HP ProLiant DL380 Gen10", image: serverDL380, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 38000, badge: "Yeni", brand: "HP", cpuBrand: "Intel" },
-  { id: "supermicro-2u", name: "Supermicro SuperServer 2U", image: serverSupermicro, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "4096 GB DDR4", price: 55000, oldPrice: 62000, brand: "Supermicro", cpuBrand: "Intel" },
-  { id: "dell-r740xd-12lff", name: "Dell PowerEdge R740xd 12LFF", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 48000, brand: "Dell", cpuBrand: "Intel" },
-  { id: "hp-dl360", name: "HP ProLiant DL360 Gen10", image: serverDL380, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 35000, badge: "İndirimli", oldPrice: 40000, brand: "HP", cpuBrand: "Intel" },
-  { id: "dell-r630", name: "Dell PowerEdge R630", image: serverR640, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon E5-2600 v4", maxRam: "1536 GB DDR4", price: 22000, brand: "Dell", cpuBrand: "Intel" },
-  { id: "supermicro-1u", name: "Supermicro SuperServer 1U", image: serverSupermicro, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 42000, brand: "Supermicro", cpuBrand: "Intel" },
-  { id: "dell-r7525", name: "Dell PowerEdge R7525", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x AMD EPYC 7003", maxRam: "4096 GB DDR4", price: 58000, badge: "Yeni", brand: "Dell", cpuBrand: "AMD" },
-  { id: "hp-dl325", name: "HP ProLiant DL325 Gen10 Plus", image: serverDL380, formFactor: "1U Rack Mount", cpu: "1x AMD EPYC 7003", maxRam: "2048 GB DDR4", price: 36000, brand: "HP", cpuBrand: "AMD" },
-  { id: "supermicro-amd-2u", name: "Supermicro H12DSU-iN 2U", image: serverSupermicro, formFactor: "2U Rack Mount", cpu: "2x AMD EPYC 7003", maxRam: "4096 GB DDR4", price: 62000, oldPrice: 70000, brand: "Supermicro", cpuBrand: "AMD" },
-];
-
-const brands = ["Dell", "HP", "Supermicro"];
-const cpuBrands = ["Intel", "AMD"];
-const formFactors = ["1U Rack Mount", "2U Rack Mount"];
-const priceRanges = [
-  { label: "Tümü", min: 0, max: Infinity },
-  { label: "₺20.000 - ₺35.000", min: 20000, max: 35000 },
-  { label: "₺35.000 - ₺50.000", min: 35000, max: 50000 },
-  { label: "₺50.000+", min: 50000, max: Infinity },
-];
 const sortOptions = [
   { label: "Varsayılan", value: "default" },
   { label: "Fiyat: Düşükten Yükseğe", value: "price-asc" },
@@ -41,38 +15,67 @@ const sortOptions = [
   { label: "İsim: A-Z", value: "name-asc" },
 ];
 
+interface DBProduct {
+  id: string;
+  name: string;
+  description: string | null;
+  image_url: string | null;
+  images: string[] | null;
+  category: string;
+  price: number;
+  specs: Record<string, string>;
+  in_stock: boolean;
+  featured: boolean;
+}
+
 export default function Hardware() {
+  const [products, setProducts] = useState<DBProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const [selectedFormFactors, setSelectedFormFactors] = useState<string[]>([]);
-  const [selectedCpuBrands, setSelectedCpuBrands] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState(0);
   const [sort, setSort] = useState("default");
   const [showFilters, setShowFilters] = useState(false);
+
+  useEffect(() => {
+    supabase
+      .from("admin_products")
+      .select("*")
+      .order("featured", { ascending: false })
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        setProducts((data as unknown as DBProduct[]) || []);
+        setLoading(false);
+      });
+  }, []);
 
   const toggleFilter = (arr: string[], val: string, setter: (v: string[]) => void) => {
     setter(arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]);
   };
 
-  const hasActiveFilters = search || selectedBrands.length > 0 || selectedFormFactors.length > 0 || selectedCpuBrands.length > 0 || priceRange > 0;
+  const allBrands = useMemo(() => {
+    const brands = new Set<string>();
+    products.forEach((p) => {
+      const brand = (p.specs as any)?.brand || (p.specs as any)?.marka;
+      if (brand) brands.add(brand);
+    });
+    return Array.from(brands).sort();
+  }, [products]);
+
+  const hasActiveFilters = search || selectedBrands.length > 0;
 
   const clearAll = () => {
     setSearch("");
     setSelectedBrands([]);
-    setSelectedFormFactors([]);
-    setSelectedCpuBrands([]);
-    setPriceRange(0);
     setSort("default");
   };
 
   const filtered = useMemo(() => {
-    let result = allServers.filter((s) => {
-      if (search && !s.name.toLowerCase().includes(search.toLowerCase())) return false;
-      if (selectedBrands.length > 0 && !selectedBrands.includes(s.brand)) return false;
-      if (selectedFormFactors.length > 0 && !selectedFormFactors.includes(s.formFactor)) return false;
-      if (selectedCpuBrands.length > 0 && !selectedCpuBrands.includes(s.cpuBrand)) return false;
-      const range = priceRanges[priceRange];
-      if (s.price < range.min || s.price > range.max) return false;
+    let result = products.filter((p) => {
+      if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
+      if (selectedBrands.length > 0) {
+        const brand = (p.specs as any)?.brand || (p.specs as any)?.marka || "";
+        if (!selectedBrands.includes(brand)) return false;
+      }
       return true;
     });
 
@@ -81,14 +84,14 @@ export default function Hardware() {
     else if (sort === "name-asc") result.sort((a, b) => a.name.localeCompare(b.name));
 
     return result;
-  }, [search, selectedBrands, selectedFormFactors, selectedCpuBrands, priceRange, sort]);
+  }, [search, selectedBrands, sort, products]);
 
   return (
     <div className="py-10">
       <SEO
         title="Sunucu Donanımları"
-        description="Dell, HP, Supermicro sunucu donanımları. Marka, fiyat ve form faktörüne göre filtreleyin, ihtiyacınıza uygun sunucuyu bulun."
-        keywords="sunucu donanım, dell poweredge, hp proliant, supermicro, rack sunucu, 1u sunucu, 2u sunucu"
+        description="Dell, HP, Supermicro sunucu donanımları. Marka, fiyat ve form faktörüne göre filtreleyin."
+        keywords="sunucu donanım, dell poweredge, hp proliant, supermicro, rack sunucu"
         canonical="/hardware"
         jsonLd={{
           "@context": "https://schema.org",
@@ -96,41 +99,19 @@ export default function Hardware() {
           name: "Sunucu Donanımları",
           url: `${SITE_URL}/hardware`,
           numberOfItems: filtered.length,
-          itemListElement: filtered.slice(0, 10).map((s, i) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            item: {
-              "@type": "Product",
-              name: s.name,
-              description: `${s.formFactor} - ${s.cpu} - ${s.maxRam}`,
-              brand: { "@type": "Brand", name: s.brand },
-              offers: {
-                "@type": "Offer",
-                price: s.price.toString(),
-                priceCurrency: "TRY",
-                availability: "https://schema.org/InStock",
-                seller: { "@type": "Organization", name: "ServerMarket" },
-              },
-            },
-          })),
         }}
       />
       <div className="container">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-foreground">Sunucu Donanımları</h1>
-          <p className="text-muted-foreground mt-1">Tüm sunucu modellerimizi inceleyin ve ihtiyacınıza uygun olanı seçin.</p>
+          <p className="text-muted-foreground mt-1">Tüm ürünlerimizi inceleyin ve ihtiyacınıza uygun olanı seçin.</p>
         </div>
 
-        {/* Search + controls bar */}
+        {/* Search + controls */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Sunucu ara (ör. Dell R740, HP DL380...)"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9"
-            />
+            <Input placeholder="Ürün ara..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
             {search && (
               <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                 <X className="h-4 w-4" />
@@ -138,81 +119,51 @@ export default function Hardware() {
             )}
           </div>
           <div className="flex gap-2">
-            <Button
-              variant={showFilters ? "default" : "outline"}
-              size="default"
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              <SlidersHorizontal className="h-4 w-4" /> Filtreler
-            </Button>
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              className="h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-            >
-              {sortOptions.map((o) => (
-                <option key={o.value} value={o.value}>{o.label}</option>
-              ))}
+            {allBrands.length > 0 && (
+              <Button variant={showFilters ? "default" : "outline"} size="default" onClick={() => setShowFilters(!showFilters)}>
+                <SlidersHorizontal className="h-4 w-4" /> Filtreler
+              </Button>
+            )}
+            <select value={sort} onChange={(e) => setSort(e.target.value)} className="h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
+              {sortOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Category sidebar */}
-          <HardwareSidebar />
+          <div className="w-full lg:w-56 shrink-0 space-y-4">
+            <HardwareSidebar />
 
-          <div className="flex-1">
-            {/* Product filters */}
-            {showFilters && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                <div className="bg-card border rounded-lg p-3">
-                  <h3 className="font-semibold text-foreground text-xs mb-2">Marka</h3>
-                  <div className="space-y-1.5">
-                    {brands.map((brand) => (
-                      <label key={brand} className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" checked={selectedBrands.includes(brand)} onChange={() => toggleFilter(selectedBrands, brand, setSelectedBrands)} className="accent-primary rounded" />
-                        <span className="text-xs text-foreground">{brand}</span>
-                      </label>
-                    ))}
+            {showFilters && allBrands.length > 0 && (
+              <div className="bg-card border rounded-xl p-3 space-y-4">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground px-1">Filtreler</p>
+                <div>
+                  <h3 className="font-semibold text-foreground text-xs mb-2 px-1">Marka</h3>
+                  <div className="space-y-1">
+                    {allBrands.map((brand) => {
+                      const selected = selectedBrands.includes(brand);
+                      return (
+                        <button key={brand} onClick={() => toggleFilter(selectedBrands, brand, setSelectedBrands)}
+                          className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${selected ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"}`}>
+                          <span className="flex items-center gap-2">
+                            <span className={`h-3.5 w-3.5 rounded border flex items-center justify-center transition-colors ${selected ? "bg-primary border-primary" : "border-border"}`}>
+                              {selected && <span className="text-primary-foreground text-[8px]">✓</span>}
+                            </span>
+                            {brand}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-                <div className="bg-card border rounded-lg p-3">
-                  <h3 className="font-semibold text-foreground text-xs mb-2">İşlemci</h3>
-                  <div className="space-y-1.5">
-                    {cpuBrands.map((cb) => (
-                      <label key={cb} className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" checked={selectedCpuBrands.includes(cb)} onChange={() => toggleFilter(selectedCpuBrands, cb, setSelectedCpuBrands)} className="accent-primary rounded" />
-                        <span className="text-xs text-foreground">{cb}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="bg-card border rounded-lg p-3">
-                  <h3 className="font-semibold text-foreground text-xs mb-2">Form Faktörü</h3>
-                  <div className="space-y-1.5">
-                    {formFactors.map((ff) => (
-                      <label key={ff} className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" checked={selectedFormFactors.includes(ff)} onChange={() => toggleFilter(selectedFormFactors, ff, setSelectedFormFactors)} className="accent-primary rounded" />
-                        <span className="text-xs text-foreground">{ff}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="bg-card border rounded-lg p-3">
-                  <h3 className="font-semibold text-foreground text-xs mb-2">Fiyat</h3>
-                  <div className="space-y-1.5">
-                    {priceRanges.map((range, i) => (
-                      <label key={range.label} className="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="price" checked={priceRange === i} onChange={() => setPriceRange(i)} className="accent-primary" />
-                        <span className="text-xs text-foreground">{range.label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
+                {hasActiveFilters && (
+                  <Button variant="outline" size="sm" onClick={clearAll} className="w-full text-xs"><X className="h-3 w-3" /> Temizle</Button>
+                )}
               </div>
             )}
+          </div>
 
-            {/* Active filter chips */}
+          <div className="flex-1">
             {hasActiveFilters && (
               <div className="flex flex-wrap gap-2 mb-4">
                 {selectedBrands.map((b) => (
@@ -220,40 +171,47 @@ export default function Hardware() {
                     {b} <button onClick={() => toggleFilter(selectedBrands, b, setSelectedBrands)}><X className="h-3 w-3" /></button>
                   </span>
                 ))}
-                {selectedCpuBrands.map((cb) => (
-                  <span key={cb} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                    {cb} <button onClick={() => toggleFilter(selectedCpuBrands, cb, setSelectedCpuBrands)}><X className="h-3 w-3" /></button>
-                  </span>
-                ))}
-                {selectedFormFactors.map((ff) => (
-                  <span key={ff} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                    {ff} <button onClick={() => toggleFilter(selectedFormFactors, ff, setSelectedFormFactors)}><X className="h-3 w-3" /></button>
-                  </span>
-                ))}
-                {priceRange > 0 && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                    {priceRanges[priceRange].label} <button onClick={() => setPriceRange(0)}><X className="h-3 w-3" /></button>
-                  </span>
-                )}
-                <Button variant="ghost" size="sm" onClick={clearAll} className="text-xs"><X className="h-3 w-3" /> Temizle</Button>
               </div>
             )}
 
-            <p className="text-sm text-muted-foreground mb-4">{filtered.length} ürün bulundu</p>
-
-            {filtered.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filtered.map((s) => (
-                  <ServerCard key={s.id} {...s} />
-                ))}
+            {loading ? (
+              <div className="flex items-center justify-center py-16">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
             ) : (
-              <div className="text-center py-16 bg-card border rounded-lg">
-                <Search className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-                <h3 className="text-lg font-semibold text-foreground">Sonuç bulunamadı</h3>
-                <p className="text-sm text-muted-foreground mt-1">Filtrelerinizi değiştirerek tekrar deneyin.</p>
-                <Button variant="outline" size="sm" className="mt-4" onClick={clearAll}>Filtreleri Temizle</Button>
-              </div>
+              <>
+                <p className="text-sm text-muted-foreground mb-4">{filtered.length} ürün bulundu</p>
+                {filtered.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {filtered.map((p) => (
+                      <div key={p.id} className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group">
+                        {p.image_url && (
+                          <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
+                            <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
+                          </div>
+                        )}
+                        {p.featured && <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Öne Çıkan</span>}
+                        <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
+                        {p.description && <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{p.description}</p>}
+                        {p.specs && Object.keys(p.specs).length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-3">
+                            {Object.entries(p.specs).slice(0, 3).map(([k, v]) => (
+                              <span key={k} className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{String(v)}</span>
+                            ))}
+                          </div>
+                        )}
+                        <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-16 bg-card border rounded-lg">
+                    <Search className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                    <h3 className="text-lg font-semibold text-foreground">Henüz ürün eklenmemiş</h3>
+                    <p className="text-sm text-muted-foreground mt-1">Admin panelinden ürün ekleyebilirsiniz.</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
