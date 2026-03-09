@@ -132,7 +132,7 @@ export default function ProductDetail() {
     <div className="py-8">
       <SEO
         title={`${product.name} | ServerMarket`}
-        description={product.description || `${product.name} - ${getCategoryLabel(product.category)}`}
+        description={product.short_description || product.description?.replace(/<[^>]*>/g, '').substring(0, 160) || `${product.name} - ${getCategoryLabel(product.category)}`}
         canonical={`/urun/${categorySlug}/${product.slug}`}
         ogImage={allImages[0] || undefined}
         jsonLd={{
