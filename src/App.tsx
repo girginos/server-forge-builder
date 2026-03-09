@@ -12,6 +12,14 @@ import PartnersBanner from "@/components/PartnersBanner";
 import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Hardware from "./pages/Hardware";
+import CTOSunucular from "./pages/hardware/CTOSunucular";
+import DiskPage from "./pages/hardware/DiskPage";
+import CPUPage from "./pages/hardware/CPUPage";
+import RAMPage from "./pages/hardware/RAMPage";
+import EthernetPage from "./pages/hardware/EthernetPage";
+import SwitchRouterPage from "./pages/hardware/SwitchRouterPage";
+import KabloPage from "./pages/hardware/KabloPage";
+import AnakartPage from "./pages/hardware/AnakartPage";
 import Configurator from "./pages/Configurator";
 import ExpertConfigurator from "./pages/ExpertConfigurator";
 import Colocation from "./pages/Colocation";
@@ -46,6 +54,14 @@ function SiteLayout() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/hardware" element={<Hardware />} />
+          <Route path="/hardware/cto-sunucular" element={<CTOSunucular />} />
+          <Route path="/hardware/disk" element={<DiskPage />} />
+          <Route path="/hardware/cpu" element={<CPUPage />} />
+          <Route path="/hardware/ram" element={<RAMPage />} />
+          <Route path="/hardware/ethernet-kartlari" element={<EthernetPage />} />
+          <Route path="/hardware/switch-router" element={<SwitchRouterPage />} />
+          <Route path="/hardware/kablo" element={<KabloPage />} />
+          <Route path="/hardware/anakart" element={<AnakartPage />} />
           <Route path="/hazir-paketler" element={<ReadyPackages />} />
           <Route path="/yapilandirici" element={<Configurator />} />
           <Route path="/yapilandirici/uzman" element={<ExpertConfigurator />} />
