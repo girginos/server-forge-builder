@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, X, Loader2 } from "lucide-react";
+import { Search, X, Loader2, ShoppingCart } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
 import HardwareSidebar from "./HardwareSidebar";
