@@ -256,7 +256,7 @@ export default function Navbar() {
                           <Link
                             key={child.href}
                             to={child.href}
-                            onClick={() => { setMobileOpen(false); setMobileDropdownOpen(false); }}
+                            onClick={() => { setMobileOpen(false); setMobileDropdownOpen(null); }}
                             className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm ${
                               location.pathname === child.href
                                 ? "text-primary bg-primary/5"
