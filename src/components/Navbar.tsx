@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ShoppingCart, Search, Phone, Mail, Server, User, LayoutDashboard, ChevronDown, Cloud, Building2, Monitor } from "lucide-react";
+import { Menu, X, ShoppingCart, Search, Phone, Mail, Server, User, LayoutDashboard, ChevronDown, Cloud, Building2, Monitor, HardDrive, Cpu, MemoryStick, Network, Router, Cable, CircuitBoard, ServerCog } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/hooks/useAuth";
@@ -16,7 +16,19 @@ interface NavItem {
   label: string;
   href?: string;
   children?: NavChild[];
+  megaMenu?: boolean;
 }
+
+const hardwareChildren: NavChild[] = [
+  { label: "CTO Sunucular", href: "/hardware?cat=cto", description: "Siparişe özel yapılandırılmış sunucular", icon: <ServerCog className="h-5 w-5" /> },
+  { label: "Disk", href: "/hardware?cat=disk", description: "SSD, NVMe ve HDD depolama çözümleri", icon: <HardDrive className="h-5 w-5" /> },
+  { label: "CPU", href: "/hardware?cat=cpu", description: "Intel & AMD işlemciler", icon: <Cpu className="h-5 w-5" /> },
+  { label: "RAM", href: "/hardware?cat=ram", description: "DDR4 & DDR5 sunucu bellekleri", icon: <MemoryStick className="h-5 w-5" /> },
+  { label: "Ethernet Kartları", href: "/hardware?cat=ethernet", description: "1G, 10G, 25G ağ kartları", icon: <Network className="h-5 w-5" /> },
+  { label: "Switch & Router", href: "/hardware?cat=switch", description: "Kurumsal ağ anahtarları ve yönlendiriciler", icon: <Router className="h-5 w-5" /> },
+  { label: "Kablo", href: "/hardware?cat=kablo", description: "DAC, fiber optik ve patch kablolar", icon: <Cable className="h-5 w-5" /> },
+  { label: "Anakart", href: "/hardware?cat=anakart", description: "Sunucu anakartları ve sistem kartları", icon: <CircuitBoard className="h-5 w-5" /> },
+];
 
 const datacenterChildren: NavChild[] = [
   { label: "Cloud", href: "/cloud", description: "Bulut sunucu ve altyapı hizmetleri", icon: <Cloud className="h-5 w-5" /> },
@@ -26,7 +38,7 @@ const datacenterChildren: NavChild[] = [
 
 const navLinks: NavItem[] = [
   { label: "Anasayfa", href: "/" },
-  { label: "Donanım", href: "/hardware" },
+  { label: "Donanım", children: hardwareChildren, megaMenu: true, href: "/hardware" },
   { label: "Hazır Paketler", href: "/hazir-paketler" },
   { label: "Yapılandırıcı", href: "/yapilandirici" },
   { label: "Datacenter", children: datacenterChildren },
@@ -36,23 +48,12 @@ const navLinks: NavItem[] = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(null);
   const location = useLocation();
   const { items } = useCart();
   const { user } = useAuth();
   const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
 
   const isActiveChild = (children?: { href: string }[]) =>
     children?.some((c) => location.pathname === c.href);
@@ -85,55 +86,99 @@ export default function Navbar() {
                 <div
                   key={link.label}
                   className="relative"
-                  ref={dropdownRef}
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}
+                  onMouseEnter={() => setOpenDropdown(link.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
                   <button
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    onClick={() => setOpenDropdown(openDropdown === link.label ? null : link.label)}
                     className={`flex items-center gap-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      isActiveChild(link.children)
+                      isActiveChild(link.children) || location.pathname === link.href
                         ? "text-primary bg-primary/5"
                         : "text-foreground hover:text-primary hover:bg-primary/5"
                     }`}
                   >
                     {link.label}
-                    <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${openDropdown === link.label ? "rotate-180" : ""}`} />
                   </button>
-                  {dropdownOpen && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50">
-                      <div className="w-96 rounded-2xl border border-border/60 bg-popover text-popover-foreground shadow-2xl shadow-black/10 p-1.5 animate-fade-in backdrop-blur-sm">
-                        <div className="px-3 pt-2 pb-1.5 mb-1">
-                          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Datacenter Hizmetleri</p>
+                  {openDropdown === link.label && (
+                    <div className={`absolute top-full pt-3 z-50 ${link.megaMenu ? "left-0" : "left-1/2 -translate-x-1/2"}`}>
+                      {link.megaMenu ? (
+                        /* Wide mega menu for hardware */
+                        <div className="w-[640px] rounded-2xl border border-border/60 bg-popover text-popover-foreground shadow-2xl shadow-black/10 p-2 animate-fade-in backdrop-blur-sm">
+                          <div className="px-3 pt-2 pb-1.5 mb-1 flex items-center justify-between">
+                            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Donanım Kategorileri</p>
+                            <Link
+                              to="/hardware"
+                              onClick={() => setOpenDropdown(null)}
+                              className="text-[11px] font-medium text-primary hover:underline"
+                            >
+                              Tümünü Gör →
+                            </Link>
+                          </div>
+                          <div className="grid grid-cols-2 gap-1">
+                            {link.children!.map((child) => (
+                              <Link
+                                key={child.href}
+                                to={child.href}
+                                onClick={() => setOpenDropdown(null)}
+                                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-150 group ${
+                                  location.pathname + location.search === child.href
+                                    ? "bg-primary/8"
+                                    : "hover:bg-muted/60"
+                                }`}
+                              >
+                                <span className={`shrink-0 flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-150 ${
+                                  location.pathname + location.search === child.href
+                                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/25"
+                                    : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                                }`}>
+                                  {child.icon}
+                                </span>
+                                <div className="flex-1 min-w-0">
+                                  <p className={`text-sm font-semibold leading-none mb-0.5 ${
+                                    location.pathname + location.search === child.href ? "text-primary" : "text-foreground"
+                                  }`}>{child.label}</p>
+                                  <p className="text-[11px] text-muted-foreground leading-snug truncate">{child.description}</p>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
                         </div>
-                        {link.children!.map((child, idx) => (
-                          <Link
-                            key={child.href}
-                            to={child.href}
-                            onClick={() => setDropdownOpen(false)}
-                            className={`flex items-center gap-3.5 rounded-xl px-3 py-3 transition-all duration-150 group ${
-                              location.pathname === child.href
-                                ? "bg-primary/8"
-                                : "hover:bg-muted/60"
-                            }`}
-                          >
-                            <span className={`shrink-0 flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-150 ${
-                              location.pathname === child.href
-                                ? "bg-primary text-primary-foreground shadow-md shadow-primary/25"
-                                : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
-                            }`}>
-                              {child.icon}
-                            </span>
-                            <div className="flex-1 min-w-0">
-                              <p className={`text-sm font-semibold leading-none mb-1 ${
-                                location.pathname === child.href ? "text-primary" : "text-foreground"
-                              }`}>{child.label}</p>
-                              <p className="text-xs text-muted-foreground leading-snug">{child.description}</p>
-                            </div>
-                            <ChevronDown className={`h-3.5 w-3.5 -rotate-90 text-muted-foreground/40 group-hover:text-primary/60 transition-colors shrink-0`} />
-                          </Link>
-                        ))}
-                      </div>
+                      ) : (
+                        /* Standard dropdown for datacenter */
+                        <div className="w-96 rounded-2xl border border-border/60 bg-popover text-popover-foreground shadow-2xl shadow-black/10 p-1.5 animate-fade-in backdrop-blur-sm">
+                          <div className="px-3 pt-2 pb-1.5 mb-1">
+                            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Datacenter Hizmetleri</p>
+                          </div>
+                          {link.children!.map((child) => (
+                            <Link
+                              key={child.href}
+                              to={child.href}
+                              onClick={() => setOpenDropdown(null)}
+                              className={`flex items-center gap-3.5 rounded-xl px-3 py-3 transition-all duration-150 group ${
+                                location.pathname === child.href
+                                  ? "bg-primary/8"
+                                  : "hover:bg-muted/60"
+                              }`}
+                            >
+                              <span className={`shrink-0 flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-150 ${
+                                location.pathname === child.href
+                                  ? "bg-primary text-primary-foreground shadow-md shadow-primary/25"
+                                  : "bg-muted text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+                              }`}>
+                                {child.icon}
+                              </span>
+                              <div className="flex-1 min-w-0">
+                                <p className={`text-sm font-semibold leading-none mb-1 ${
+                                  location.pathname === child.href ? "text-primary" : "text-foreground"
+                                }`}>{child.label}</p>
+                                <p className="text-xs text-muted-foreground leading-snug">{child.description}</p>
+                              </div>
+                              <ChevronDown className="h-3.5 w-3.5 -rotate-90 text-muted-foreground/40 group-hover:text-primary/60 transition-colors shrink-0" />
+                            </Link>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -195,7 +240,7 @@ export default function Navbar() {
                 link.children ? (
                   <div key={link.label}>
                     <button
-                      onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+                      onClick={() => setMobileDropdownOpen(mobileDropdownOpen === link.label ? null : link.label)}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-sm font-medium ${
                         isActiveChild(link.children)
                           ? "text-primary bg-primary/5"
@@ -203,15 +248,15 @@ export default function Navbar() {
                       }`}
                     >
                       {link.label}
-                      <ChevronDown className={`h-3.5 w-3.5 transition-transform ${mobileDropdownOpen ? "rotate-180" : ""}`} />
+                      <ChevronDown className={`h-3.5 w-3.5 transition-transform ${mobileDropdownOpen === link.label ? "rotate-180" : ""}`} />
                     </button>
-                    {mobileDropdownOpen && (
+                    {mobileDropdownOpen === link.label && (
                       <div className="ml-2 flex flex-col gap-1 mt-1 border-l-2 border-primary/20 pl-2">
                         {link.children.map((child) => (
                           <Link
                             key={child.href}
                             to={child.href}
-                            onClick={() => { setMobileOpen(false); setMobileDropdownOpen(false); }}
+                            onClick={() => { setMobileOpen(false); setMobileDropdownOpen(null); }}
                             className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm ${
                               location.pathname === child.href
                                 ? "text-primary bg-primary/5"
