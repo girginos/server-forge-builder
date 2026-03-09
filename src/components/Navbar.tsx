@@ -16,7 +16,19 @@ interface NavItem {
   label: string;
   href?: string;
   children?: NavChild[];
+  megaMenu?: boolean;
 }
+
+const hardwareChildren: NavChild[] = [
+  { label: "CTO Sunucular", href: "/hardware?cat=cto", description: "Siparişe özel yapılandırılmış sunucular", icon: <ServerCog className="h-5 w-5" /> },
+  { label: "Disk", href: "/hardware?cat=disk", description: "SSD, NVMe ve HDD depolama çözümleri", icon: <HardDrive className="h-5 w-5" /> },
+  { label: "CPU", href: "/hardware?cat=cpu", description: "Intel & AMD işlemciler", icon: <Cpu className="h-5 w-5" /> },
+  { label: "RAM", href: "/hardware?cat=ram", description: "DDR4 & DDR5 sunucu bellekleri", icon: <MemoryStick className="h-5 w-5" /> },
+  { label: "Ethernet Kartları", href: "/hardware?cat=ethernet", description: "1G, 10G, 25G ağ kartları", icon: <Network className="h-5 w-5" /> },
+  { label: "Switch & Router", href: "/hardware?cat=switch", description: "Kurumsal ağ anahtarları ve yönlendiriciler", icon: <Router className="h-5 w-5" /> },
+  { label: "Kablo", href: "/hardware?cat=kablo", description: "DAC, fiber optik ve patch kablolar", icon: <Cable className="h-5 w-5" /> },
+  { label: "Anakart", href: "/hardware?cat=anakart", description: "Sunucu anakartları ve sistem kartları", icon: <CircuitBoard className="h-5 w-5" /> },
+];
 
 const datacenterChildren: NavChild[] = [
   { label: "Cloud", href: "/cloud", description: "Bulut sunucu ve altyapı hizmetleri", icon: <Cloud className="h-5 w-5" /> },
@@ -26,7 +38,7 @@ const datacenterChildren: NavChild[] = [
 
 const navLinks: NavItem[] = [
   { label: "Anasayfa", href: "/" },
-  { label: "Donanım", href: "/hardware" },
+  { label: "Donanım", children: hardwareChildren, megaMenu: true, href: "/hardware" },
   { label: "Hazır Paketler", href: "/hazir-paketler" },
   { label: "Yapılandırıcı", href: "/yapilandirici" },
   { label: "Datacenter", children: datacenterChildren },
