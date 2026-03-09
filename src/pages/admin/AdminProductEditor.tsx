@@ -198,6 +198,7 @@ export default function AdminProductEditor() {
     const payload: Record<string, any> = {
       name: form.name,
       slug: slugify(form.name),
+      short_description: form.short_description || null,
       description: form.description || null,
       category: form.category,
       price: form.price,
