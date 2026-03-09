@@ -54,6 +54,14 @@ function SiteLayout() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/hardware" element={<Hardware />} />
+          <Route path="/hardware/cto-sunucular" element={<CTOSunucular />} />
+          <Route path="/hardware/disk" element={<DiskPage />} />
+          <Route path="/hardware/cpu" element={<CPUPage />} />
+          <Route path="/hardware/ram" element={<RAMPage />} />
+          <Route path="/hardware/ethernet-kartlari" element={<EthernetPage />} />
+          <Route path="/hardware/switch-router" element={<SwitchRouterPage />} />
+          <Route path="/hardware/kablo" element={<KabloPage />} />
+          <Route path="/hardware/anakart" element={<AnakartPage />} />
           <Route path="/hazir-paketler" element={<ReadyPackages />} />
           <Route path="/yapilandirici" element={<Configurator />} />
           <Route path="/yapilandirici/uzman" element={<ExpertConfigurator />} />
