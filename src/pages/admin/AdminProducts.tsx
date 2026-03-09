@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { HARDWARE_CATEGORIES, getCategoryLabel } from "@/config/hardware-categories";
 
 interface Product {
   id: string;
@@ -23,17 +25,22 @@ interface Product {
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const { toast } = useToast();
   const navigate = useNavigate();
 
   const load = () => {
-    supabase.from("admin_products").select("*").order("created_at", { ascending: false }).then(({ data }) => {
+    let query = supabase.from("admin_products").select("*").order("created_at", { ascending: false });
+    if (categoryFilter !== "all") {
+      query = query.eq("category", categoryFilter);
+    }
+    query.then(({ data }) => {
       setProducts((data as unknown as Product[]) || []);
       setIsLoading(false);
     });
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [categoryFilter]);
 
   const handleDelete = async (id: string) => {
     if (!confirm("Bu ürünü silmek istediğinize emin misiniz?")) return;
@@ -44,11 +51,24 @@ export default function AdminProducts() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-3">
         <CardTitle>Ürün Yönetimi</CardTitle>
-        <Button size="sm" onClick={() => navigate("/admin/urunler/yeni")}>
-          <Plus className="h-4 w-4 mr-1" /> Yeni Ürün
-        </Button>
+        <div className="flex items-center gap-2">
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Kategori" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tüm Kategoriler</SelectItem>
+              {HARDWARE_CATEGORIES.map((cat) => (
+                <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button size="sm" onClick={() => navigate("/admin/urunler/yeni")}>
+            <Plus className="h-4 w-4 mr-1" /> Yeni Ürün
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         {isLoading ? <p>Yükleniyor...</p> : products.length === 0 ? (
@@ -69,7 +89,9 @@ export default function AdminProducts() {
                 {products.map((p) => (
                   <TableRow key={p.id}>
                     <TableCell className="font-medium">{p.name}</TableCell>
-                    <TableCell>{p.category}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{getCategoryLabel(p.category)}</Badge>
+                    </TableCell>
                     <TableCell>{p.price.toLocaleString("tr-TR")} ₺</TableCell>
                     <TableCell>
                       <Badge variant={p.in_stock ? "default" : "secondary"}>{p.in_stock ? "Stokta" : "Tükendi"}</Badge>

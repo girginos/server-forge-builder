@@ -8,9 +8,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { HARDWARE_CATEGORIES } from "@/config/hardware-categories";
 
 interface SpecFields {
   cpu: string;
@@ -432,11 +434,18 @@ export default function AdminProductEditor() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label>Kategori</Label>
-                <Input
-                  value={form.category}
-                  onChange={(e) => setForm({ ...form, category: e.target.value })}
-                  placeholder="server"
-                />
+                <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Kategori seçin" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {HARDWARE_CATEGORIES.map((cat) => (
+                      <SelectItem key={cat.value} value={cat.value}>
+                        {cat.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-2">
                 <Label>Fiyat (₺)</Label>
