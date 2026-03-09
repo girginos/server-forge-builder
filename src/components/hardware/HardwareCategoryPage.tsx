@@ -149,30 +149,41 @@ export default function HardwareCategoryPage({
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Left sidebar */}
-          <HardwareSidebar />
+          {/* Left sidebar: categories + filters */}
+          <div className="w-full lg:w-56 shrink-0 space-y-4">
+            <HardwareSidebar />
 
-          <div className="flex-1">
-            {/* Filter sidebar for category-specific filters */}
             {filters.length > 0 && (
-              <div className="flex flex-wrap gap-4 mb-6">
+              <div className="bg-card border rounded-xl p-3 space-y-4 sticky top-[21rem]">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground px-1">
+                  Filtreler
+                </p>
                 {filters.map((filter) => (
-                  <div key={filter.key} className="bg-card border rounded-lg p-3">
-                    <h3 className="font-semibold text-foreground text-xs mb-2">{filter.label}</h3>
-                    <div className="flex flex-wrap gap-1.5">
+                  <div key={filter.key}>
+                    <h3 className="font-semibold text-foreground text-xs mb-2 px-1">{filter.label}</h3>
+                    <div className="space-y-1">
                       {filter.options.map((opt) => {
                         const selected = (activeFilters[filter.key] || []).includes(opt);
+                        const count = products.filter((p) => (p as any)[filter.key] === opt).length;
                         return (
                           <button
                             key={opt}
                             onClick={() => toggleFilter(filter.key, opt)}
-                            className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
+                            className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                               selected
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-muted text-muted-foreground hover:bg-muted/80"
+                                ? "bg-primary/10 text-primary"
+                                : "text-foreground hover:bg-muted"
                             }`}
                           >
-                            {opt}
+                            <span className="flex items-center gap-2">
+                              <span className={`h-3.5 w-3.5 rounded border flex items-center justify-center transition-colors ${
+                                selected ? "bg-primary border-primary" : "border-border"
+                              }`}>
+                                {selected && <span className="text-primary-foreground text-[8px]">✓</span>}
+                              </span>
+                              {opt}
+                            </span>
+                            <span className="text-muted-foreground">({count})</span>
                           </button>
                         );
                       })}
@@ -180,12 +191,15 @@ export default function HardwareCategoryPage({
                   </div>
                 ))}
                 {hasActiveFilters && (
-                  <Button variant="outline" size="sm" onClick={clearAll} className="self-end">
-                    <X className="h-3 w-3" /> Temizle
+                  <Button variant="outline" size="sm" onClick={clearAll} className="w-full text-xs">
+                    <X className="h-3 w-3" /> Filtreleri Temizle
                   </Button>
                 )}
               </div>
             )}
+          </div>
+
+          <div className="flex-1">
 
             <p className="text-sm text-muted-foreground mb-4">{filtered.length} ürün bulundu</p>
 
