@@ -7,6 +7,7 @@ import { Search, X, SlidersHorizontal, Loader2, ShoppingCart } from "lucide-reac
 import { useCart } from "@/context/CartContext";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
+import { getProductUrl } from "@/config/hardware-categories";
 import HardwareSidebar from "@/components/hardware/HardwareSidebar";
 import { supabase } from "@/lib/supabase";
 
