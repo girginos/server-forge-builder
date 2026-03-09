@@ -1,0 +1,1 @@
+ALTER TABLE admin_products ADD COLUMN IF NOT EXISTS short_description text;

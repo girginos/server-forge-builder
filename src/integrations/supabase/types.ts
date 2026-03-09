@@ -26,6 +26,7 @@ export type Database = {
           in_stock: boolean
           name: string
           price: number
+          short_description: string | null
           specs: Json
           updated_at: string
         }
@@ -40,6 +41,7 @@ export type Database = {
           in_stock?: boolean
           name: string
           price?: number
+          short_description?: string | null
           specs?: Json
           updated_at?: string
         }
@@ -54,6 +56,7 @@ export type Database = {
           in_stock?: boolean
           name?: string
           price?: number
+          short_description?: string | null
           specs?: Json
           updated_at?: string
         }
