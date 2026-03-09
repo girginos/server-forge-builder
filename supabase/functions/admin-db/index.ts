@@ -33,10 +33,8 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     return false;
   }
 
-  const token = authHeader.replace("Bearer ", "");
 
   // Method 2: Direct service role key check (Lovable Cloud automation)
-  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (serviceRoleKey && token === serviceRoleKey) {
     console.log("Authenticated via service role key match");
     return true;
