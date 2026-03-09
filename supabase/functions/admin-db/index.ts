@@ -23,18 +23,28 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     return true;
   }
 
+  // Method 1b: Service Role Key or Anon Key (for internal tools like curl)
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
+  const apikeyHeader = req.headers.get("apikey");
+  if (authHeader) {
+    const token = authHeader.replace("Bearer ", "");
+    if ((serviceRoleKey && token === serviceRoleKey) || (anonKey && token === anonKey)) {
+      console.log("Auth: matched service/anon key via Authorization header");
+      return true;
+    }
+  }
+  // Also check apikey header (Supabase client sends this)
+  if (apikeyHeader && anonKey && apikeyHeader === anonKey) {
+    console.log("Auth: matched anon key via apikey header");
+    return true;
+  }
+
   if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
 
   const token = authHeader.replace("Bearer ", "");
-
-  // Method 2: Direct service role key check (Lovable Cloud automation)
-  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (serviceRoleKey && token === serviceRoleKey) {
-    console.log("Authenticated via service role key match");
-    return true;
-  }
 
   // Method 2: Lovable Cloud JWT (service_role from curl tool or AI automation)
   try {
