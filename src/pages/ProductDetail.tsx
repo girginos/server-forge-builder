@@ -14,6 +14,7 @@ import {
   Check,
   XCircle,
   ChevronRight,
+  ChevronLeft,
   Star,
   Loader2,
   ZoomIn,
