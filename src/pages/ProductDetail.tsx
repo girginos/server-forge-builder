@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
-import { getCategoryLabel, HARDWARE_CATEGORIES } from "@/config/hardware-categories";
+import { getCategoryLabel, HARDWARE_CATEGORIES, getProductUrl } from "@/config/hardware-categories";
 import {
   ArrowLeft,
   ShoppingCart,
