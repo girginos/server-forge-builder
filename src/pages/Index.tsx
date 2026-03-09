@@ -5,6 +5,8 @@ import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
 import ServerCard from "@/components/ServerCard";
 import HeroSlider from "@/components/HeroSlider";
+import { useCart } from "@/context/CartContext";
+import { supabase } from "@/lib/supabase";
 import {
   Shield, Settings, Cpu, Zap, Truck, Headphones,
   Globe, Database, Layers, ArrowRight, CheckCircle2,
