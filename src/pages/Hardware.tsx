@@ -185,24 +185,7 @@ export default function Hardware() {
                 {filtered.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                     {filtered.map((p) => (
-                      <div key={p.id} className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group">
-                        {p.image_url && (
-                          <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
-                            <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
-                          </div>
-                        )}
-                        {p.featured && <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Öne Çıkan</span>}
-                        <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
-                        {p.description && <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{p.description}</p>}
-                        {p.specs && Object.keys(p.specs).length > 0 && (
-                          <div className="flex flex-wrap gap-1 mb-3">
-                            {Object.entries(p.specs).slice(0, 3).map(([k, v]) => (
-                              <span key={k} className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{String(v)}</span>
-                            ))}
-                          </div>
-                        )}
-                        <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
-                      </div>
+                      <HardwareCard key={p.id} product={p} />
                     ))}
                   </div>
                 ) : (
