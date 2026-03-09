@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
-import { getCategoryLabel, HARDWARE_CATEGORIES } from "@/config/hardware-categories";
+import { getCategoryLabel, HARDWARE_CATEGORIES, getProductUrl } from "@/config/hardware-categories";
 import {
   ArrowLeft,
   ShoppingCart,
@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 interface Product {
   id: string;
   name: string;
+  slug: string;
   description: string | null;
   category: string;
   price: number;
@@ -50,7 +51,7 @@ const specLabels: Record<string, string> = {
 };
 
 export default function ProductDetail() {
-  const { productId } = useParams();
+  const { productSlug } = useParams();
   const navigate = useNavigate();
   const { addItem } = useCart();
 
@@ -61,23 +62,24 @@ export default function ProductDetail() {
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    if (!productId) return;
+    if (!productSlug) return;
     setLoading(true);
 
     supabase
       .from("admin_products")
       .select("*")
-      .eq("id", productId)
+      .eq("slug", productSlug)
       .single()
-      .then(({ data, error }) => {
+      .then(({ data, error }: any) => {
         if (error || !data) {
           navigate("/hardware", { replace: true });
           return;
         }
         const p = {
           ...data,
+          slug: data.slug || "",
           specs: typeof data.specs === "object" && data.specs !== null ? (data.specs as Record<string, string>) : {},
-          images: (data as any).images || [],
+          images: data.images || [],
         } as Product;
         setProduct(p);
         setSelectedImage(0);
@@ -88,19 +90,20 @@ export default function ProductDetail() {
           .from("admin_products")
           .select("*")
           .eq("category", data.category)
-          .neq("id", productId)
+          .neq("id", data.id)
           .limit(4)
-          .then(({ data: related }) => {
+          .then(({ data: related }: any) => {
             setRelatedProducts(
               (related || []).map((r: any) => ({
                 ...r,
+                slug: r.slug || "",
                 specs: typeof r.specs === "object" ? r.specs : {},
                 images: r.images || [],
               }))
             );
           });
       });
-  }, [productId, navigate]);
+  }, [productSlug, navigate]);
 
   if (loading || !product) {
     return (
@@ -128,7 +131,7 @@ export default function ProductDetail() {
       <SEO
         title={`${product.name} | ServerMarket`}
         description={product.description || `${product.name} - ${getCategoryLabel(product.category)}`}
-        canonical={`/urun/${product.id}`}
+        canonical={`/urun/${categorySlug}/${product.slug}`}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Product",
@@ -321,7 +324,7 @@ export default function ProductDetail() {
               {relatedProducts.map((p) => (
                 <Link
                   key={p.id}
-                  to={`/urun/${p.id}`}
+                  to={getProductUrl(p.category, p.slug)}
                   className="bg-card border rounded-xl p-3 hover:border-primary/30 transition-colors group"
                 >
                   {p.image_url && (

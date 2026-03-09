@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { HARDWARE_CATEGORIES } from "@/config/hardware-categories";
+import { HARDWARE_CATEGORIES, slugify } from "@/config/hardware-categories";
 
 interface SpecFields {
   cpu: string;
@@ -192,8 +192,9 @@ export default function AdminProductEditor() {
       if (value.trim()) specs[key] = value.trim();
     }
 
-    const payload = {
+    const payload: Record<string, any> = {
       name: form.name,
+      slug: slugify(form.name),
       description: form.description || null,
       category: form.category,
       price: form.price,

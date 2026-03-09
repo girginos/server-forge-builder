@@ -6,6 +6,7 @@ import { Search, X, Loader2, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
+import { getProductUrl } from "@/config/hardware-categories";
 import HardwareSidebar from "./HardwareSidebar";
 import { supabase } from "@/lib/supabase";
 
@@ -265,7 +266,7 @@ export default function HardwareCategoryPage({
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                     {filtered.map((p) => (
                       <div key={p.id} className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group flex flex-col">
-                        <Link to={`/urun/${p.id}`} className="block">
+                        <Link to={getProductUrl(p.category, (p as any).slug || p.id)} className="block">
                           {p.image_url && (
                             <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
                               <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />

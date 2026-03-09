@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
+import { getProductUrl } from "@/config/hardware-categories";
 import ServerCard from "@/components/ServerCard";
 import HeroSlider from "@/components/HeroSlider";
 import { useCart } from "@/context/CartContext";
@@ -189,7 +190,7 @@ export default function Index() {
               {featuredProducts.map((p) => (
                 <Link
                   key={p.id}
-                  to={`/urun/${p.id}`}
+                  to={getProductUrl(p.category, (p as any).slug || p.id)}
                   className="group bg-card rounded-lg border shadow-card hover:shadow-glow transition-all duration-300 overflow-hidden flex flex-col h-full"
                 >
                   <div className="relative p-4 flex items-center justify-center h-52 bg-muted/30">
