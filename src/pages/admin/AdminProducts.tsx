@@ -25,17 +25,22 @@ interface Product {
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [categoryFilter, setCategoryFilter] = useState("all");
   const { toast } = useToast();
   const navigate = useNavigate();
 
   const load = () => {
-    supabase.from("admin_products").select("*").order("created_at", { ascending: false }).then(({ data }) => {
+    let query = supabase.from("admin_products").select("*").order("created_at", { ascending: false });
+    if (categoryFilter !== "all") {
+      query = query.eq("category", categoryFilter);
+    }
+    query.then(({ data }) => {
       setProducts((data as unknown as Product[]) || []);
       setIsLoading(false);
     });
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [categoryFilter]);
 
   const handleDelete = async (id: string) => {
     if (!confirm("Bu ürünü silmek istediğinize emin misiniz?")) return;
