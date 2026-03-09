@@ -139,7 +139,7 @@ export default function ProductDetail() {
           "@context": "https://schema.org",
           "@type": "Product",
           name: product.name,
-          description: product.description || "",
+          description: product.short_description || product.description?.replace(/<[^>]*>/g, '').substring(0, 200) || "",
           image: allImages[0] || "",
           offers: {
             "@type": "Offer",
