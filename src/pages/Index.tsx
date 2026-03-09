@@ -73,6 +73,27 @@ const testimonials = [
 ];
 
 export default function Index() {
+  const [featuredProducts, setFeaturedProducts] = useState<FeaturedProduct[]>([]);
+  const { addItem } = useCart();
+
+  useEffect(() => {
+    supabase
+      .from("admin_products")
+      .select("*")
+      .eq("featured", true)
+      .eq("in_stock", true)
+      .order("created_at", { ascending: false })
+      .limit(8)
+      .then(({ data }) => {
+        setFeaturedProducts(
+          (data || []).map((p: any) => ({
+            ...p,
+            specs: typeof p.specs === "object" ? p.specs : {},
+          }))
+        );
+      });
+  }, []);
+
   return (
     <div>
       <SEO
