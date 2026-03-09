@@ -261,11 +261,12 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Description */}
+            {/* Short Description */}
             {product.description && (
-              <p className="text-muted-foreground leading-relaxed">
-                {product.description}
-              </p>
+              <div
+                className="text-muted-foreground leading-relaxed text-sm [&_a]:text-primary [&_a]:underline"
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }}
+              />
             )}
 
             {/* Add to cart */}
