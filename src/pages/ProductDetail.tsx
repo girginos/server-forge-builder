@@ -195,6 +195,29 @@ export default function ProductDetail() {
                   <div className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <ZoomIn className="h-4 w-4 text-foreground" />
                   </div>
+                  {/* Navigation Arrows */}
+                  {allImages.length > 1 && (
+                    <>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedImage((prev) => (prev === 0 ? allImages.length - 1 : prev - 1));
+                        }}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background shadow-md"
+                      >
+                        <ChevronLeft className="h-5 w-5 text-foreground" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedImage((prev) => (prev === allImages.length - 1 ? 0 : prev + 1));
+                        }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background shadow-md"
+                      >
+                        <ChevronRight className="h-5 w-5 text-foreground" />
+                      </button>
+                    </>
+                  )}
                 </>
               ) : (
                 <div className="text-muted-foreground text-sm">Görsel yok</div>
