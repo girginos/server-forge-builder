@@ -262,14 +262,6 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Short Description */}
-            {product.description && (
-              <div
-                className="text-muted-foreground leading-relaxed text-sm [&_a]:text-primary [&_a]:underline"
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }}
-              />
-            )}
-
             {/* Add to cart */}
             <div className="flex gap-3">
               <Button
@@ -314,25 +306,25 @@ export default function ProductDetail() {
                 </div>
               </div>
             )}
-
-            {/* Product Description Section */}
-            {product.description && (
-              <div className="border rounded-xl overflow-hidden">
-                <div className="bg-muted/50 px-4 py-2.5 border-b">
-                  <h2 className="font-semibold text-sm text-foreground">
-                    Ürün Açıklaması
-                  </h2>
-                </div>
-                <div className="px-4 py-4">
-                  <div
-                    className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground [&_a]:text-primary [&_a]:underline [&_h2]:text-foreground [&_h3]:text-foreground [&_strong]:text-foreground"
-                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }}
-                  />
-                </div>
-              </div>
-            )}
           </div>
         </div>
+
+        {/* Product Description - Full Width Below */}
+        {product.description && (
+          <div className="mt-10 border rounded-xl overflow-hidden">
+            <div className="bg-muted/50 px-4 py-2.5 border-b">
+              <h2 className="font-semibold text-sm text-foreground">
+                Ürün Açıklaması
+              </h2>
+            </div>
+            <div className="px-4 py-4 sm:px-6 sm:py-5">
+              <div
+                className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground [&_a]:text-primary [&_a]:underline [&_h2]:text-foreground [&_h3]:text-foreground [&_strong]:text-foreground"
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
