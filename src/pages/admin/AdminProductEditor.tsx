@@ -62,6 +62,7 @@ const specLabels: Record<keyof SpecFields, string> = {
 
 const emptyForm: ProductForm = {
   name: "",
+  short_description: "",
   description: "",
   category: "server",
   price: 0,
