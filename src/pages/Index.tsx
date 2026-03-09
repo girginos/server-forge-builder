@@ -176,21 +176,73 @@ export default function Index() {
         <div className="container">
           <div className="flex items-end justify-between mb-10">
             <div>
-              <h2 className="text-3xl font-bold text-foreground">Popüler Sunucu Modelleri</h2>
-              <p className="text-muted-foreground mt-2">Başlangıç noktanızı seçin, ardından ihtiyacınıza göre özelleştirin.</p>
+              <h2 className="text-3xl font-bold text-foreground">Öne Çıkan Ürünler</h2>
+              <p className="text-muted-foreground mt-2">Editör seçimi en popüler donanım ürünleri</p>
             </div>
             <Button variant="ghost" asChild className="hidden sm:flex">
               <Link to="/hardware">Tümünü Gör <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {servers.map((server) => (
-              <ServerCard key={server.id} {...server} />
-            ))}
-          </div>
+          {featuredProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {featuredProducts.map((p) => (
+                <Link
+                  key={p.id}
+                  to={`/urun/${p.id}`}
+                  className="group bg-card rounded-lg border shadow-card hover:shadow-glow transition-all duration-300 overflow-hidden flex flex-col h-full"
+                >
+                  <div className="relative p-4 flex items-center justify-center h-52 bg-muted/30">
+                    {p.featured && (
+                      <div className="absolute top-3 left-3 z-10">
+                        <Badge className="bg-primary text-primary-foreground text-[10px]">Öne Çıkan</Badge>
+                      </div>
+                    )}
+                    {p.image_url ? (
+                      <img src={p.image_url} alt={p.name} className="max-h-44 object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                    ) : (
+                      <Server className="h-16 w-16 text-muted-foreground/30" />
+                    )}
+                  </div>
+                  <div className="p-4 flex flex-col flex-1">
+                    {p.specs?.brand && (
+                      <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1">{p.specs.brand}</span>
+                    )}
+                    <h3 className="font-semibold text-foreground leading-tight min-h-[2.5rem]">{p.name}</h3>
+                    {p.description && (
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{p.description}</p>
+                    )}
+                    <div className="flex items-baseline gap-2 mt-auto pt-3">
+                      <span className="text-lg font-bold text-foreground">₺{p.price.toLocaleString("tr-TR")}</span>
+                    </div>
+                    <div className="flex gap-2 mt-3">
+                      <Button variant="hero" size="sm" className="flex-1" onClick={(e) => e.preventDefault()}>
+                        Detayları Gör <ChevronRight className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addItem({ id: p.id, name: p.name, price: p.price, image: p.image_url || undefined });
+                        }}
+                      >
+                        <ShoppingCart className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="bg-card rounded-lg border h-80 animate-pulse" />
+              ))}
+            </div>
+          )}
           <div className="text-center mt-6 sm:hidden">
             <Button variant="outline" asChild>
-              <Link to="/hardware">Tüm Sunucuları Gör <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/hardware">Tüm Ürünleri Gör <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
         </div>
