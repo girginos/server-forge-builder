@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
+import { getProductUrl } from "@/config/hardware-categories";
 import ServerCard from "@/components/ServerCard";
 import HeroSlider from "@/components/HeroSlider";
 import { useCart } from "@/context/CartContext";
