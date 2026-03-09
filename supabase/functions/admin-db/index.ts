@@ -37,12 +37,7 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     return false;
   }
 
-
-  // Method 2: Direct service role key check (Lovable Cloud automation)
-  if (serviceRoleKey && token === serviceRoleKey) {
-    console.log("Authenticated via service role key match");
-    return true;
-  }
+  const token = authHeader.replace("Bearer ", "");
 
   // Method 2: Lovable Cloud JWT (service_role from curl tool or AI automation)
   try {
