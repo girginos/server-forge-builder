@@ -189,7 +189,7 @@ export default function Index() {
               {featuredProducts.map((p) => (
                 <Link
                   key={p.id}
-                  to={`/urun/${p.id}`}
+                  to={getProductUrl(p.category, (p as any).slug || p.id)}
                   className="group bg-card rounded-lg border shadow-card hover:shadow-glow transition-all duration-300 overflow-hidden flex flex-col h-full"
                 >
                   <div className="relative p-4 flex items-center justify-center h-52 bg-muted/30">
