@@ -260,6 +260,17 @@ export default function AdminProductEditor() {
               </div>
 
               <div className="space-y-2">
+                <Label>Ürün Detayı (SEO Kısa Açıklama)</Label>
+                <Input
+                  value={form.short_description}
+                  onChange={(e) => setForm({ ...form, short_description: e.target.value })}
+                  placeholder="Ürün başlığı altında görünecek kısa SEO açıklaması..."
+                  maxLength={200}
+                />
+                <p className="text-xs text-muted-foreground">{form.short_description.length}/200 karakter</p>
+              </div>
+
+              <div className="space-y-2">
                 <Label>Açıklama</Label>
                 <RichTextEditor
                   content={form.description}
