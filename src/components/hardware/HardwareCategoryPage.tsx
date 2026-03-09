@@ -1,20 +1,24 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, X, SlidersHorizontal } from "lucide-react";
+import { Search, X, Loader2 } from "lucide-react";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
 import HardwareSidebar from "./HardwareSidebar";
+import { supabase } from "@/lib/supabase";
 
 export interface HardwareProduct {
   id: string;
   name: string;
-  image: string;
-  specs: string;
+  image_url: string | null;
+  description: string | null;
+  specs: Record<string, string>;
   price: number;
-  oldPrice?: number;
-  badge?: string;
-  brand: string;
+  in_stock: boolean;
+  featured: boolean;
+  category: string;
+  brand?: string;
+  [key: string]: any;
 }
 
 interface FilterConfig {
@@ -29,7 +33,7 @@ interface HardwareCategoryPageProps {
   seoDescription: string;
   seoKeywords: string;
   canonical: string;
-  products: HardwareProduct[];
+  categoryDbValue: string;
   filters?: FilterConfig[];
 }
 
@@ -39,12 +43,33 @@ export default function HardwareCategoryPage({
   seoDescription,
   seoKeywords,
   canonical,
-  products,
+  categoryDbValue,
   filters = [],
 }: HardwareCategoryPageProps) {
+  const [products, setProducts] = useState<HardwareProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [sort, setSort] = useState("default");
+
+  useEffect(() => {
+    setLoading(true);
+    supabase
+      .from("admin_products")
+      .select("*")
+      .eq("category", categoryDbValue)
+      .order("featured", { ascending: false })
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        const mapped = (data || []).map((p: any) => ({
+          ...p,
+          specs: typeof p.specs === "object" ? p.specs : {},
+          brand: p.specs?.brand || p.specs?.marka || "",
+        }));
+        setProducts(mapped);
+        setLoading(false);
+      });
+  }, [categoryDbValue]);
 
   const toggleFilter = (key: string, val: string) => {
     setActiveFilters((prev) => {
@@ -70,7 +95,10 @@ export default function HardwareCategoryPage({
     let result = products.filter((p) => {
       if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
       for (const [key, values] of Object.entries(activeFilters)) {
-        if (values.length > 0 && !values.includes((p as any)[key])) return false;
+        if (values.length > 0) {
+          const productVal = p.specs?.[key] || (p as any)[key] || "";
+          if (!values.includes(productVal)) return false;
+        }
       }
       return true;
     });
@@ -101,13 +129,12 @@ export default function HardwareCategoryPage({
             item: {
               "@type": "Product",
               name: p.name,
-              description: p.specs,
-              brand: { "@type": "Brand", name: p.brand },
+              description: p.description || "",
               offers: {
                 "@type": "Offer",
                 price: p.price.toString(),
                 priceCurrency: "TRY",
-                availability: "https://schema.org/InStock",
+                availability: p.in_stock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
                 seller: { "@type": "Organization", name: "ServerMarket" },
               },
             },
@@ -164,7 +191,10 @@ export default function HardwareCategoryPage({
                     <div className="space-y-1">
                       {filter.options.map((opt) => {
                         const selected = (activeFilters[filter.key] || []).includes(opt);
-                        const count = products.filter((p) => (p as any)[filter.key] === opt).length;
+                        const count = products.filter((p) => {
+                          const val = p.specs?.[filter.key] || (p as any)[filter.key] || "";
+                          return val === opt;
+                        }).length;
                         return (
                           <button
                             key={opt}
@@ -200,37 +230,55 @@ export default function HardwareCategoryPage({
           </div>
 
           <div className="flex-1">
-
-            <p className="text-sm text-muted-foreground mb-4">{filtered.length} ürün bulundu</p>
-
-            {filtered.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                {filtered.map((p) => (
-                  <div key={p.id} className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group">
-                    <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
-                      <img src={p.image} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
-                    </div>
-                    {p.badge && (
-                      <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">{p.badge}</span>
-                    )}
-                    <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-3">{p.specs}</p>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
-                      {p.oldPrice && (
-                        <span className="text-xs text-muted-foreground line-through">₺{p.oldPrice.toLocaleString("tr-TR")}</span>
-                      )}
-                    </div>
-                  </div>
-                ))}
+            {loading ? (
+              <div className="flex items-center justify-center py-16">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
             ) : (
-              <div className="text-center py-16 bg-card border rounded-lg">
-                <Search className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-                <h3 className="text-lg font-semibold text-foreground">Sonuç bulunamadı</h3>
-                <p className="text-sm text-muted-foreground mt-1">Filtrelerinizi değiştirerek tekrar deneyin.</p>
-                <Button variant="outline" size="sm" className="mt-4" onClick={clearAll}>Filtreleri Temizle</Button>
-              </div>
+              <>
+                <p className="text-sm text-muted-foreground mb-4">{filtered.length} ürün bulundu</p>
+
+                {filtered.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {filtered.map((p) => (
+                      <div key={p.id} className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group">
+                        {p.image_url && (
+                          <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
+                            <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
+                          </div>
+                        )}
+                        {p.featured && (
+                          <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Öne Çıkan</span>
+                        )}
+                        {!p.in_stock && (
+                          <span className="inline-block bg-destructive/10 text-destructive text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Stok Dışı</span>
+                        )}
+                        <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
+                        {p.description && (
+                          <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{p.description}</p>
+                        )}
+                        {/* Specs summary */}
+                        {Object.keys(p.specs).length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-3">
+                            {Object.entries(p.specs).slice(0, 3).map(([k, v]) => (
+                              <span key={k} className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{String(v)}</span>
+                            ))}
+                          </div>
+                        )}
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-16 bg-card border rounded-lg">
+                    <Search className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                    <h3 className="text-lg font-semibold text-foreground">Henüz ürün eklenmemiş</h3>
+                    <p className="text-sm text-muted-foreground mt-1">Bu kategoriye admin panelinden ürün ekleyebilirsiniz.</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
