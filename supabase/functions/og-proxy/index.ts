@@ -164,14 +164,14 @@ async function getProductMeta(productSlug: string, categorySlug: string): Promis
 
     const { data, error } = await supabase
       .from("admin_products")
-      .select("name, description, category, price, image_url, images, in_stock, specs")
+      .select("name, short_description, description, category, price, image_url, images, in_stock, specs")
       .eq("slug", productSlug)
       .single();
 
     if (error || !data) return null;
 
     const catLabel = CATEGORY_LABELS[categorySlug] || categorySlug;
-    const description = data.description || `${data.name} - ${catLabel} kategorisinde. ServerMarket'te en uygun fiyatlarla.`;
+    const description = data.short_description || data.description?.replace(/<[^>]*>/g, '').substring(0, 160) || `${data.name} - ${catLabel} kategorisinde. ServerMarket'te en uygun fiyatlarla.`;
     const firstImage = data.images?.[0] || data.image_url || OG_IMAGE;
 
     return {

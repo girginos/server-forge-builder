@@ -24,6 +24,7 @@ interface Product {
   id: string;
   name: string;
   slug: string;
+  short_description: string | null;
   description: string | null;
   category: string;
   price: number;
@@ -131,14 +132,14 @@ export default function ProductDetail() {
     <div className="py-8">
       <SEO
         title={`${product.name} | ServerMarket`}
-        description={product.description || `${product.name} - ${getCategoryLabel(product.category)}`}
+        description={product.short_description || product.description?.replace(/<[^>]*>/g, '').substring(0, 160) || `${product.name} - ${getCategoryLabel(product.category)}`}
         canonical={`/urun/${categorySlug}/${product.slug}`}
         ogImage={allImages[0] || undefined}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Product",
           name: product.name,
-          description: product.description || "",
+          description: product.short_description || product.description?.replace(/<[^>]*>/g, '').substring(0, 200) || "",
           image: allImages[0] || "",
           offers: {
             "@type": "Offer",
@@ -244,6 +245,11 @@ export default function ProductDetail() {
               <h1 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">
                 {product.name}
               </h1>
+              {product.short_description && (
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {product.short_description}
+                </p>
+              )}
             </div>
 
             {/* Price + Stock */}
