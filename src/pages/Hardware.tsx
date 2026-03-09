@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Search, X, SlidersHorizontal } from "lucide-react";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
+import HardwareSidebar from "@/components/hardware/HardwareSidebar";
 import serverR740 from "@/assets/server-r740.png";
 import serverR640 from "@/assets/server-r640.png";
 import serverDL380 from "@/assets/server-dl380.png";
@@ -115,7 +116,6 @@ export default function Hardware() {
         }}
       />
       <div className="container">
-        {/* Header */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-foreground">Sunucu Donanımları</h1>
           <p className="text-muted-foreground mt-1">Tüm sunucu modellerimizi inceleyin ve ihtiyacınıza uygun olanı seçin.</p>
@@ -158,132 +158,84 @@ export default function Hardware() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar filters */}
-          {showFilters && (
-          <aside className="w-full lg:w-60 shrink-0">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-            {/* Brand */}
-            <div className="bg-card border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground text-sm mb-3">Marka</h3>
-              <div className="space-y-2">
-                {brands.map((brand) => (
-                  <label key={brand} className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={selectedBrands.includes(brand)}
-                      onChange={() => toggleFilter(selectedBrands, brand, setSelectedBrands)}
-                      className="accent-primary rounded"
-                    />
-                    <span className="text-sm text-foreground">{brand}</span>
-                    <span className="text-xs text-muted-foreground ml-auto">
-                      ({allServers.filter((s) => s.brand === brand).length})
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
+          {/* Category sidebar */}
+          <HardwareSidebar />
 
-            {/* CPU Brand */}
-            <div className="bg-card border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground text-sm mb-3">İşlemci</h3>
-              <div className="space-y-2">
-                {cpuBrands.map((cpuBrand) => (
-                  <label key={cpuBrand} className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={selectedCpuBrands.includes(cpuBrand)}
-                      onChange={() => toggleFilter(selectedCpuBrands, cpuBrand, setSelectedCpuBrands)}
-                      className="accent-primary rounded"
-                    />
-                    <span className="text-sm text-foreground">{cpuBrand}</span>
-                    <span className="text-xs text-muted-foreground ml-auto">
-                      ({allServers.filter((s) => s.cpuBrand === cpuBrand).length})
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Form Factor */}
-            <div className="bg-card border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground text-sm mb-3">Form Faktörü</h3>
-              <div className="space-y-2">
-                {formFactors.map((ff) => (
-                  <label key={ff} className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={selectedFormFactors.includes(ff)}
-                      onChange={() => toggleFilter(selectedFormFactors, ff, setSelectedFormFactors)}
-                      className="accent-primary rounded"
-                    />
-                    <span className="text-sm text-foreground">{ff}</span>
-                    <span className="text-xs text-muted-foreground ml-auto">
-                      ({allServers.filter((s) => s.formFactor === ff).length})
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Price Range */}
-            <div className="bg-card border rounded-lg p-4">
-              <h3 className="font-semibold text-foreground text-sm mb-3">Fiyat Aralığı</h3>
-              <div className="space-y-2">
-                {priceRanges.map((range, i) => (
-                  <label key={range.label} className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="price"
-                      checked={priceRange === i}
-                      onChange={() => setPriceRange(i)}
-                      className="accent-primary"
-                    />
-                    <span className="text-sm text-foreground">{range.label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {hasActiveFilters && (
-              <div className="sm:col-span-2 lg:col-span-1">
-                <Button variant="outline" size="sm" className="w-full" onClick={clearAll}>
-                  <X className="h-3 w-3" /> Filtreleri Temizle
-                </Button>
+          <div className="flex-1">
+            {/* Product filters */}
+            {showFilters && (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                <div className="bg-card border rounded-lg p-3">
+                  <h3 className="font-semibold text-foreground text-xs mb-2">Marka</h3>
+                  <div className="space-y-1.5">
+                    {brands.map((brand) => (
+                      <label key={brand} className="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" checked={selectedBrands.includes(brand)} onChange={() => toggleFilter(selectedBrands, brand, setSelectedBrands)} className="accent-primary rounded" />
+                        <span className="text-xs text-foreground">{brand}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-card border rounded-lg p-3">
+                  <h3 className="font-semibold text-foreground text-xs mb-2">İşlemci</h3>
+                  <div className="space-y-1.5">
+                    {cpuBrands.map((cb) => (
+                      <label key={cb} className="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" checked={selectedCpuBrands.includes(cb)} onChange={() => toggleFilter(selectedCpuBrands, cb, setSelectedCpuBrands)} className="accent-primary rounded" />
+                        <span className="text-xs text-foreground">{cb}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-card border rounded-lg p-3">
+                  <h3 className="font-semibold text-foreground text-xs mb-2">Form Faktörü</h3>
+                  <div className="space-y-1.5">
+                    {formFactors.map((ff) => (
+                      <label key={ff} className="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" checked={selectedFormFactors.includes(ff)} onChange={() => toggleFilter(selectedFormFactors, ff, setSelectedFormFactors)} className="accent-primary rounded" />
+                        <span className="text-xs text-foreground">{ff}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-card border rounded-lg p-3">
+                  <h3 className="font-semibold text-foreground text-xs mb-2">Fiyat</h3>
+                  <div className="space-y-1.5">
+                    {priceRanges.map((range, i) => (
+                      <label key={range.label} className="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="price" checked={priceRange === i} onChange={() => setPriceRange(i)} className="accent-primary" />
+                        <span className="text-xs text-foreground">{range.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
-            </div>
-          </aside>
-          )}
 
-          {/* Products */}
-          <div className="flex-1">
             {/* Active filter chips */}
             {hasActiveFilters && (
               <div className="flex flex-wrap gap-2 mb-4">
                 {selectedBrands.map((b) => (
                   <span key={b} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                    {b}
-                    <button onClick={() => toggleFilter(selectedBrands, b, setSelectedBrands)}><X className="h-3 w-3" /></button>
+                    {b} <button onClick={() => toggleFilter(selectedBrands, b, setSelectedBrands)}><X className="h-3 w-3" /></button>
                   </span>
                 ))}
                 {selectedCpuBrands.map((cb) => (
                   <span key={cb} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                    {cb}
-                    <button onClick={() => toggleFilter(selectedCpuBrands, cb, setSelectedCpuBrands)}><X className="h-3 w-3" /></button>
+                    {cb} <button onClick={() => toggleFilter(selectedCpuBrands, cb, setSelectedCpuBrands)}><X className="h-3 w-3" /></button>
                   </span>
                 ))}
                 {selectedFormFactors.map((ff) => (
                   <span key={ff} className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                    {ff}
-                    <button onClick={() => toggleFilter(selectedFormFactors, ff, setSelectedFormFactors)}><X className="h-3 w-3" /></button>
+                    {ff} <button onClick={() => toggleFilter(selectedFormFactors, ff, setSelectedFormFactors)}><X className="h-3 w-3" /></button>
                   </span>
                 ))}
                 {priceRange > 0 && (
                   <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium">
-                    {priceRanges[priceRange].label}
-                    <button onClick={() => setPriceRange(0)}><X className="h-3 w-3" /></button>
+                    {priceRanges[priceRange].label} <button onClick={() => setPriceRange(0)}><X className="h-3 w-3" /></button>
                   </span>
                 )}
+                <Button variant="ghost" size="sm" onClick={clearAll} className="text-xs"><X className="h-3 w-3" /> Temizle</Button>
               </div>
             )}
 
