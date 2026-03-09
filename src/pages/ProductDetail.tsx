@@ -245,6 +245,11 @@ export default function ProductDetail() {
               <h1 className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">
                 {product.name}
               </h1>
+              {product.short_description && (
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {product.short_description}
+                </p>
+              )}
             </div>
 
             {/* Price + Stock */}
