@@ -400,16 +400,40 @@ export default function ProductDetail() {
         >
           <button
             onClick={() => setLightbox(false)}
-            className="absolute top-4 right-4 text-white/70 hover:text-white text-3xl font-light"
+            className="absolute top-4 right-4 text-white/70 hover:text-white text-3xl font-light z-10"
           >
             ×
           </button>
+          {/* Lightbox Left Arrow */}
+          {allImages.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImage((prev) => (prev === 0 ? allImages.length - 1 : prev - 1));
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-full p-2 transition-colors z-10"
+            >
+              <ChevronLeft className="h-6 w-6 text-white" />
+            </button>
+          )}
           <img
             src={allImages[selectedImage]}
             alt={product.name}
             className="max-h-[85vh] max-w-[90vw] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
+          {/* Lightbox Right Arrow */}
+          {allImages.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedImage((prev) => (prev === allImages.length - 1 ? 0 : prev + 1));
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-full p-2 transition-colors z-10"
+            >
+              <ChevronRight className="h-6 w-6 text-white" />
+            </button>
+          )}
           {allImages.length > 1 && (
             <div className="absolute bottom-6 flex gap-2">
               {allImages.map((img, i) => (
