@@ -266,8 +266,9 @@ export default function HardwareCategoryPage({
                             ))}
                           </div>
                         )}
-                        <div className="flex items-baseline gap-2">
+                        <div className="flex items-center justify-between gap-2 mt-auto pt-1">
                           <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
+                          <AddToCartButton product={p} />
                         </div>
                       </div>
                     ))}
