@@ -100,6 +100,7 @@ export default function AdminProductEditor() {
           }
           setForm({
             name: data.name,
+            short_description: (data as any).short_description || "",
             description: data.description || "",
             category: data.category,
             price: data.price,
