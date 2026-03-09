@@ -258,11 +258,10 @@ export default function AdminProductEditor() {
 
               <div className="space-y-2">
                 <Label>Açıklama</Label>
-                <Textarea
-                  value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                <RichTextEditor
+                  content={form.description}
+                  onChange={(html) => setForm({ ...form, description: html })}
                   placeholder="Ürün hakkında detaylı açıklama..."
-                  rows={5}
                 />
               </div>
             </CardContent>
