@@ -13,18 +13,18 @@ import {
   Users, Award, Server, Clock, Package, Brain,
   HardDrive, ChevronRight
 } from "lucide-react";
-import colocationBg from "@/assets/colocation-bg.jpg";
-import serverR740 from "@/assets/server-r740.png";
-import serverR640 from "@/assets/server-r640.png";
-import serverDL380 from "@/assets/server-dl380.png";
-import serverSupermicro from "@/assets/server-supermicro.png";
 
-const servers = [
-  { id: "dell-r740xd", name: "Dell PowerEdge R740xd", image: serverR740, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4 (24 Slot)", price: 45000, oldPrice: 52000, badge: "Popüler" },
-  { id: "dell-r640", name: "Dell PowerEdge R640", image: serverR640, formFactor: "1U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "2048 GB DDR4", price: 32000 },
-  { id: "hp-dl380", name: "HP ProLiant DL380 Gen10", image: serverDL380, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "3072 GB DDR4", price: 38000, badge: "Yeni" },
-  { id: "supermicro-2u", name: "Supermicro SuperServer 2U", image: serverSupermicro, formFactor: "2U Rack Mount", cpu: "2x Intel Xeon Scalable", maxRam: "4096 GB DDR4", price: 55000, oldPrice: 62000 },
-];
+interface FeaturedProduct {
+  id: string;
+  name: string;
+  image_url: string | null;
+  description: string | null;
+  category: string;
+  price: number;
+  specs: Record<string, string>;
+  in_stock: boolean;
+  featured: boolean;
+}
 
 const features = [
   { icon: Shield, title: "1 Yıl Garanti", desc: "Tüm sunucularda standart garanti" },
