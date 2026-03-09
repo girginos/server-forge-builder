@@ -312,6 +312,22 @@ export default function ProductDetail() {
                 </div>
               </div>
             )}
+
+            {/* Product Description Section */}
+            {product.description && (
+              <div className="border rounded-xl overflow-hidden">
+                <div className="bg-muted/50 px-4 py-2.5 border-b">
+                  <h2 className="font-semibold text-sm text-foreground">
+                    Ürün Açıklaması
+                  </h2>
+                </div>
+                <div className="px-4 py-4">
+                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                    {product.description}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
