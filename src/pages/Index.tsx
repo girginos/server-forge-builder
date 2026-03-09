@@ -12,7 +12,7 @@ import {
   Shield, Settings, Cpu, Zap, Truck, Headphones,
   Globe, Database, Layers, ArrowRight, CheckCircle2,
   Users, Award, Server, Clock, Package, Brain,
-  HardDrive, ChevronRight
+  HardDrive, ChevronRight, ShoppingCart
 } from "lucide-react";
 import colocationBg from "@/assets/colocation-bg.jpg";
 
