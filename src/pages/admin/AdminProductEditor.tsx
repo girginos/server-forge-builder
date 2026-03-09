@@ -27,6 +27,7 @@ interface SpecFields {
 
 interface ProductForm {
   name: string;
+  short_description: string;
   description: string;
   category: string;
   price: number;
