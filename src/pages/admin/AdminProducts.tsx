@@ -51,11 +51,24 @@ export default function AdminProducts() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-3">
         <CardTitle>Ürün Yönetimi</CardTitle>
-        <Button size="sm" onClick={() => navigate("/admin/urunler/yeni")}>
-          <Plus className="h-4 w-4 mr-1" /> Yeni Ürün
-        </Button>
+        <div className="flex items-center gap-2">
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Kategori" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tüm Kategoriler</SelectItem>
+              {HARDWARE_CATEGORIES.map((cat) => (
+                <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button size="sm" onClick={() => navigate("/admin/urunler/yeni")}>
+            <Plus className="h-4 w-4 mr-1" /> Yeni Ürün
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         {isLoading ? <p>Yükleniyor...</p> : products.length === 0 ? (
