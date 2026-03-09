@@ -240,7 +240,7 @@ export default function Navbar() {
                 link.children ? (
                   <div key={link.label}>
                     <button
-                      onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+                      onClick={() => setMobileDropdownOpen(mobileDropdownOpen === link.label ? null : link.label)}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-sm font-medium ${
                         isActiveChild(link.children)
                           ? "text-primary bg-primary/5"
