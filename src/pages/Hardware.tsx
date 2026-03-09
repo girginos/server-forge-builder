@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { Link } from "react-router-dom";
 import ServerCard from "@/components/ServerCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -33,21 +34,23 @@ function HardwareCard({ product: p }: { product: DBProduct }) {
   const { addItem } = useCart();
   return (
     <div className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group flex flex-col">
-      {p.image_url && (
-        <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
-          <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
-        </div>
-      )}
-      {p.featured && <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Öne Çıkan</span>}
-      <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
-      {p.description && <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{p.description}</p>}
-      {p.specs && Object.keys(p.specs).length > 0 && (
-        <div className="flex flex-wrap gap-1 mb-3">
-          {Object.entries(p.specs).slice(0, 3).map(([k, v]) => (
-            <span key={k} className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{String(v)}</span>
-          ))}
-        </div>
-      )}
+      <Link to={`/urun/${p.id}`} className="block">
+        {p.image_url && (
+          <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
+            <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
+          </div>
+        )}
+        {p.featured && <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Öne Çıkan</span>}
+        <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
+        {p.description && <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{p.description}</p>}
+        {p.specs && Object.keys(p.specs).length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-3">
+            {Object.entries(p.specs).slice(0, 3).map(([k, v]) => (
+              <span key={k} className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{String(v)}</span>
+            ))}
+          </div>
+        )}
+      </Link>
       <div className="flex items-center justify-between gap-2 mt-auto pt-1">
         <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
         <Button

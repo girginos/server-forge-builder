@@ -33,6 +33,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
+import ProductDetail from "./pages/ProductDetail";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -62,6 +63,7 @@ function SiteLayout() {
           <Route path="/hardware/switch-router" element={<SwitchRouterPage />} />
           <Route path="/hardware/kablo" element={<KabloPage />} />
           <Route path="/hardware/anakart" element={<AnakartPage />} />
+          <Route path="/urun/:productId" element={<ProductDetail />} />
           <Route path="/hazir-paketler" element={<ReadyPackages />} />
           <Route path="/yapilandirici" element={<Configurator />} />
           <Route path="/yapilandirici/uzman" element={<ExpertConfigurator />} />
