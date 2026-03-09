@@ -201,12 +201,9 @@ export default function HardwareCategoryPage({
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Left sidebar: categories + filters */}
-          <div className="w-full lg:w-56 shrink-0 space-y-4">
-            <HardwareSidebar />
-
-            {filters.length > 0 && (
-              <div className="bg-card border rounded-xl p-3 space-y-4 sticky top-[21rem]">
+          {filters.length > 0 && (
+            <div className="w-full lg:w-56 shrink-0">
+              <div className="bg-card border rounded-xl p-3 space-y-4 sticky top-20">
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground px-1">
                   Filtreler
                 </p>
@@ -251,8 +248,8 @@ export default function HardwareCategoryPage({
                   </Button>
                 )}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="flex-1">
             {loading ? (
