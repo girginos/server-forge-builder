@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, X, Loader2 } from "lucide-react";
+import { Search, X, Loader2, ShoppingCart } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
 import HardwareSidebar from "./HardwareSidebar";
@@ -35,6 +36,30 @@ interface HardwareCategoryPageProps {
   canonical: string;
   categoryDbValue: string;
   filters?: FilterConfig[];
+}
+
+function AddToCartButton({ product }: { product: HardwareProduct }) {
+  const { addItem } = useCart();
+  return (
+    <Button
+      size="sm"
+      variant="outline"
+      className="shrink-0 gap-1.5 text-xs"
+      disabled={!product.in_stock}
+      onClick={() =>
+        addItem({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image_url || undefined,
+          specs: product.description || undefined,
+        })
+      }
+    >
+      <ShoppingCart className="h-3.5 w-3.5" />
+      Sepete Ekle
+    </Button>
+  );
 }
 
 export default function HardwareCategoryPage({
@@ -241,7 +266,7 @@ export default function HardwareCategoryPage({
                 {filtered.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                     {filtered.map((p) => (
-                      <div key={p.id} className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group">
+                      <div key={p.id} className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group flex flex-col">
                         {p.image_url && (
                           <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
                             <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
@@ -265,8 +290,9 @@ export default function HardwareCategoryPage({
                             ))}
                           </div>
                         )}
-                        <div className="flex items-baseline gap-2">
+                        <div className="flex items-center justify-between gap-2 mt-auto pt-1">
                           <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
+                          <AddToCartButton product={p} />
                         </div>
                       </div>
                     ))}

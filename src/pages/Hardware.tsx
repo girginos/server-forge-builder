@@ -2,7 +2,8 @@ import { useState, useMemo, useEffect } from "react";
 import ServerCard from "@/components/ServerCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, X, SlidersHorizontal, Loader2 } from "lucide-react";
+import { Search, X, SlidersHorizontal, Loader2, ShoppingCart } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 import SEO from "@/components/SEO";
 import { SITE_URL } from "@/config/site";
 import HardwareSidebar from "@/components/hardware/HardwareSidebar";
@@ -26,6 +27,42 @@ interface DBProduct {
   specs: Record<string, string>;
   in_stock: boolean;
   featured: boolean;
+}
+
+function HardwareCard({ product: p }: { product: DBProduct }) {
+  const { addItem } = useCart();
+  return (
+    <div className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group flex flex-col">
+      {p.image_url && (
+        <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
+          <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
+        </div>
+      )}
+      {p.featured && <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Öne Çıkan</span>}
+      <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
+      {p.description && <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{p.description}</p>}
+      {p.specs && Object.keys(p.specs).length > 0 && (
+        <div className="flex flex-wrap gap-1 mb-3">
+          {Object.entries(p.specs).slice(0, 3).map(([k, v]) => (
+            <span key={k} className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{String(v)}</span>
+          ))}
+        </div>
+      )}
+      <div className="flex items-center justify-between gap-2 mt-auto pt-1">
+        <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
+        <Button
+          size="sm"
+          variant="outline"
+          className="shrink-0 gap-1.5 text-xs"
+          disabled={!p.in_stock}
+          onClick={() => addItem({ id: p.id, name: p.name, price: p.price, image: p.image_url || undefined, specs: p.description || undefined })}
+        >
+          <ShoppingCart className="h-3.5 w-3.5" />
+          Sepete Ekle
+        </Button>
+      </div>
+    </div>
+  );
 }
 
 export default function Hardware() {
@@ -184,24 +221,7 @@ export default function Hardware() {
                 {filtered.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                     {filtered.map((p) => (
-                      <div key={p.id} className="bg-card border rounded-xl p-4 hover:border-primary/30 transition-colors group">
-                        {p.image_url && (
-                          <div className="aspect-[4/3] rounded-lg bg-muted/30 mb-3 flex items-center justify-center overflow-hidden">
-                            <img src={p.image_url} alt={p.name} className="max-h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
-                          </div>
-                        )}
-                        {p.featured && <span className="inline-block bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Öne Çıkan</span>}
-                        <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
-                        {p.description && <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{p.description}</p>}
-                        {p.specs && Object.keys(p.specs).length > 0 && (
-                          <div className="flex flex-wrap gap-1 mb-3">
-                            {Object.entries(p.specs).slice(0, 3).map(([k, v]) => (
-                              <span key={k} className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">{String(v)}</span>
-                            ))}
-                          </div>
-                        )}
-                        <span className="text-lg font-bold text-primary">₺{p.price.toLocaleString("tr-TR")}</span>
-                      </div>
+                      <HardwareCard key={p.id} product={p} />
                     ))}
                   </div>
                 ) : (
