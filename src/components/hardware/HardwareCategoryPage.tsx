@@ -279,8 +279,10 @@ export default function HardwareCategoryPage({
                             <span className="inline-block bg-destructive/10 text-destructive text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">Stok Dışı</span>
                           )}
                           <h3 className="font-semibold text-sm text-foreground leading-tight mb-1">{p.name}</h3>
-                          {p.description && (
-                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{p.description}</p>
+                          {(p.short_description || p.description) && (
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                              {p.short_description || p.description?.replace(/<[^>]*>/g, '').substring(0, 120)}
+                            </p>
                           )}
                           {Object.keys(p.specs).length > 0 && (
                             <div className="flex flex-wrap gap-1 mb-3">
