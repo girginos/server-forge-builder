@@ -248,9 +248,9 @@ export default function Navbar() {
                       }`}
                     >
                       {link.label}
-                      <ChevronDown className={`h-3.5 w-3.5 transition-transform ${mobileDropdownOpen ? "rotate-180" : ""}`} />
+                      <ChevronDown className={`h-3.5 w-3.5 transition-transform ${mobileDropdownOpen === link.label ? "rotate-180" : ""}`} />
                     </button>
-                    {mobileDropdownOpen && (
+                    {mobileDropdownOpen === link.label && (
                       <div className="ml-2 flex flex-col gap-1 mt-1 border-l-2 border-primary/20 pl-2">
                         {link.children.map((child) => (
                           <Link
