@@ -323,9 +323,10 @@ export default function ProductDetail() {
                   </h2>
                 </div>
                 <div className="px-4 py-4">
-                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                    {product.description}
-                  </p>
+                  <div
+                    className="prose prose-sm dark:prose-invert max-w-none text-muted-foreground [&_a]:text-primary [&_a]:underline [&_h2]:text-foreground [&_h3]:text-foreground [&_strong]:text-foreground"
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }}
+                  />
                 </div>
               </div>
             )}
