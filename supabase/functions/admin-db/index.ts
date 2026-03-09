@@ -23,10 +23,14 @@ async function authenticateRequest(req: Request): Promise<boolean> {
     return true;
   }
 
-  // Method 1b: Service Role Key (for internal tools like curl)
+  // Method 1b: Service Role Key or Anon Key (for internal tools like curl)
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (authHeader && serviceRoleKey && authHeader === `Bearer ${serviceRoleKey}`) {
-    return true;
+  const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
+  if (authHeader) {
+    const token = authHeader.replace("Bearer ", "");
+    if ((serviceRoleKey && token === serviceRoleKey) || (anonKey && token === anonKey)) {
+      return true;
+    }
   }
 
   if (!authHeader?.startsWith("Bearer ")) {
