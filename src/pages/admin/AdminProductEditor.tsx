@@ -27,6 +27,7 @@ interface SpecFields {
 
 interface ProductForm {
   name: string;
+  short_description: string;
   description: string;
   category: string;
   price: number;
@@ -61,6 +62,7 @@ const specLabels: Record<keyof SpecFields, string> = {
 
 const emptyForm: ProductForm = {
   name: "",
+  short_description: "",
   description: "",
   category: "server",
   price: 0,
@@ -98,6 +100,7 @@ export default function AdminProductEditor() {
           }
           setForm({
             name: data.name,
+            short_description: (data as any).short_description || "",
             description: data.description || "",
             category: data.category,
             price: data.price,
@@ -195,6 +198,7 @@ export default function AdminProductEditor() {
     const payload: Record<string, any> = {
       name: form.name,
       slug: slugify(form.name),
+      short_description: form.short_description || null,
       description: form.description || null,
       category: form.category,
       price: form.price,
@@ -253,6 +257,17 @@ export default function AdminProductEditor() {
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="Dell PowerEdge R740"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Ürün Detayı (SEO Kısa Açıklama)</Label>
+                <Input
+                  value={form.short_description}
+                  onChange={(e) => setForm({ ...form, short_description: e.target.value })}
+                  placeholder="Ürün başlığı altında görünecek kısa SEO açıklaması..."
+                  maxLength={200}
+                />
+                <p className="text-xs text-muted-foreground">{form.short_description.length}/200 karakter</p>
               </div>
 
               <div className="space-y-2">
