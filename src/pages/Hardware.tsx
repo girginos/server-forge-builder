@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { Link } from "react-router-dom";
 import ServerCard from "@/components/ServerCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
