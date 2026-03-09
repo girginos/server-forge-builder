@@ -324,7 +324,7 @@ export default function ProductDetail() {
               {relatedProducts.map((p) => (
                 <Link
                   key={p.id}
-                  to={`/urun/${p.id}`}
+                  to={getProductUrl(p.category, p.slug)}
                   className="bg-card border rounded-xl p-3 hover:border-primary/30 transition-colors group"
                 >
                   {p.image_url && (
