@@ -13,6 +13,7 @@ import {
   Users, Award, Server, Clock, Package, Brain,
   HardDrive, ChevronRight
 } from "lucide-react";
+import colocationBg from "@/assets/colocation-bg.jpg";
 
 interface FeaturedProduct {
   id: string;
