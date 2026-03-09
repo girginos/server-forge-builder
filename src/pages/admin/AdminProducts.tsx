@@ -89,7 +89,9 @@ export default function AdminProducts() {
                 {products.map((p) => (
                   <TableRow key={p.id}>
                     <TableCell className="font-medium">{p.name}</TableCell>
-                    <TableCell>{p.category}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{getCategoryLabel(p.category)}</Badge>
+                    </TableCell>
                     <TableCell>{p.price.toLocaleString("tr-TR")} ₺</TableCell>
                     <TableCell>
                       <Badge variant={p.in_stock ? "default" : "secondary"}>{p.in_stock ? "Stokta" : "Tükendi"}</Badge>
